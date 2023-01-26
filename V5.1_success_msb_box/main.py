@@ -23,9 +23,7 @@ from PyQt5.QtWidgets import QApplication, QFileDialog, QMessageBox
 # bin_file = "C:/Users/USER/Desktop/STM32/BIN.bin"
 # bin_file = "C:/Users/USER/Desktop/STM32/BIN2_F413ZH.bin"
 
-print("checking for restart")
 form_window = uic.loadUiType("UI_V1.ui")[0]
-
 
 class main_threading(QThread):
 

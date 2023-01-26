@@ -7,7 +7,6 @@ Created on Sun Jan  1 14:38:33 2023
 
 # python C:\Users\USER\Desktop\STM32\upload_bin_func.py
 # python C:\Users\USER\Documents\STM32\upload_bin_func.py
-
 import sys
 import time
 import os
