@@ -16,7 +16,7 @@ import numpy as np
 import serial
 import PyQt5
 from PyQt5 import QtWidgets, uic, QtGui
-from PyQt5.QtCore import QThread, pyqtSignal
+from PyQt5.QtCore import QThread, pyqtSignal, QTimer
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMessageBox
 
@@ -27,21 +27,13 @@ form_window = uic.loadUiType("UI_V2.ui")[0]
 
 class main_threading(QThread):
 
-    # countChanged = pyqtSignal(int)
-    # pyqtSignal(int)
     def run(self):
-        # self.countChanged.emit("변수")
-        print("HI")
-        time.sleep(1)
-
         while True:
             try:
                 if main_func(main_window.bin_file, main_window.port, main_window.skip_checksum):
-
-
+                    self.btn_done.setDisabled(False)
                     break
                 else:
-                    time.sleep(3)
                     main_window.text_label.setText("restart in 3 seconds")
                     time.sleep(3)
 
@@ -55,12 +47,15 @@ class main_threading(QThread):
 class UiMainWindow(QtWidgets.QMainWindow, form_window):
     def __init__(self):
         super().__init__()
+
+        self.setWindowTitle("Firmware Update")
         self.setupUi(self)
         self.bin_file = "./BIN2_F413ZH.bin"
         self.port = "11"
         self.skip_checksum = False
         self.lineEdit.setText(self.bin_file)
         self.lineEdit_2.setText(self.port)
+        self.btn_done.setDisabled(True)
         self.setWindowFlags(self.windowFlags() | PyQt5.QtCore.Qt.WindowStaysOnTopHint)
 
     def File_Dialog(self):
@@ -70,6 +65,21 @@ class UiMainWindow(QtWidgets.QMainWindow, form_window):
         if fileName:
             print(fileName)
             self.lineEdit.setText(fileName)
+
+    def closeEvent(self, event):
+        try:
+            if self.threading.isRunning():
+                close = self.alert()
+                if close == QMessageBox.Yes:
+                    event.accept()
+                else:
+                    event.ignore()
+        except:
+            pass
+
+
+    def alert(self):
+        return QMessageBox.question(self,"Warning", "Are you sure want to quit?? \nYou might have a severe damage", QMessageBox.Yes,QMessageBox.No)
 
 
     def Ok_Clicked(self):
@@ -81,36 +91,13 @@ class UiMainWindow(QtWidgets.QMainWindow, form_window):
         main_window.buttonBox.setEnabled(False)
         QApplication.processEvents()
 
-        thread = main_threading(self)
-        thread.start()
+        self.threading = main_threading(self)
+        self.threading.start()
 
 
 app = QtWidgets.QApplication(sys.argv)
 main_window = UiMainWindow()
 main_window.show()
-
-# class Child_window(QtWidgets.QDialog):
-#     def __init__(self, main_window):  # 부모 window 설정
-#         super(Child_window, self).__init__(main_window)
-#         option_ui = './UI_Child.ui'
-#         uic.loadUi(option_ui, self)
-#
-#         self.setWindowFlag(PyQt5.QtCore.Qt.WindowCloseButtonHint, False)
-#         self.textEdit.moveCursor(QtGui.QTextCursor.End)
-#         # self.textEdit.movePosition(QtGui.QTextCursor.End)
-#         # self.textEdit.moveCursor.movePosition(QtGui.QTextCursor.End)
-#         self.pushButton.setEnabled(False)
-#         self.pushButton.clicked.connect(self.Clicked)
-#         self.count = 0
-#         self.progressBar.setMaximum(100)
-#         self.progressBar.setValue(self.count)
-#
-#         self.setWindowModality(Qt.ApplicationModal)
-#         self.show()
-#
-#     def Clicked(self):
-#         sys.exit()
-
 
 def read_bin(bin_file):
     try:

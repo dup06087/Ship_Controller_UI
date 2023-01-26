@@ -16,7 +16,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <layout class="QVBoxLayout" name="Outter_Layout" stretch="0,0,0,0,0,0,0,0,0,0">
+     <layout class="QVBoxLayout" name="Outter_Layout" stretch="0,0,0,0,0,0,0,0,0,0,0">
       <property name="sizeConstraint">
        <enum>QLayout::SetDefaultConstraint</enum>
       </property>
@@ -92,6 +92,19 @@
        </widget>
       </item>
       <item>
+       <widget class="QLabel" name="label">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Progress</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QLabel" name="text_label">
         <property name="frameShape">
          <enum>QFrame::WinPanel</enum>
@@ -103,7 +116,7 @@
          <number>0</number>
         </property>
         <property name="text">
-         <string>TextLabel</string>
+         <string>Log</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -121,12 +134,60 @@
         </item>
        </layout>
       </item>
-      <item alignment="Qt::AlignRight">
-       <widget class="QDialogButtonBox" name="buttonBox">
-        <property name="standardButtons">
-         <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-        </property>
-       </widget>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btn_done">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="text">
+           <string>Done</string>
+          </property>
+          <property name="default">
+           <bool>false</bool>
+          </property>
+          <property name="flat">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QDialogButtonBox" name="buttonBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="standardButtons">
+           <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+          </property>
+          <property name="centerButtons">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </item>
@@ -186,6 +247,22 @@
     <hint type="destinationlabel">
      <x>399</x>
      <y>151</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_done</sender>
+   <signal>clicked()</signal>
+   <receiver>Main</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>187</x>
+     <y>282</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>198</x>
+     <y>156</y>
     </hint>
    </hints>
   </connection>
