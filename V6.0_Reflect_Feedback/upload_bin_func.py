@@ -29,20 +29,26 @@ class main_threading(QThread):
 
     def run(self):
         while True:
+
             try:
                 if main_func(main_window.bin_file, main_window.port, main_window.skip_checksum):
-                    self.btn_done.setDisabled(False)
+                    main_window.btn_done.setEnabled(True)
+
+                    print("?")
                     break
                 else:
+                    print("?????")
                     main_window.text_label.setText("restart in 3 seconds")
                     time.sleep(3)
 
-            except:
-                pass
+            except Exception as E:
+                print(E)
+
 
         # check_main_func = main_window.main_func(bin_file, port, skip_checksum)
 
-
+global count
+count = 0
 
 class UiMainWindow(QtWidgets.QMainWindow, form_window):
     def __init__(self):
@@ -55,7 +61,17 @@ class UiMainWindow(QtWidgets.QMainWindow, form_window):
         self.skip_checksum = False
         self.lineEdit.setText(self.bin_file)
         self.lineEdit_2.setText(self.port)
-        self.btn_done.setDisabled(True)
+
+        self.progressBar.setMaximum(100)
+        self.progressBar.setValue(count)
+
+        self.btn_done.setEnabled(False)
+        self.btn_done.clicked.connect(self.done_clicked)
+        # self.btn_done.setDisabled(True)
+
+        ###초기화 잘해주기
+
+
         self.setWindowFlags(self.windowFlags() | PyQt5.QtCore.Qt.WindowStaysOnTopHint)
 
     def File_Dialog(self):
@@ -93,6 +109,9 @@ class UiMainWindow(QtWidgets.QMainWindow, form_window):
 
         self.threading = main_threading(self)
         self.threading.start()
+
+    def done_clicked(self):
+        main_window.buttonBox.setEnabled(True)
 
 
 app = QtWidgets.QApplication(sys.argv)
@@ -1059,7 +1078,11 @@ def verify_checksum(crc_128, crc_128_ack):
 
 
 def main_func(bin_file, port, skip_checksum):
+    count = 0
+    main_window.progressBar.setValue(count)
     check_bin, contents, crc, num_128, crc_128 = read_bin(bin_file)
+    count += 5
+    main_window.progressBar.setValue(count)
     if check_bin == False:
         print('hihi')
         main_window.text_label.setText("Failed to upload .bin file (read_bin)")
@@ -1072,6 +1095,9 @@ def main_func(bin_file, port, skip_checksum):
         return False
 
     check_ser, ser = open_serial(port)
+    count += 5
+    main_window.progressBar.setValue(count)
+
     if check_ser == False:
         main_window.text_label.setText("Failed to upload .bin file (open_serial)")
 
@@ -1083,6 +1109,9 @@ def main_func(bin_file, port, skip_checksum):
         return False
 
     check_ser = check_serial(check_ser, ser)
+    count += 5
+    main_window.progressBar.setValue(count)
+
     if check_ser == False:
         check_ser = close_serial(check_ser, ser)
 
@@ -1096,6 +1125,9 @@ def main_func(bin_file, port, skip_checksum):
         return False
 
     check_check_hse_frequency, check_check_hse_frequency_opt = check_hse_frequency(check_ser, ser)
+    count += 5
+    main_window.progressBar.setValue(count)
+
     if check_check_hse_frequency == False:
         check_ser = close_serial(check_ser, ser)
 
@@ -1106,6 +1138,10 @@ def main_func(bin_file, port, skip_checksum):
         return False
 
     check_get_id, chip_id = get_ID(check_ser, ser)
+
+    count += 5
+    main_window.progressBar.setValue(count)
+
     if check_get_id == False:
         check_ser = close_serial(check_ser, ser)
 
@@ -1120,6 +1156,10 @@ def main_func(bin_file, port, skip_checksum):
         return False
 
     check_erase_memory = erase_memory(check_ser, ser)
+
+    count += 5
+    main_window.progressBar.setValue(count)
+
     if check_erase_memory == False:
         check_ser = close_serial(check_ser, ser)
 
@@ -1133,6 +1173,10 @@ def main_func(bin_file, port, skip_checksum):
         return False
 
     check_upload_bin = upload_bin(check_ser, ser, check_bin, contents, num_128)
+
+    count += 5
+    main_window.progressBar.setValue(count)
+
     if check_upload_bin == False:
         check_ser = close_serial(check_ser, ser)
 
@@ -1168,6 +1212,9 @@ def main_func(bin_file, port, skip_checksum):
         time.sleep(3.0)
 
     check_ser = close_serial(check_ser, ser)
+
+    count += 5
+    main_window.progressBar.setValue(count)
 
     if skip_checksum == False:
         if check_verify_checksum == True:

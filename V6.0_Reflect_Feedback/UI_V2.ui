@@ -132,23 +132,6 @@
           </property>
          </widget>
         </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
-        <item>
-         <spacer name="horizontalSpacer">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
         <item>
          <widget class="QPushButton" name="btn_done">
           <property name="sizePolicy">
@@ -170,6 +153,23 @@
            <bool>false</bool>
           </property>
          </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
         </item>
         <item>
          <widget class="QDialogButtonBox" name="buttonBox">
@@ -247,22 +247,6 @@
     <hint type="destinationlabel">
      <x>399</x>
      <y>151</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_done</sender>
-   <signal>clicked()</signal>
-   <receiver>Main</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>187</x>
-     <y>282</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>198</x>
-     <y>156</y>
     </hint>
    </hints>
   </connection>
