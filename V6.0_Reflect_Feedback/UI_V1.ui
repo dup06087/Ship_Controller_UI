@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
-    <height>350</height>
+    <width>392</width>
+    <height>206</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,7 +16,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <layout class="QVBoxLayout" name="Outter_Layout" stretch="0,0,0,0,0,0,0,0,0,0,0,0">
+     <layout class="QVBoxLayout" name="Outter_Layout" stretch="0,0,0,0,0,0,0,0,0">
       <property name="sizeConstraint">
        <enum>QLayout::SetDefaultConstraint</enum>
       </property>
@@ -104,27 +104,6 @@
         </property>
        </spacer>
       </item>
-      <item>
-       <widget class="QLabel" name="label_4">
-        <property name="text">
-         <string>Process Log</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QTextEdit" name="textEdit"/>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
-        <item>
-         <widget class="QProgressBar" name="progressBar">
-          <property name="value">
-           <number>24</number>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
       <item alignment="Qt::AlignRight">
        <widget class="QDialogButtonBox" name="buttonBox">
         <property name="standardButtons">
@@ -154,6 +133,22 @@
     <hint type="sourcelabel">
      <x>47</x>
      <y>65</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>151</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox</sender>
+   <signal>clicked()</signal>
+   <receiver>Main</receiver>
+   <slot>Checksum_ON_OFF()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>381</x>
+     <y>160</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -196,6 +191,7 @@
  </connections>
  <slots>
   <slot>File_Dialog()</slot>
+  <slot>Checksum_ON_OFF()</slot>
   <slot>Ok_Clicked()</slot>
  </slots>
 </ui>

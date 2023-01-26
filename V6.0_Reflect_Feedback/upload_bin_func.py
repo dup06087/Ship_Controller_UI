@@ -7,6 +7,7 @@ Created on Sun Jan  1 14:38:33 2023
 
 # python C:\Users\USER\Desktop\STM32\upload_bin_func.py
 # python C:\Users\USER\Documents\STM32\upload_bin_func.py
+
 import sys
 import time
 import os
@@ -32,18 +33,23 @@ class main_threading(QThread):
         # self.countChanged.emit("변수")
         print("HI")
         time.sleep(1)
+
         while True:
             try:
                 if main_func(main_window.bin_file, main_window.port, main_window.skip_checksum):
-                    # main_window.pushButton.setEnabled(True)
+
+
                     break
                 else:
-                    # main_window.textEdit.append("restart in 3 seconds")
                     time.sleep(3)
+                    main_window.text_label.setText("restart in 3 seconds")
+                    time.sleep(3)
+
             except:
                 pass
 
         # check_main_func = main_window.main_func(bin_file, port, skip_checksum)
+
 
 
 class UiMainWindow(QtWidgets.QMainWindow, form_window):
@@ -65,14 +71,14 @@ class UiMainWindow(QtWidgets.QMainWindow, form_window):
             print(fileName)
             self.lineEdit.setText(fileName)
 
+
     def Ok_Clicked(self):
         self.bin_file = self.lineEdit.text()
         self.port = "COM" + self.lineEdit_2.text()
         if self.checkBox.checkState():
             self.skip_checksum = True
 
-        # self.child = Child_window(self)
-
+        main_window.buttonBox.setEnabled(False)
         QApplication.processEvents()
 
         thread = main_threading(self)
@@ -82,7 +88,6 @@ class UiMainWindow(QtWidgets.QMainWindow, form_window):
 app = QtWidgets.QApplication(sys.argv)
 main_window = UiMainWindow()
 main_window.show()
-
 
 # class Child_window(QtWidgets.QDialog):
 #     def __init__(self, main_window):  # 부모 window 설정
@@ -109,12 +114,13 @@ main_window.show()
 
 def read_bin(bin_file):
     try:
-
+        print("HHH")
         with open(bin_file, "rb") as f:
             contents = f.read()
 
-        main_window.textEdit.append("Found .bin file (%s)" % bin_file)
-        time.sleep(3.0)
+        main_window.text_label.setText("Found")
+        main_window.text_label.setText("Found .bin file (%s)" % bin_file)
+        # time.sleep(3.0)
 
         # for i in range(len(contents) // 16):
         #    print("0x%08x: 0x%02x%02x%02x%02x 0x%02x%02x%02x%02x 0x%02x%02x%02x%02x 0x%02x%02x%02x%02x" % (16*i, contents[16*i + 3], contents[16*i + 2], contents[16*i + 1], contents[16*i + 0], contents[16*i + 7], contents[16*i + 6], contents[16*i + 5], contents[16*i + 4], contents[16*i + 11], contents[16*i + 10], contents[16*i + 9], contents[16*i + 8], contents[16*i + 15], contents[16*i + 14], contents[16*i + 13], contents[16*i + 12]))
@@ -143,7 +149,7 @@ def read_bin(bin_file):
         crc = np.uint32(0x00000000)
         for i in range(len(contents)):
             crc = crc + np.uint32(int(("0x%02x" % contents[i]), 16))
-        main_window.textEdit.append(
+        main_window.text_label.setText(
             "Checksum (0x%08x - 0x%08x): 0x%08x, %d bytes" % (0x00000000, len(contents) - 1, crc, len(contents)))
 
         if len(contents) % 128 == 0:
@@ -166,20 +172,23 @@ def read_bin(bin_file):
                 crc_128 = crc_128 + np.uint32(int(("0x%02x" % contents[i]), 16))
             else:
                 crc_128 = crc_128 + np.uint32(int(("0x%02x" % 0xff), 16))
-        main_window.textEdit.append("Checksum (0x%08x - 0x%08x): 0x%08x, %d bytes" % (
+
+        
+        main_window.text_label.setText("Checksum (0x%08x - 0x%08x): 0x%08x, %d bytes" % (
         0x00000000, (num_128 * 128) - 1, crc_128, (num_128 * 128)))
 
-        main_window.textEdit.append("")
+        
         time.sleep(3.0)
 
         return True, contents, crc, num_128, crc_128
     except:
-        main_window.textEdit.append("Can not find .bin file (%s)" % bin_file)
+        
+        main_window.text_label.setText("Can not find .bin file (%s)" % bin_file)
 
-        main_window.textEdit.append("")
+        
         time.sleep(3.0)
 
-        main_window.textEdit.moveCursor(QtGui.QTextCursor.End)
+
         return False, b'', np.uint32(0x00000000), 0, np.uint32(0x00000000)
 
 
@@ -188,23 +197,25 @@ def open_serial(port):
         ser = serial.Serial(port)
         ser.baudrate = 115200
 
-        main_window.textEdit.append("Opened %s" % port)
+        
+        main_window.text_label.setText("Opened %s" % port)
 
-        main_window.textEdit.append("")
+        
         time.sleep(3.0)
 
         check_ser = True
         # ser = ser
     except:
-        main_window.textEdit.append("Can not open %s" % port)
+        
+        main_window.text_label.setText("Can not open %s" % port)
 
-        main_window.textEdit.append("")
+        
         time.sleep(3.0)
 
         check_ser = False
         ser = False
 
-    main_window.textEdit.moveCursor(QtGui.QTextCursor.End)
+
     return check_ser, ser
 
 
@@ -214,28 +225,28 @@ def check_serial(check_ser, ser):
             while ser.in_waiting > 0:
                 data_dummy = ser.read()
 
-            main_window.textEdit.append("%s is alive" % main_window.port)
+            main_window.text_label.setText("%s is alive" % main_window.port)
 
-            main_window.textEdit.append("")
             time.sleep(3.0)
 
             check_ser = True
         except:
-            main_window.textEdit.append("%s is dead" % main_window.port)
+            
+            main_window.text_label.setText("%s is dead" % main_window.port)
 
-            main_window.textEdit.append("")
+            
             time.sleep(3.0)
 
             check_ser = False
     else:
-        main_window.textEdit.append("Can not found serial port")
+        
+        main_window.text_label.setText("Can not found serial port")
 
-        main_window.textEdit.append("")
+        
         time.sleep(3.0)
 
         # check_ser = False
 
-    main_window.textEdit.moveCursor(QtGui.QTextCursor.End)
     return check_ser
 
 
@@ -244,28 +255,31 @@ def close_serial(check_ser, ser):
         try:
             ser.close()
 
-            main_window.textEdit.append("Closed %s" % ser.port)
+            
+            main_window.text_label.setText("Closed %s" % ser.port)
 
-            main_window.textEdit.append("")
+            
             time.sleep(3.0)
 
             check_ser = False
         except:
-            main_window.textEdit.append("Can not close serial port")
+            
+            main_window.text_label.setText("Can not close serial port")
 
-            main_window.textEdit.append("")
+            
             time.sleep(3.0)
 
             check_ser = False
     else:
-        main_window.textEdit.append("Can not found serial port")
+        
+        main_window.text_label.setText("Can not found serial port")
 
-        main_window.textEdit.append("")
+        
         time.sleep(3.0)
 
         # check_ser = False
 
-    main_window.textEdit.moveCursor(QtGui.QTextCursor.End)
+
     return check_ser
 
 
@@ -284,7 +298,7 @@ def check_hse_frequency(check_ser, ser):
             for i in range(20):
                 ser.write(request)
                 time.sleep(0.05)
-            # main_window.textEdit.append("Sent: %s\\r" % request[0:-1].decode("utf-8"))
+            # main_window.text_label.setText("Sent: %s\\r" % request[0:-1].decode("utf-8"))
             time.sleep(0.01)
 
             response = b''
@@ -297,29 +311,33 @@ def check_hse_frequency(check_ser, ser):
                     if data_rx == b'\r':
                         # print("Recv: %s\\r" % response[0:-1].decode("utf-8"))
                         if response == b't079179\r':
-                            main_window.textEdit.append("Check HSE frequency Response Done (ACK)")
+                            
+                            main_window.text_label.setText("Check HSE frequency Response Done (ACK)")
 
                             check_check_hse_frequency = True
                             check_check_hse_frequency_opt = True
 
                             break
                         elif response == b't07911f\r':
-                            main_window.textEdit.append("Check HSE frequency Response Failed (NACK)")
+                            
+                            main_window.text_label.setText("Check HSE frequency Response Failed (NACK)")
 
                             check_check_hse_frequency = True
                             check_check_hse_frequency_opt = False
 
                             break
                         else:
-                            main_window.textEdit.append("Check HSE frequency Response Failed (Missing data)")
+                            
+                            main_window.text_label.setText("Check HSE frequency Response Failed (Missing data)")
 
                             check_check_hse_frequency = False
                             check_check_hse_frequency_opt = True
 
                             break
                 if time.time() >= prev_time + 1.0:
-                    # main_window.textEdit.append("Recv: %s" % response[0:].decode("utf-8"))
-                    main_window.textEdit.append("Check HSE frequency Response Failed (Timeout)")
+                    
+                    # main_window.text_label.setText("Recv: %s" % response[0:].decode("utf-8"))
+                    main_window.text_label.setText("Check HSE frequency Response Failed (Timeout)")
 
                     check_check_hse_frequency = False
                     check_check_hse_frequency_opt = False
@@ -332,34 +350,36 @@ def check_hse_frequency(check_ser, ser):
 
             if check_check_hse_frequency == True:
                 if check_check_hse_frequency_opt == True:
-                    main_window.textEdit.append("Checked HSE frequency")
+                    
+                    main_window.text_label.setText("Checked HSE frequency")
                 else:
-                    main_window.textEdit.append("Already checked HSE frequency")
+                    
+                    main_window.text_label.setText("Already checked HSE frequency")
             else:
-                main_window.textEdit.append("Can not check HSE frequency")
+                main_window.text_label.setText("Can not check HSE frequency")
 
-            main_window.textEdit.append("")
+            
             time.sleep(3.0)
         except:
-            main_window.textEdit.append("Can not check HSE frequency")
-            main_window.textEdit.append("Can not use %s" % ser.port)
+            main_window.text_label.setText("Can not check HSE frequency")
+            main_window.text_label.setText("Can not use %s" % ser.port)
 
-            main_window.textEdit.append("")
+            
             time.sleep(3.0)
 
             check_check_hse_frequency = False
             check_check_hse_frequency_opt = False
     else:
-        main_window.textEdit.append("Can not check HSE frequency")
-        main_window.textEdit.append("Can not find serial port")
+        main_window.text_label.setText("Can not check HSE frequency")
+        main_window.text_label.setText("Can not find serial port")
 
-        main_window.textEdit.append("")
+        
         time.sleep(3.0)
 
         check_check_hse_frequency = False
         check_check_hse_frequency_opt = False
 
-    main_window.textEdit.moveCursor(QtGui.QTextCursor.End)
+
     return check_check_hse_frequency, check_check_hse_frequency_opt
 
 
@@ -384,26 +404,26 @@ def get_ID(check_ser, ser):
                     if data_rx == b'\r':
                         # print("Recv: %s\\r" % response[0:-1].decode("utf-8"))
                         if response == b't002179\r':
-                            main_window.textEdit.append("Get ID Request Done (ACK)")
+                            main_window.text_label.setText("Get ID Request Done (ACK)")
 
                             check_id = True
 
                             break
                         elif response == b't00211f\r':
-                            main_window.textEdit.append("Get ID Request Failed (NACK)")
+                            main_window.text_label.setText("Get ID Request Failed (NACK)")
 
                             check_id = False
 
                             break
                         else:
-                            main_window.textEdit.append("Get ID Request Failed (Unknown)")
+                            main_window.text_label.setText("Get ID Request Failed (Unknown)")
 
                             check_id = False
 
                             break
                 if time.time() >= prev_time + 1.0:
                     # print("Recv: %s" % response[0:].decode("utf-8"))
-                    main_window.textEdit.append("Get ID Request Failed (Timeout)")
+                    main_window.text_label.setText("Get ID Request Failed (Timeout)")
 
                     check_id = False
 
@@ -420,35 +440,35 @@ def get_ID(check_ser, ser):
                         # print("Recv: %s\\r" % response[0:-1].decode("utf-8"))
                         if response[0:5] == b't0022':
                             if response[5:10] == b'0421\r':
-                                main_window.textEdit.append(
+                                main_window.text_label.setText(
                                     "Get ID Done (ID: 0x%03s (STM32F446xx))" % response[6:9].decode("utf-8"))
 
                                 chip_id = int(("0x%03s" % response[6:9].decode("utf-8")), 16)
 
                                 break
                             elif response[5:10] == b'0463\r':
-                                main_window.textEdit.append(
+                                main_window.text_label.setText(
                                     "Get ID Done (ID: 0x%03s (STM32F413xx))" % response[6:9].decode("utf-8"))
 
                                 chip_id = int(("0x%03s" % response[6:9].decode("utf-8")), 16)
 
                                 break
                             else:
-                                main_window.textEdit.append(
+                                main_window.text_label.setText(
                                     "Get ID Done (ID: 0x%03s)" % response[6:9].decode("utf-8"))
 
                                 chip_id = int(("0x%03s" % response[6:9].decode("utf-8")), 16)
 
                                 break
                         else:
-                            main_window.textEdit.append("Get ID Failed (Unknown)")
+                            main_window.text_label.setText("Get ID Failed (Unknown)")
 
                             chip_id = 0x000
 
                             break
                 if time.time() >= prev_time + 1.0:
                     # print("Recv: %s" % response[0:].decode("utf-8"))
-                    main_window.textEdit.append("Get ID Failed (Timeout)")
+                    main_window.text_label.setText("Get ID Failed (Timeout)")
 
                     chip_id = 0x000
 
@@ -464,26 +484,26 @@ def get_ID(check_ser, ser):
                     if data_rx == b'\r':
                         # print("Recv: %s\\r" % response[0:-1].decode("utf-8"))
                         if response == b't002179\r':
-                            main_window.textEdit.append("Get ID Response Done (ACK)")
+                            main_window.text_label.setText("Get ID Response Done (ACK)")
 
                             check_id = True
 
                             break
                         elif response == b't00211f\r':
-                            main_window.textEdit.append("Get ID Response Failed (NACK)")
+                            main_window.text_label.setText("Get ID Response Failed (NACK)")
 
                             check_id = False
 
                             break
                         else:
-                            main_window.textEdit.append("Get ID Response Failed (Unknown)")
+                            main_window.text_label.setText("Get ID Response Failed (Unknown)")
 
                             check_id = False
 
                             break
                 if time.time() >= prev_time + 1.0:
                     # print("Recv: %s" % response[0:].decode("utf-8"))
-                    main_window.textEdit.append("Get ID Response Failed (Timeout)")
+                    main_window.text_label.setText("Get ID Response Failed (Timeout)")
 
                     check_id = False
 
@@ -491,36 +511,36 @@ def get_ID(check_ser, ser):
 
             if check_id == True:
                 if chip_id == 0x421:
-                    main_window.textEdit.append("Got ID: 0x%03x (STM32F446xx)" % chip_id)
+                    main_window.text_label.setText("Got ID: 0x%03x (STM32F446xx)" % chip_id)
                 elif chip_id == 0x463:
-                    main_window.textEdit.append("Got ID: 0x%03x (STM32F413xx)" % chip_id)
+                    main_window.text_label.setText("Got ID: 0x%03x (STM32F413xx)" % chip_id)
                 else:
-                    main_window.textEdit.append("Got ID: 0x%03x" % chip_id)
+                    main_window.text_label.setText("Got ID: 0x%03x" % chip_id)
             else:
-                main_window.textEdit.append("Can not get Chip ID")
+                main_window.text_label.setText("Can not get Chip ID")
 
-            main_window.textEdit.append("")
+            
             time.sleep(3.0)
         except:
-            main_window.textEdit.append("Can not get Chip ID")
-            main_window.textEdit.append("Can not use %s" % ser.port)
+            main_window.text_label.setText("Can not get Chip ID")
+            main_window.text_label.setText("Can not use %s" % ser.port)
 
-            main_window.textEdit.append("")
+            
             time.sleep(3.0)
 
             check_id = False
             chip_id = 0x000
     else:
-        main_window.textEdit.append("Can not get Chip ID")
-        main_window.textEdit.append("Can not find serial port")
+        main_window.text_label.setText("Can not get Chip ID")
+        main_window.text_label.setText("Can not find serial port")
 
-        main_window.textEdit.append("")
+        
         time.sleep(3.0)
 
         check_id = False
         chip_id = 0x000
 
-    main_window.textEdit.moveCursor(QtGui.QTextCursor.End)
+
     return check_id, chip_id
 
 
@@ -545,26 +565,26 @@ def erase_memory(check_ser, ser):
                     if data_rx == b'\r':
                         # print("Recv: %s\\r" % response[0:-1].decode("utf-8"))
                         if response == b't043179\r':
-                            main_window.textEdit.append("Erase Memory Request Done (ACK)")
+                            main_window.text_label.setText("Erase Memory Request Done (ACK)")
 
                             check_erase = True
 
                             break
                         elif response == b't04311f\r':
-                            main_window.textEdit.append("Erase Memory Request Failed (NACK)")
+                            main_window.text_label.setText("Erase Memory Request Failed (NACK)")
 
                             check_erase = False
 
                             break
                         else:
-                            main_window.textEdit.append("Erase Memory Request Failed (Unknown)")
+                            main_window.text_label.setText("Erase Memory Request Failed (Unknown)")
 
                             check_erase = False
 
                             break
                 if time.time() >= prev_time + 1.0:
-                    # main_window.textEdit.append("Recv: %s" % response[0:].decode("utf-8"))
-                    main_window.textEdit.append("Erase Memory Request Failed (Timeout)")
+                    # main_window.text_label.setText("Recv: %s" % response[0:].decode("utf-8"))
+                    main_window.text_label.setText("Erase Memory Request Failed (Timeout)")
 
                     check_erase = False
 
@@ -580,56 +600,56 @@ def erase_memory(check_ser, ser):
                     if data_rx == b'\r':
                         # print("Recv: %s\\r" % response[0:-1].decode("utf-8"))
                         if response == b't043179\r':
-                            main_window.textEdit.append("Erase Memory Response Done (ACK)")
+                            main_window.text_label.setText("Erase Memory Response Done (ACK)")
 
                             check_erase = True
 
                             break
                         elif response == b't04311f\r':
-                            main_window.textEdit.append("Erase Memory Response Failed (NACK)")
+                            main_window.text_label.setText("Erase Memory Response Failed (NACK)")
 
                             check_erase = False
 
                             break
                         else:
-                            main_window.textEdit.append("Erase Memory Response Failed (Unknown)")
+                            main_window.text_label.setText("Erase Memory Response Failed (Unknown)")
 
                             check_erase = False
 
                             break
                 if time.time() >= prev_time + 30.0:
                     # print("Recv: %s" % response[0:].decode("utf-8"))
-                    main_window.textEdit.append("Erase Memory Response Failed (Timeout)")
+                    main_window.text_label.setText("Erase Memory Response Failed (Timeout)")
 
                     check_erase = False
 
                     break
 
             if check_erase == True:
-                main_window.textEdit.append("Erased memory")
+                main_window.text_label.setText("Erased memory")
             else:
-                main_window.textEdit.append("Can not erase memory")
+                main_window.text_label.setText("Can not erase memory")
 
-            main_window.textEdit.append("")
+            
             time.sleep(3.0)
         except:
-            main_window.textEdit.append("Can not erase memory")
-            main_window.textEdit.append("Can not use %s" % ser.port)
+            main_window.text_label.setText("Can not erase memory")
+            main_window.text_label.setText("Can not use %s" % ser.port)
 
-            main_window.textEdit.append("")
+            
             time.sleep(3.0)
 
             check_erase = False
     else:
-        main_window.textEdit.append("Can not erase memory")
-        main_window.textEdit.append("Can not find serial port")
+        main_window.text_label.setText("Can not erase memory")
+        main_window.text_label.setText("Can not find serial port")
 
-        main_window.textEdit.append("")
+        
         time.sleep(3.0)
 
         check_erase = False
 
-    main_window.textEdit.moveCursor(QtGui.QTextCursor.End)
+
     return check_erase
 
 
@@ -661,28 +681,28 @@ def upload_bin(check_ser, ser, check_bin, contents, num_128):
                         if data_rx == b'\r':
                             # print("Recv: %s\\r" % response[0:-1].decode("utf-8"))
                             if response == b't031179\r':
-                                # main_window.textEdit.append("Write Memory 0x%08x - 0x%08x Request Done (ACK), %04d / %04d" % (addr, addr + 128 - 1, num + 1, num_128))
+                                # main_window.text_label.setText("Write Memory 0x%08x - 0x%08x Request Done (ACK), %04d / %04d" % (addr, addr + 128 - 1, num + 1, num_128))
 
                                 check_upload_bin = True
 
                                 break
                             elif response == b't03111f\r':
-                                # main_window.textEdit.append("Write Memory 0x%08x - 0x%08x Request Failed (NACK), %04d / %04d" % (addr, addr + 128 - 1, num + 1, num_128))
+                                # main_window.text_label.setText("Write Memory 0x%08x - 0x%08x Request Failed (NACK), %04d / %04d" % (addr, addr + 128 - 1, num + 1, num_128))
 
                                 for_break = True
                                 check_upload_bin = False
 
                                 break
                             else:
-                                # main_window.textEdit.append("Write Memory 0x%08x - 0x%08x Request Failed (Unknown), %04d / %04d" % (addr, addr + 128 - 1, num + 1, num_128))
+                                # main_window.text_label.setText("Write Memory 0x%08x - 0x%08x Request Failed (Unknown), %04d / %04d" % (addr, addr + 128 - 1, num + 1, num_128))
 
                                 for_break = True
                                 check_upload_bin = False
 
                                 break
                     if time.time() >= prev_time + 1.0:
-                        # main_window.textEdit.append("Recv: %s" % response[0:].decode("utf-8"))
-                        main_window.textEdit.append(
+                        # main_window.text_label.setText("Recv: %s" % response[0:].decode("utf-8"))
+                        main_window.text_label.setText(
                             "Write Memory 0x%08x - 0x%08x Request Failed (Timeout), %04d / %04d" % (
                             addr, addr + 128 - 1, num + 1, num_128))
 
@@ -703,7 +723,7 @@ def upload_bin(check_ser, ser, check_bin, contents, num_128):
                     request = b't0048%02x%02x%02x%02x%02x%02x%02x%02x\r' % (
                     temp[0], temp[1], temp[2], temp[3], temp[4], temp[5], temp[6], temp[7])
                     ser.write(request)
-                    # main_window.textEdit.append("Sent: %s\\r" % request[0:-1].decode("utf-8"))
+                    # main_window.text_label.setText("Sent: %s\\r" % request[0:-1].decode("utf-8"))
                     time.sleep(0.001)
 
                     response = b''
@@ -716,32 +736,32 @@ def upload_bin(check_ser, ser, check_bin, contents, num_128):
                             if data_rx == b'\r':
                                 # print("Recv: %s\\r" % response[0:-1].decode("utf-8"))
                                 if response == b't031179\r':
-                                    # main_window.textEdit.append("Write Memory 0x%08x - 0x%08x (0x%02s 0x%02s 0x%02s 0x%02s 0x%02s 0x%02s 0x%02s 0x%02s) Done (ACK), %04d / %04d" % (addr + (i*8), addr + ((i+1)*8) - 1, request[5:7].decode("utf-8"), request[7:9].decode("utf-8"), request[9:11].decode("utf-8"), request[11:13].decode("utf-8"), request[13:15].decode("utf-8"), request[15:17].decode("utf-8"), request[17:19].decode("utf-8"), request[19:21].decode("utf-8"), num + 1, num_128))
+                                    # main_window.text_label.setText("Write Memory 0x%08x - 0x%08x (0x%02s 0x%02s 0x%02s 0x%02s 0x%02s 0x%02s 0x%02s 0x%02s) Done (ACK), %04d / %04d" % (addr + (i*8), addr + ((i+1)*8) - 1, request[5:7].decode("utf-8"), request[7:9].decode("utf-8"), request[9:11].decode("utf-8"), request[11:13].decode("utf-8"), request[13:15].decode("utf-8"), request[15:17].decode("utf-8"), request[17:19].decode("utf-8"), request[19:21].decode("utf-8"), num + 1, num_128))
 
                                     check_upload_bin = True
 
                                     break
                                 elif response == b't03111f\r':
-                                    # main_window.textEdit.append("Write Memory 0x%08x - 0x%08x Failed (NACK), %04d / %04d" % (addr + (i*8), addr + ((i+1)*8) - 1, num + 1, num_128))
+                                    # main_window.text_label.setText("Write Memory 0x%08x - 0x%08x Failed (NACK), %04d / %04d" % (addr + (i*8), addr + ((i+1)*8) - 1, num + 1, num_128))
 
                                     for_break = True
                                     check_upload_bin = False
 
                                     break
                                 else:
-                                    # main_window.textEdit.append("Write Memory 0x%08x - 0x%08x Failed (Unknown), %04d / %04d" % (addr + (i*8), addr + ((i+1)*8) - 1, num + 1, num_128))
+                                    # main_window.text_label.setText("Write Memory 0x%08x - 0x%08x Failed (Unknown), %04d / %04d" % (addr + (i*8), addr + ((i+1)*8) - 1, num + 1, num_128))
 
                                     for_break = True
                                     check_upload_bin = False
 
                                     break
                         if time.time() >= prev_time + 1.0:
-                            # main_window.textEdit.append("Recv: %s" % response[0:].decode("utf-8"))
+                            # main_window.text_label.setText("Recv: %s" % response[0:].decode("utf-8"))
 
                             for_break = True
                             check_upload_bin = False
 
-                            # main_window.textEdit.append("Write Memory 0x%08x - 0x%08x Failed (Timeout), %04d / %04d" % (addr + (i*8), addr + ((i+1)*8) - 1, num + 1, num_128))
+                            # main_window.text_label.setText("Write Memory 0x%08x - 0x%08x Failed (Timeout), %04d / %04d" % (addr + (i*8), addr + ((i+1)*8) - 1, num + 1, num_128))
                             break
 
                     if for_break == True:
@@ -794,51 +814,51 @@ def upload_bin(check_ser, ser, check_bin, contents, num_128):
                 time.sleep(0.01)
 
             if check_upload_bin == True:
-                main_window.textEdit.append("Uploaded .bin file")
+                main_window.text_label.setText("Uploaded .bin file")
             else:
-                main_window.textEdit.append("Can not upload .bin file")
+                main_window.text_label.setText("Can not upload .bin file")
 
-            main_window.textEdit.append("")
+            
             time.sleep(3.0)
         except:
-            main_window.textEdit.append("Can not upload .bin file")
-            main_window.textEdit.append("Can not use %s" % ser.port)
+            main_window.text_label.setText("Can not upload .bin file")
+            main_window.text_label.setText("Can not use %s" % ser.port)
 
-            main_window.textEdit.append("")
+            
             time.sleep(3.0)
 
             check_upload_bin = False
     elif check_ser == True and check_bin == False:
-        main_window.textEdit.append("Can not upload .bin file")
-        main_window.textEdit.append("Can not find .bin file")
+        main_window.text_label.setText("Can not upload .bin file")
+        main_window.text_label.setText("Can not find .bin file")
 
-        main_window.textEdit.append("")
+        
         time.sleep(3.0)
 
         check_upload_bin = False
     elif check_ser == False and check_bin == True:
-        main_window.textEdit.append("Can not upload .bin file")
-        main_window.textEdit.append("Can not find serial port")
+        main_window.text_label.setText("Can not upload .bin file")
+        main_window.text_label.setText("Can not find serial port")
 
-        main_window.textEdit.append("")
+        
         time.sleep(3.0)
 
         check_upload_bin = False
     else:
-        main_window.textEdit.append("Can not upload .bin file")
-        main_window.textEdit.append("Can not find both .bin file and serial port")
+        main_window.text_label.setText("Can not upload .bin file")
+        main_window.text_label.setText("Can not find both .bin file and serial port")
 
-        main_window.textEdit.append("")
+        
         time.sleep(3.0)
 
         check_upload_bin = False
 
-    main_window.textEdit.moveCursor(QtGui.QTextCursor.End)
+
     return check_upload_bin
 
 
 def get_checksum(check_ser, ser, num_128):
-    main_window.textEdit.append("Checking Checksum...")
+    main_window.text_label.setText("Checking Checksum...")
     if check_ser == True:
         try:
             while ser.in_waiting > 0:
@@ -866,37 +886,37 @@ def get_checksum(check_ser, ser, num_128):
 
                     if ser.in_waiting > 0:
                         data_rx = ser.read()
-                        # main_window.textEdit.append(data_rx)
+                        # main_window.text_label.setText(data_rx)
                         response = response + data_rx
                         if data_rx == b'\r':
-                            # main_window.textEdit.append("Recv: %s\\r" % response[0:-1].decode("utf-8"))
+                            # main_window.text_label.setText("Recv: %s\\r" % response[0:-1].decode("utf-8"))
                             if response == b't011179\r':
-                                # main_window.textEdit.append("Read Memory 0x%08x - 0x%08x Request Done (ACK), %04d / %04d" % (addr, addr + 128 - 1, num + 1, num_128))
+                                # main_window.text_label.setText("Read Memory 0x%08x - 0x%08x Request Done (ACK), %04d / %04d" % (addr, addr + 128 - 1, num + 1, num_128))
 
                                 check_get_checksum = True
 
                                 break
                             elif response == b't01111f\r':
-                                # main_window.textEdit.append("Read Memory 0x%08x - 0x%08x Request Failed (NACK), %04d / %04d" % (addr, addr + 128 - 1, num + 1, num_128))
+                                # main_window.text_label.setText("Read Memory 0x%08x - 0x%08x Request Failed (NACK), %04d / %04d" % (addr, addr + 128 - 1, num + 1, num_128))
 
                                 for_break = True
                                 check_get_checksum = False
 
                                 break
                             else:
-                                # main_window.textEdit.append("Read Memory 0x%08x - 0x%08x Request Failed (Unknown), %04d / %04d" % (addr, addr + 128 - 1, num + 1, num_128))
+                                # main_window.text_label.setText("Read Memory 0x%08x - 0x%08x Request Failed (Unknown), %04d / %04d" % (addr, addr + 128 - 1, num + 1, num_128))
 
                                 for_break = True
                                 check_get_checksum = False
 
                                 break
                     if time.time() >= prev_time + 1.0:
-                        # main_window.textEdit.append("Recv: %s" % response[0:].decode("utf-8"))
+                        # main_window.text_label.setText("Recv: %s" % response[0:].decode("utf-8"))
 
                         for_break = True
                         check_get_checksum = False
 
-                        # main_window.textEdit.append("Read Memory 0x%08x - 0x%08x Request Failed (Timeout), %04d / %04d" % (addr, addr + 128 - 1, num + 1, num_128))
+                        # main_window.text_label.setText("Read Memory 0x%08x - 0x%08x Request Failed (Timeout), %04d / %04d" % (addr, addr + 128 - 1, num + 1, num_128))
                         break
 
                 if for_break == True:
@@ -910,10 +930,10 @@ def get_checksum(check_ser, ser, num_128):
 
                     if ser.in_waiting > 0:
                         data_rx = ser.read()
-                        # main_window.textEdit.append(data_rx)
+                        # main_window.text_label.setText(data_rx)
                         response = response + data_rx
                         if data_rx == b'\r':
-                            # main_window.textEdit.append("Recv: %s\\r" % response[0:-1].decode("utf-8"))
+                            # main_window.text_label.setText("Recv: %s\\r" % response[0:-1].decode("utf-8"))
                             if response[0:5] == b't0118':
                                 if len(response) == 22:
                                     for j in range(8):
@@ -922,17 +942,17 @@ def get_checksum(check_ser, ser, num_128):
 
                                     check_get_checksum = True
 
-                                    # main_window.textEdit.append("Read Memory 0x%08x - 0x%08x (0x%02s 0x%02s 0x%02s 0x%02s 0x%02s 0x%02s 0x%02s 0x%02s) Done, %04d / %04d" % (addr + (i*8), addr + ((i+1)*8) - 1, response[5:7].decode("utf-8"), response[7:9].decode("utf-8"), response[9:11].decode("utf-8"), response[11:13].decode("utf-8"), response[13:15].decode("utf-8"), response[15:17].decode("utf-8"), response[17:19].decode("utf-8"), response[19:21].decode("utf-8"), num + 1, num_128))
+                                    # main_window.text_label.setText("Read Memory 0x%08x - 0x%08x (0x%02s 0x%02s 0x%02s 0x%02s 0x%02s 0x%02s 0x%02s 0x%02s) Done, %04d / %04d" % (addr + (i*8), addr + ((i+1)*8) - 1, response[5:7].decode("utf-8"), response[7:9].decode("utf-8"), response[9:11].decode("utf-8"), response[11:13].decode("utf-8"), response[13:15].decode("utf-8"), response[15:17].decode("utf-8"), response[17:19].decode("utf-8"), response[19:21].decode("utf-8"), num + 1, num_128))
                                 else:
                                     for_break = True
                                     check_get_checksum = False
 
-                                    # main_window.textEdit.append("Read Memory 0x%08x - 0x%08x Failed (Missing data), %04d / %04d" % (addr + (i*8), addr + ((i+1)*8) - 1, num + 1, num_128))
+                                    # main_window.text_label.setText("Read Memory 0x%08x - 0x%08x Failed (Missing data), %04d / %04d" % (addr + (i*8), addr + ((i+1)*8) - 1, num + 1, num_128))
                             else:
                                 for_break = True
                                 check_get_checksum = False
 
-                                # main_window.textEdit.append("Read Memory 0x%08x - 0x%08x Failed (Unknown), %04d / %04d" % (addr + (i*8), addr + ((i+1)*8) - 1, num + 1, num_128))
+                                # main_window.text_label.setText("Read Memory 0x%08x - 0x%08x Failed (Unknown), %04d / %04d" % (addr + (i*8), addr + ((i+1)*8) - 1, num + 1, num_128))
 
                             response = b''
                             prev_time = time.time()
@@ -941,12 +961,12 @@ def get_checksum(check_ser, ser, num_128):
                             if i == 16:
                                 break
                     if time.time() >= prev_time + 1.0:
-                        # main_window.textEdit.append("Recv: %s" % response[0:].decode("utf-8"))
+                        # main_window.text_label.setText("Recv: %s" % response[0:].decode("utf-8"))
 
                         for_break = True
                         check_get_checksum = False
 
-                        # main_window.textEdit.append("Read Memory 0x%08x - 0x%08x Failed (Timeout), %04d / %04d" % (addr, addr + 128 - 1, num + 1, num_128))
+                        # main_window.text_label.setText("Read Memory 0x%08x - 0x%08x Failed (Timeout), %04d / %04d" % (addr, addr + 128 - 1, num + 1, num_128))
                         break
 
                 if for_break == True:
@@ -959,42 +979,39 @@ def get_checksum(check_ser, ser, num_128):
 
                     if ser.in_waiting > 0:
                         data_rx = ser.read()
-                        # main_window.textEdit.append(data_rx)
+                        # main_window.text_label.setText(data_rx)
                         response = response + data_rx
                         if data_rx == b'\r':
-                            # main_window.textEdit.append("Recv: %s\\r" % response[0:-1].decode("utf-8"))
+                            # main_window.text_label.setText("Recv: %s\\r" % response[0:-1].decode("utf-8"))
                             if response == b't011179\r':
-                                # main_window.textEdit.append("Read Memory 0x%08x - 0x%08x Response Done (ACK), %04d / %04d" % (addr, addr + 128 - 1, num + 1, num_128))
+                                # main_window.text_label.setText("Read Memory 0x%08x - 0x%08x Response Done (ACK), %04d / %04d" % (addr, addr + 128 - 1, num + 1, num_128))
 
                                 check_get_checksum = True
 
                                 break
                             elif response == b't01111f\r':
-                                # main_window.textEdit.append("Read Memory 0x%08x - 0x%08x Response Failed (NACK), %04d / %04d" % (addr, addr + 128 - 1, num + 1, num_128))
+                                # main_window.text_label.setText("Read Memory 0x%08x - 0x%08x Response Failed (NACK), %04d / %04d" % (addr, addr + 128 - 1, num + 1, num_128))
 
                                 for_break = True
                                 check_get_checksum = False
 
                                 break
                             else:
-                                # main_window.textEdit.append("Read Memory 0x%08x - 0x%08x Response Failed (Unknown), %04d / %04d" % (addr, addr + 128 - 1, num + 1, num_128))
+                                # main_window.text_label.setText("Read Memory 0x%08x - 0x%08x Response Failed (Unknown), %04d / %04d" % (addr, addr + 128 - 1, num + 1, num_128))
 
                                 for_break = True
                                 check_get_checksum = False
 
                                 break
                     if time.time() >= prev_time + 1.0:
-                        # main_window.textEdit.append("Recv: %s" % response[0:].decode("utf-8"))
+                        # main_window.text_label.setText("Recv: %s" % response[0:].decode("utf-8"))
 
                         for_break = True
                         check_get_checksum = False
-                        QApplication.processEvents()
 
-                        main_window.textEdit.append(
+                        main_window.text_label.setText(
                             "Read Memory 0x%08x - 0x%08x Response Failed (Timeout), %04d / %04d" % (
                             addr, addr + 128 - 1, num + 1, num_128))
-                        QApplication.processEvents()
-
                         break
 
                 if for_break == True:
@@ -1004,94 +1021,76 @@ def get_checksum(check_ser, ser, num_128):
 
             if check_get_checksum == True:
                 pass
-                # main_window.textEdit.append("Got checksum (0x%08x - 0x%08x): 0x%08x, %d bytes" % (0x08000000, 0x08000000 + (num_128 * 128) - 1, crc_128_ack, (num_128 * 128)))
+                # main_window.text_label.setText("Got checksum (0x%08x - 0x%08x): 0x%08x, %d bytes" % (0x08000000, 0x08000000 + (num_128 * 128) - 1, crc_128_ack, (num_128 * 128)))
             else:
-                QApplication.processEvents()
+                main_window.text_label.setText("Can not get checksum")
 
-                main_window.textEdit.append("Can not get checksum")
-
-            QApplication.processEvents()
-
-            main_window.textEdit.append("")
+            
             time.sleep(3.0)
         except:
-            QApplication.processEvents()
+            main_window.text_label.setText("Can not get checksum")
+            main_window.text_label.setText("Can not use %s" % ser.port)
 
-            main_window.textEdit.append("Can not get checksum")
-            QApplication.processEvents()
-
-            main_window.textEdit.append("Can not use %s" % ser.port)
-            QApplication.processEvents()
-
-            main_window.textEdit.append("")
+            
             time.sleep(3.0)
 
             check_get_checksum = False
             crc_128_ack = np.uint32(0x00000000)
     else:
-        QApplication.processEvents()
+        main_window.text_label.setText("Can not get checksum")
+        main_window.text_label.setText("Can not find serial port")
 
-        main_window.textEdit.append("Can not get checksum")
-        QApplication.processEvents()
-
-        main_window.textEdit.append("Can not find serial port")
-        QApplication.processEvents()
-
-        main_window.textEdit.append("")
+        
         time.sleep(3.0)
 
         check_get_checksum = False
         crc_128_ack = np.uint32(0x00000000)
 
-    main_window.textEdit.moveCursor(QtGui.QTextCursor.End)
+
     return check_get_checksum, crc_128_ack
 
 
 def verify_checksum(crc_128, crc_128_ack):
     if crc_128 == crc_128_ack:
-        QApplication.processEvents()
-
-        main_window.textEdit.append(
+        main_window.text_label.setText(
             "Checksum matched (.bin file: 0x%08x, Memory: 0x%08x)" % (crc_128, crc_128_ack))
-        QApplication.processEvents()
 
-        main_window.textEdit.append("")
+        
         time.sleep(3.0)
 
         check_verify_checksum = True
     else:
-        QApplication.processEvents()
-
-        main_window.textEdit.append(
+        main_window.text_label.setText(
             "Checksum not matched (.bin file: 0x%08x, Memory: 0x%08x)" % (crc_128, crc_128_ack))
 
-        main_window.textEdit.append("")
+        
         time.sleep(3.0)
 
         check_verify_checksum = False
-    main_window.textEdit.moveCursor(QtGui.QTextCursor.End)
+
     return check_verify_checksum
 
 
 def main_func(bin_file, port, skip_checksum):
     check_bin, contents, crc, num_128, crc_128 = read_bin(bin_file)
     if check_bin == False:
-        main_window.textEdit.append("Failed to upload .bin file (read_bin)")
+        print('hihi')
+        main_window.text_label.setText("Failed to upload .bin file (read_bin)")
 
-        main_window.textEdit.append("")
+        
 
-        main_window.textEdit.moveCursor(QtGui.QTextCursor.End)
+
         time.sleep(3.0)
 
         return False
 
     check_ser, ser = open_serial(port)
     if check_ser == False:
-        main_window.textEdit.append("Failed to upload .bin file (open_serial)")
+        main_window.text_label.setText("Failed to upload .bin file (open_serial)")
 
-        main_window.textEdit.append("")
+        
 
-        main_window.textEdit.moveCursor(QtGui.QTextCursor.End)
+
         time.sleep(3.0)
 
         return False
@@ -1100,11 +1099,11 @@ def main_func(bin_file, port, skip_checksum):
     if check_ser == False:
         check_ser = close_serial(check_ser, ser)
 
-        main_window.textEdit.append("Failed to upload .bin file (check_serial)")
+        main_window.text_label.setText("Failed to upload .bin file (check_serial)")
 
-        main_window.textEdit.append("")
+        
 
-        main_window.textEdit.moveCursor(QtGui.QTextCursor.End)
+
         time.sleep(3.0)
 
         return False
@@ -1113,11 +1112,8 @@ def main_func(bin_file, port, skip_checksum):
     if check_check_hse_frequency == False:
         check_ser = close_serial(check_ser, ser)
 
-        main_window.textEdit.append("Failed to upload .bin file (check_hse_frequency)")
+        main_window.text_label.setText("Failed to upload .bin file (check_hse_frequency)")
 
-        main_window.textEdit.append("")
-
-        main_window.textEdit.moveCursor(QtGui.QTextCursor.End)
         time.sleep(3.0)
 
         return False
@@ -1126,11 +1122,11 @@ def main_func(bin_file, port, skip_checksum):
     if check_get_id == False:
         check_ser = close_serial(check_ser, ser)
 
-        main_window.textEdit.append("Failed to upload .bin file (check_get_id)")
+        main_window.text_label.setText("Failed to upload .bin file (check_get_id)")
 
-        main_window.textEdit.append("")
+        
 
-        main_window.textEdit.moveCursor(QtGui.QTextCursor.End)
+
 
         time.sleep(3.0)
 
@@ -1140,11 +1136,11 @@ def main_func(bin_file, port, skip_checksum):
     if check_erase_memory == False:
         check_ser = close_serial(check_ser, ser)
 
-        main_window.textEdit.append("Failed to upload .bin file (erase_memory)")
+        main_window.text_label.setText("Failed to upload .bin file (erase_memory)")
 
-        main_window.textEdit.append("")
+        
 
-        main_window.textEdit.moveCursor(QtGui.QTextCursor.End)
+
         time.sleep(3.0)
 
         return False
@@ -1153,11 +1149,11 @@ def main_func(bin_file, port, skip_checksum):
     if check_upload_bin == False:
         check_ser = close_serial(check_ser, ser)
 
-        main_window.textEdit.append("Failed to upload .bin file (upload_bin)")
+        main_window.text_label.setText("Failed to upload .bin file (upload_bin)")
 
-        main_window.textEdit.append("")
+        
 
-        main_window.textEdit.moveCursor(QtGui.QTextCursor.End)
+
         time.sleep(3.0)
 
         return False
@@ -1167,20 +1163,20 @@ def main_func(bin_file, port, skip_checksum):
         if check_get_checksum == False:
             check_ser = close_serial(check_ser, ser)
 
-            main_window.textEdit.append("Failed to verify checksum (get_checksum)")
+            main_window.text_label.setText("Failed to verify checksum (get_checksum)")
 
-            main_window.textEdit.append("")
+            
             time.sleep(3.0)
 
             return False
 
         check_verify_checksum = verify_checksum(crc_128, crc_128_ack)
     else:
-        main_window.textEdit.append("Skipped checksum verification")
+        main_window.text_label.setText("Skipped checksum verification")
 
-        main_window.textEdit.append("")
+        
 
-        main_window.textEdit.moveCursor(QtGui.QTextCursor.End)
+
 
         time.sleep(3.0)
 
@@ -1188,31 +1184,19 @@ def main_func(bin_file, port, skip_checksum):
 
     if skip_checksum == False:
         if check_verify_checksum == True:
-            main_window.textEdit.append("Successfully uploaded .bin file (Checksum matched)")
-
-            main_window.textEdit.append("")
-
-            main_window.textEdit.moveCursor(QtGui.QTextCursor.End)
+            main_window.text_label.setText("Successfully uploaded .bin file (Checksum matched)")
 
             time.sleep(3.0)
 
             return True
         else:
-            main_window.textEdit.append("Failed to upload .bin file (Checksum unmatched)")
-
-            main_window.textEdit.append("")
-
-            main_window.textEdit.moveCursor(QtGui.QTextCursor.End)
+            main_window.text_label.setText("Failed to upload .bin file (Checksum unmatched)")
 
             time.sleep(3.0)
 
             return False
     else:
-        main_window.textEdit.append("Successfully uploaded .bin file (Checksum verification skipped)")
-
-        main_window.textEdit.append("")
-
-        main_window.textEdit.moveCursor(QtGui.QTextCursor.End)
+        main_window.text_label.setText("Successfully uploaded .bin file (Checksum verification skipped)")
 
         time.sleep(3.0)
 
