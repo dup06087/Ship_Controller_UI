@@ -117,6 +117,8 @@ class UiMainWindow(QtWidgets.QMainWindow, form_window):
 
 app = QtWidgets.QApplication(sys.argv)
 qtmodern.styles.dark(app)
+# qtmodern.styles._apply_base_theme(app)
+
 main_window = UiMainWindow()
 main_window = qtmodern.windows.ModernWindow(main_window)
 
@@ -183,6 +185,8 @@ def read_bin(bin_file):
                 crc_128 = crc_128 + np.uint32(int(("0x%02x" % contents[i]), 16))
             else:
                 crc_128 = crc_128 + np.uint32(int(("0x%02x" % 0xff), 16))
+
+        QApplication.processEvents()
 
         main_window.text_label.setText("Checksum (0x%08x - 0x%08x): 0x%08x, %d bytes" % (
             0x00000000, (num_128 * 128) - 1, crc_128, (num_128 * 128)))

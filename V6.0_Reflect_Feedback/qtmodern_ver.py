@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sun Jan  1 14:38:33 2023
-
 @author: USER
 """
 
@@ -25,6 +24,7 @@ from PyQt5.QtWidgets import QApplication, QFileDialog, QMessageBox
 
 form_window = uic.loadUiType("UI_V2.ui")[0]
 
+
 class main_threading(QThread):
 
     def run(self):
@@ -33,22 +33,29 @@ class main_threading(QThread):
             try:
                 if main_func(main_window.bin_file, main_window.port, main_window.skip_checksum):
                     main_window.btn_done.setEnabled(True)
-
                     print("?")
                     break
                 else:
                     print("?????")
                     main_window.text_label.setText("restart in 3 seconds")
-                    time.sleep(3)
+                    print(main_window.port)
+                    try:
+                        serial.Serial(main_window.port).close()
+                    except:
+                        print("Serial not opened")
+                    main_threading.sleep(3)
+
+                    # time.sleep(3)
 
             except Exception as E:
                 print(E)
 
-
         # check_main_func = main_window.main_func(bin_file, port, skip_checksum)
+
 
 global count
 count = 0
+
 
 class UiMainWindow(QtWidgets.QMainWindow, form_window):
     def __init__(self):
@@ -71,7 +78,6 @@ class UiMainWindow(QtWidgets.QMainWindow, form_window):
 
         ###초기화 잘해주기
 
-
         self.setWindowFlags(self.windowFlags() | PyQt5.QtCore.Qt.WindowStaysOnTopHint)
 
     def File_Dialog(self):
@@ -93,10 +99,9 @@ class UiMainWindow(QtWidgets.QMainWindow, form_window):
         except:
             pass
 
-
     def alert(self):
-        return QMessageBox.question(self,"Warning", "Are you sure want to quit?? \nYou might have a severe damage", QMessageBox.Yes,QMessageBox.No)
-
+        return QMessageBox.question(self, "Warning", "Are you sure want to quit?? \nYou might have a severe damage",
+                                    QMessageBox.Yes, QMessageBox.No)
 
     def Ok_Clicked(self):
         self.bin_file = self.lineEdit.text()
@@ -119,6 +124,7 @@ app = QtWidgets.QApplication(sys.argv)
 main_window = UiMainWindow()
 main_window.show()
 
+
 def read_bin(bin_file):
     try:
         print("HHH")
@@ -127,7 +133,7 @@ def read_bin(bin_file):
 
         main_window.text_label.setText("Found")
         main_window.text_label.setText("Found .bin file (%s)" % bin_file)
-        # time.sleep(3.0)
+        # main_threading.sleep(3)
 
         # for i in range(len(contents) // 16):
         #    print("0x%08x: 0x%02x%02x%02x%02x 0x%02x%02x%02x%02x 0x%02x%02x%02x%02x 0x%02x%02x%02x%02x" % (16*i, contents[16*i + 3], contents[16*i + 2], contents[16*i + 1], contents[16*i + 0], contents[16*i + 7], contents[16*i + 6], contents[16*i + 5], contents[16*i + 4], contents[16*i + 11], contents[16*i + 10], contents[16*i + 9], contents[16*i + 8], contents[16*i + 15], contents[16*i + 14], contents[16*i + 13], contents[16*i + 12]))
@@ -153,12 +159,17 @@ def read_bin(bin_file):
         #    crc = crc & 0xffffffff
         # print("Checksum (0x%08x - 0x%08x): 0x%08x, %d bytes" % (0x00000000, len(contents) - 1, crc, len(contents)))
 
+
         crc = np.uint32(0x00000000)
         for i in range(len(contents)):
             crc = crc + np.uint32(int(("0x%02x" % contents[i]), 16))
+
+        print("Not pass")
+        QApplication.processEvents()
         main_window.text_label.setText(
             "Checksum (0x%08x - 0x%08x): 0x%08x, %d bytes" % (0x00000000, len(contents) - 1, crc, len(contents)))
 
+        print("pass")
         if len(contents) % 128 == 0:
             num_128 = len(contents) // 128
         else:
@@ -173,6 +184,7 @@ def read_bin(bin_file):
         #    crc_128 = crc_128 & 0xffffffff
         # print("Checksum (0x%08x - 0x%08x): 0x%08x, %d bytes" % (0x00000000, (num_128 * 128) - 1, crc_128, (num_128 * 128)))
 
+        print("어디가 문제니0")
         crc_128 = np.uint32(0x00000000)
         for i in range(num_128 * 128):
             if i < len(contents):
@@ -180,21 +192,22 @@ def read_bin(bin_file):
             else:
                 crc_128 = crc_128 + np.uint32(int(("0x%02x" % 0xff), 16))
 
-        
+        print("어디가 문제니1")
+        QApplication.processEvents()
         main_window.text_label.setText("Checksum (0x%08x - 0x%08x): 0x%08x, %d bytes" % (
-        0x00000000, (num_128 * 128) - 1, crc_128, (num_128 * 128)))
+            0x00000000, (num_128 * 128) - 1, crc_128, (num_128 * 128)))
 
-        
-        time.sleep(3.0)
+        print("어디가 문제니2")
+        # main_threading.sleep(3)
 
-        return True, contents, crc, num_128, crc_128
+        print("pass out")
+        return True, contents, crc, num_128, crc_128, print("Hihi")
+
     except:
-        
+
         main_window.text_label.setText("Can not find .bin file (%s)" % bin_file)
 
-        
-        time.sleep(3.0)
-
+        main_threading.sleep(3)
 
         return False, b'', np.uint32(0x00000000), 0, np.uint32(0x00000000)
 
@@ -204,24 +217,20 @@ def open_serial(port):
         ser = serial.Serial(port)
         ser.baudrate = 115200
 
-        
         main_window.text_label.setText("Opened %s" % port)
 
-        
-        time.sleep(3.0)
+        main_threading.sleep(3)
 
         check_ser = True
         # ser = ser
     except:
-        
+        print("Nope0")
         main_window.text_label.setText("Can not open %s" % port)
-
-        
-        time.sleep(3.0)
-
+        print("Nope1")
+        main_threading.sleep(3)
+        print("Nope2")
         check_ser = False
         ser = False
-
 
     return check_ser, ser
 
@@ -234,23 +243,21 @@ def check_serial(check_ser, ser):
 
             main_window.text_label.setText("%s is alive" % main_window.port)
 
-            time.sleep(3.0)
+            main_threading.sleep(3)
 
             check_ser = True
         except:
-            
+
             main_window.text_label.setText("%s is dead" % main_window.port)
 
-            
-            time.sleep(3.0)
+            main_threading.sleep(3)
 
             check_ser = False
     else:
-        
+
         main_window.text_label.setText("Can not found serial port")
 
-        
-        time.sleep(3.0)
+        main_threading.sleep(3)
 
         # check_ser = False
 
@@ -262,30 +269,25 @@ def close_serial(check_ser, ser):
         try:
             ser.close()
 
-            
             main_window.text_label.setText("Closed %s" % ser.port)
 
-            
-            time.sleep(3.0)
+            main_threading.sleep(3)
 
             check_ser = False
         except:
-            
+
             main_window.text_label.setText("Can not close serial port")
 
-            
-            time.sleep(3.0)
+            main_threading.sleep(3)
 
             check_ser = False
     else:
-        
+
         main_window.text_label.setText("Can not found serial port")
 
-        
-        time.sleep(3.0)
+        main_threading.sleep(3)
 
         # check_ser = False
-
 
     return check_ser
 
@@ -318,7 +320,7 @@ def check_hse_frequency(check_ser, ser):
                     if data_rx == b'\r':
                         # print("Recv: %s\\r" % response[0:-1].decode("utf-8"))
                         if response == b't079179\r':
-                            
+
                             main_window.text_label.setText("Check HSE frequency Response Done (ACK)")
 
                             check_check_hse_frequency = True
@@ -326,7 +328,7 @@ def check_hse_frequency(check_ser, ser):
 
                             break
                         elif response == b't07911f\r':
-                            
+
                             main_window.text_label.setText("Check HSE frequency Response Failed (NACK)")
 
                             check_check_hse_frequency = True
@@ -334,7 +336,7 @@ def check_hse_frequency(check_ser, ser):
 
                             break
                         else:
-                            
+
                             main_window.text_label.setText("Check HSE frequency Response Failed (Missing data)")
 
                             check_check_hse_frequency = False
@@ -342,7 +344,6 @@ def check_hse_frequency(check_ser, ser):
 
                             break
                 if time.time() >= prev_time + 1.0:
-                    
                     # main_window.text_label.setText("Recv: %s" % response[0:].decode("utf-8"))
                     main_window.text_label.setText("Check HSE frequency Response Failed (Timeout)")
 
@@ -357,22 +358,20 @@ def check_hse_frequency(check_ser, ser):
 
             if check_check_hse_frequency == True:
                 if check_check_hse_frequency_opt == True:
-                    
+
                     main_window.text_label.setText("Checked HSE frequency")
                 else:
-                    
+
                     main_window.text_label.setText("Already checked HSE frequency")
             else:
                 main_window.text_label.setText("Can not check HSE frequency")
 
-            
-            time.sleep(3.0)
+            main_threading.sleep(3)
         except:
             main_window.text_label.setText("Can not check HSE frequency")
             main_window.text_label.setText("Can not use %s" % ser.port)
 
-            
-            time.sleep(3.0)
+            main_threading.sleep(3)
 
             check_check_hse_frequency = False
             check_check_hse_frequency_opt = False
@@ -380,12 +379,10 @@ def check_hse_frequency(check_ser, ser):
         main_window.text_label.setText("Can not check HSE frequency")
         main_window.text_label.setText("Can not find serial port")
 
-        
-        time.sleep(3.0)
+        main_threading.sleep(3)
 
         check_check_hse_frequency = False
         check_check_hse_frequency_opt = False
-
 
     return check_check_hse_frequency, check_check_hse_frequency_opt
 
@@ -526,14 +523,12 @@ def get_ID(check_ser, ser):
             else:
                 main_window.text_label.setText("Can not get Chip ID")
 
-            
-            time.sleep(3.0)
+            main_threading.sleep(3)
         except:
             main_window.text_label.setText("Can not get Chip ID")
             main_window.text_label.setText("Can not use %s" % ser.port)
 
-            
-            time.sleep(3.0)
+            main_threading.sleep(3)
 
             check_id = False
             chip_id = 0x000
@@ -541,12 +536,10 @@ def get_ID(check_ser, ser):
         main_window.text_label.setText("Can not get Chip ID")
         main_window.text_label.setText("Can not find serial port")
 
-        
-        time.sleep(3.0)
+        main_threading.sleep(3)
 
         check_id = False
         chip_id = 0x000
-
 
     return check_id, chip_id
 
@@ -637,25 +630,21 @@ def erase_memory(check_ser, ser):
             else:
                 main_window.text_label.setText("Can not erase memory")
 
-            
-            time.sleep(3.0)
+            main_threading.sleep(3)
         except:
             main_window.text_label.setText("Can not erase memory")
             main_window.text_label.setText("Can not use %s" % ser.port)
 
-            
-            time.sleep(3.0)
+            main_threading.sleep(3)
 
             check_erase = False
     else:
         main_window.text_label.setText("Can not erase memory")
         main_window.text_label.setText("Can not find serial port")
 
-        
-        time.sleep(3.0)
+        main_threading.sleep(3)
 
         check_erase = False
-
 
     return check_erase
 
@@ -711,7 +700,7 @@ def upload_bin(check_ser, ser, check_bin, contents, num_128):
                         # main_window.text_label.setText("Recv: %s" % response[0:].decode("utf-8"))
                         main_window.text_label.setText(
                             "Write Memory 0x%08x - 0x%08x Request Failed (Timeout), %04d / %04d" % (
-                            addr, addr + 128 - 1, num + 1, num_128))
+                                addr, addr + 128 - 1, num + 1, num_128))
 
                         for_break = True
                         check_upload_bin = False
@@ -728,7 +717,7 @@ def upload_bin(check_ser, ser, check_bin, contents, num_128):
                             temp[j] = contents[(128 * num) + (8 * i) + j]
 
                     request = b't0048%02x%02x%02x%02x%02x%02x%02x%02x\r' % (
-                    temp[0], temp[1], temp[2], temp[3], temp[4], temp[5], temp[6], temp[7])
+                        temp[0], temp[1], temp[2], temp[3], temp[4], temp[5], temp[6], temp[7])
                     ser.write(request)
                     # main_window.text_label.setText("Sent: %s\\r" % request[0:-1].decode("utf-8"))
                     time.sleep(0.001)
@@ -825,41 +814,35 @@ def upload_bin(check_ser, ser, check_bin, contents, num_128):
             else:
                 main_window.text_label.setText("Can not upload .bin file")
 
-            
-            time.sleep(3.0)
+            main_threading.sleep(3)
         except:
             main_window.text_label.setText("Can not upload .bin file")
             main_window.text_label.setText("Can not use %s" % ser.port)
 
-            
-            time.sleep(3.0)
+            main_threading.sleep(3)
 
             check_upload_bin = False
     elif check_ser == True and check_bin == False:
         main_window.text_label.setText("Can not upload .bin file")
         main_window.text_label.setText("Can not find .bin file")
 
-        
-        time.sleep(3.0)
+        main_threading.sleep(3)
 
         check_upload_bin = False
     elif check_ser == False and check_bin == True:
         main_window.text_label.setText("Can not upload .bin file")
         main_window.text_label.setText("Can not find serial port")
 
-        
-        time.sleep(3.0)
+        main_threading.sleep(3)
 
         check_upload_bin = False
     else:
         main_window.text_label.setText("Can not upload .bin file")
         main_window.text_label.setText("Can not find both .bin file and serial port")
 
-        
-        time.sleep(3.0)
+        main_threading.sleep(3)
 
         check_upload_bin = False
-
 
     return check_upload_bin
 
@@ -1018,7 +1001,7 @@ def get_checksum(check_ser, ser, num_128):
 
                         main_window.text_label.setText(
                             "Read Memory 0x%08x - 0x%08x Response Failed (Timeout), %04d / %04d" % (
-                            addr, addr + 128 - 1, num + 1, num_128))
+                                addr, addr + 128 - 1, num + 1, num_128))
                         break
 
                 if for_break == True:
@@ -1032,14 +1015,12 @@ def get_checksum(check_ser, ser, num_128):
             else:
                 main_window.text_label.setText("Can not get checksum")
 
-            
-            time.sleep(3.0)
+            main_threading.sleep(3)
         except:
             main_window.text_label.setText("Can not get checksum")
             main_window.text_label.setText("Can not use %s" % ser.port)
 
-            
-            time.sleep(3.0)
+            main_threading.sleep(3)
 
             check_get_checksum = False
             crc_128_ack = np.uint32(0x00000000)
@@ -1047,12 +1028,10 @@ def get_checksum(check_ser, ser, num_128):
         main_window.text_label.setText("Can not get checksum")
         main_window.text_label.setText("Can not find serial port")
 
-        
-        time.sleep(3.0)
+        main_threading.sleep(3)
 
         check_get_checksum = False
         crc_128_ack = np.uint32(0x00000000)
-
 
     return check_get_checksum, crc_128_ack
 
@@ -1062,16 +1041,14 @@ def verify_checksum(crc_128, crc_128_ack):
         main_window.text_label.setText(
             "Checksum matched (.bin file: 0x%08x, Memory: 0x%08x)" % (crc_128, crc_128_ack))
 
-        
-        time.sleep(3.0)
+        main_threading.sleep(3)
 
         check_verify_checksum = True
     else:
         main_window.text_label.setText(
             "Checksum not matched (.bin file: 0x%08x, Memory: 0x%08x)" % (crc_128, crc_128_ack))
 
-        
-        time.sleep(3.0)
+        main_threading.sleep(3)
 
         check_verify_checksum = False
 
@@ -1080,35 +1057,41 @@ def verify_checksum(crc_128, crc_128_ack):
 
 def main_func(bin_file, port, skip_checksum):
     count = 0
+    QApplication.processEvents()
     main_window.progressBar.setValue(count)
-    check_bin, contents, crc, num_128, crc_128 = read_bin(bin_file)
-    count += 5
-    main_window.progressBar.setValue(count)
+    QApplication.processEvents()
+
+    check_bin, contents, crc, num_128, crc_128, a = read_bin(bin_file)
+    print("Why?")
+    QApplication.processEvents()
+    # count += 5
+    # main_window.progressBar.setValue(count)
+    QApplication.processEvents()
+    print("Passed")
     if check_bin == False:
         print('hihi')
         main_window.text_label.setText("Failed to upload .bin file (read_bin)")
 
-        
-
-
-        time.sleep(3.0)
+        main_threading.sleep(3)
 
         return False
 
+    print("HiHiHi")
+
     check_ser, ser = open_serial(port)
-    count += 5
-    main_window.progressBar.setValue(count)
+    print("open_serial port 문제인가?")
+    # count += 5
+    # main_window.progressBar.setValue(count)
+    print("open serial port 문제인듯")
 
     if check_ser == False:
         main_window.text_label.setText("Failed to upload .bin file (open_serial)")
-
-        
-
-
-        time.sleep(3.0)
-
+        print("main_threading.sleep이 문제인가?")
+        main_threading.sleep(3)
+        print("main pass")
         return False
 
+    print("여기 지나가면 안됨")
     check_ser = check_serial(check_ser, ser)
     count += 5
     main_window.progressBar.setValue(count)
@@ -1118,10 +1101,7 @@ def main_func(bin_file, port, skip_checksum):
 
         main_window.text_label.setText("Failed to upload .bin file (check_serial)")
 
-        
-
-
-        time.sleep(3.0)
+        main_threading.sleep(3)
 
         return False
 
@@ -1134,7 +1114,7 @@ def main_func(bin_file, port, skip_checksum):
 
         main_window.text_label.setText("Failed to upload .bin file (check_hse_frequency)")
 
-        time.sleep(3.0)
+        main_threading.sleep(3)
 
         return False
 
@@ -1148,11 +1128,7 @@ def main_func(bin_file, port, skip_checksum):
 
         main_window.text_label.setText("Failed to upload .bin file (check_get_id)")
 
-        
-
-
-
-        time.sleep(3.0)
+        main_threading.sleep(3)
 
         return False
 
@@ -1166,10 +1142,7 @@ def main_func(bin_file, port, skip_checksum):
 
         main_window.text_label.setText("Failed to upload .bin file (erase_memory)")
 
-        
-
-
-        time.sleep(3.0)
+        main_threading.sleep(3)
 
         return False
 
@@ -1183,10 +1156,7 @@ def main_func(bin_file, port, skip_checksum):
 
         main_window.text_label.setText("Failed to upload .bin file (upload_bin)")
 
-        
-
-
-        time.sleep(3.0)
+        main_threading.sleep(3)
 
         return False
 
@@ -1197,8 +1167,7 @@ def main_func(bin_file, port, skip_checksum):
 
             main_window.text_label.setText("Failed to verify checksum (get_checksum)")
 
-            
-            time.sleep(3.0)
+            main_threading.sleep(3)
 
             return False
 
@@ -1206,11 +1175,7 @@ def main_func(bin_file, port, skip_checksum):
     else:
         main_window.text_label.setText("Skipped checksum verification")
 
-        
-
-
-
-        time.sleep(3.0)
+        main_threading.sleep(3)
 
     check_ser = close_serial(check_ser, ser)
 
@@ -1221,19 +1186,19 @@ def main_func(bin_file, port, skip_checksum):
         if check_verify_checksum == True:
             main_window.text_label.setText("Successfully uploaded .bin file (Checksum matched)")
 
-            time.sleep(3.0)
+            main_threading.sleep(3)
 
             return True
         else:
             main_window.text_label.setText("Failed to upload .bin file (Checksum unmatched)")
 
-            time.sleep(3.0)
+            main_threading.sleep(3)
 
             return False
     else:
         main_window.text_label.setText("Successfully uploaded .bin file (Checksum verification skipped)")
 
-        time.sleep(3.0)
+        main_threading.sleep(3)
 
         return True
 
