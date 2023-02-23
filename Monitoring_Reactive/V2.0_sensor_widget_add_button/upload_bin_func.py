@@ -78,6 +78,7 @@ class UiMainWindow(QtWidgets.QMainWindow, form_window):
         self.current_row = 0
         self.current_column = 0
         self.max_column_count = 4
+        self.current_idx =  self.current_row * (self.max_column_count + 1) + self.current_column
 
         self.verspacer = QtWidgets.QSpacerItem(20,40,QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
         self.horspacer = QtWidgets.QSpacerItem(20,40,QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
@@ -89,7 +90,6 @@ class UiMainWindow(QtWidgets.QMainWindow, form_window):
         # self.each_sensor_format = uic.loadUiType("each_sensor.ui")
         # self.gridlayout_sensors.setColumnMinimumWidth(1,1) # 각 센서 widget 최소 크기
         ###초기화 잘해주기
-
 
         self.setWindowFlags(self.windowFlags() | PyQt5.QtCore.Qt.WindowStaysOnTopHint)
 
