@@ -24,6 +24,7 @@ count = 0
 
 class Worker(QThread):
     finished_signal = pyqtSignal()
+    progress_signal = pyqtSignal(str)
 
     def __init__(self, bin_file, port, skip_checksum, progress_bar):
         super().__init__()
@@ -32,13 +33,16 @@ class Worker(QThread):
         self.skip_checksum = skip_checksum
         self.progress_bar = progress_bar
 
+    def print_to_label(self, text, delay_ms = 1):
+        self.progress_signal.emit(text)
+        # self.msleep(delay_ms)
+
     def run(self):
         try:
-            upload_bin_func_and_debug_func.main_func(self.bin_file, self.port, self.skip_checksum, self.progress_bar)
+            if upload_bin_func_and_debug_func.main_func(self.bin_file, self.port, self.skip_checksum, self.progress_bar, self.print_to_label):
+                self.finished_signal.emit()
         except Exception as e:
             print("An error occurred while running upload_bin_func_and_debug_func.main_func():", e)
-        finally:
-            self.finished_signal.emit()
 
 class UiMainWindow(QtWidgets.QMainWindow, form_window):
     def __init__(self):
@@ -46,7 +50,7 @@ class UiMainWindow(QtWidgets.QMainWindow, form_window):
         self.setWindowTitle("Firmware Update")
         self.setupUi(self)
         self.bin_file = "./vcu_f413zh_mbed.NUCLEO_F413ZH.bin"
-        self.port = "11"
+        self.port = "9"
         self.skip_checksum = False
         self.edit_bin_file.setText(self.bin_file)
         self.edit_port_number.setText(self.port)
@@ -120,9 +124,14 @@ class UiMainWindow(QtWidgets.QMainWindow, form_window):
 
         self.worker = Worker(self.bin_file, self.port, self.skip_checksum, self.progressBar)
         self.worker.finished_signal.connect(self.onFinished)
+        self.worker.progress_signal.connect(self.show_log)
         self.worker.start()
 
+    def show_log(self, message):
+        self.lbl_log.setText(str(message))
+
     def onFinished(self):
+
         print("end!!")
         # QMessageBox.information(self, 'Finished', 'Task is finished.')
 
