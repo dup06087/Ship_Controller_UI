@@ -1222,7 +1222,8 @@ def input_exit_debug_mode():
             exit_debug_mode_flag = True
             break
         
-        
+
+
 def get_debug_message(check_ser, ser, print_function):
     global exit_debug_mode_flag
     global debug_bytearray_list
