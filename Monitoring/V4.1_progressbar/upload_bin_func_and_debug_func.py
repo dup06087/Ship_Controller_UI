@@ -108,7 +108,7 @@ def read_bin(bin_file, print_function):
         return False, b'', np.uint32(0x00000000), 0, np.uint32(0x00000000)
 
 
-def open_serial(port,print_function):
+def open_serial(port, print_function):
     try:
         ser = serial.Serial(port)
         ser.baudrate = 115200
@@ -1223,7 +1223,7 @@ def input_exit_debug_mode():
             break
         
         
-def get_debug_message(check_ser, ser):
+def get_debug_message(check_ser, ser, print_function):
     global exit_debug_mode_flag
     global debug_bytearray_list
     global ds3231_time_u32, ds3231_date_str
@@ -1504,10 +1504,10 @@ def main_func(bin_file, port, skip_checksum, progress_bar, print_function):
         return True
         
 
-def main_func2(port):
+def main_func2(port, print_function):
     global exit_debug_mode_flag
     
-    check_ser, ser = open_serial(port)
+    check_ser, ser = open_serial(port, print_function)
     if check_ser == False:
         print("Failed to get debug message (open_serial)")
         
@@ -1516,9 +1516,9 @@ def main_func2(port):
         
         return False
     
-    check_ser = check_serial(check_ser, ser)
+    check_ser = check_serial(check_ser, ser, print_function)
     if check_ser == False:
-        check_ser = close_serial(check_ser, ser)
+        check_ser = close_serial(check_ser, ser, print_function)
         
         print("Failed to get debug message (check_serial)")
         
@@ -1527,9 +1527,9 @@ def main_func2(port):
         
         return False
     
-    check_get_debug_message = get_debug_message(check_ser, ser)
+    check_get_debug_message = get_debug_message(check_ser, ser, print_function)
     if check_get_debug_message == False:        
-        check_ser = close_serial(check_ser, ser)
+        check_ser = close_serial(check_ser, ser, print_function)
         
         print("Failed to get debug message (get_debug_message)")
         
@@ -1538,7 +1538,7 @@ def main_func2(port):
         
         return False
 
-    check_ser = close_serial(check_ser, ser)
+    check_ser = close_serial(check_ser, ser, print_function)
     
     return True
         

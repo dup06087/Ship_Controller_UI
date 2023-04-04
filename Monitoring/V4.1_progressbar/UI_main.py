@@ -11,7 +11,7 @@ from PyQt5 import uic, QtWidgets
 from PyQt5.QtCore import QThread, pyqtSignal, QTimer
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMessageBox
 import upload_bin_func_and_debug_func
-
+import gc
 
 
 form_window = uic.loadUiType("UI_V4_proto1.ui")[0]
@@ -35,7 +35,6 @@ class Worker(QThread):
 
     def print_to_label(self, text, delay_ms = 1):
         self.progress_signal.emit(text)
-        # self.msleep(delay_ms)
 
     def run(self):
         try:
@@ -61,13 +60,6 @@ class UiMainWindow(QtWidgets.QMainWindow, form_window):
         self.btn_done.setEnabled(False)
         self.btn_done.clicked.connect(self.done_clicked)
 
-        self.sensor_widget_list = [uic.loadUi("each_sensor.ui") for _ in range(25)]
-
-        self.current_row = 0
-        self.current_column = 0
-        self.max_column_count = 4
-        self.current_idx =  self.current_row * (self.max_column_count + 1) + self.current_column
-
         # self.btn_done.setDisabled(True)
         # self.each_sensor_format = uic.loadUiType("each_sensor.ui")
         # self.gridlayout_sensors.setColumnMinimumWidth(1,1) # 각 센서 widget 최소 크기
@@ -88,6 +80,7 @@ class UiMainWindow(QtWidgets.QMainWindow, form_window):
         self.setWindowFlags(self.windowFlags() | PyQt5.QtCore.Qt.WindowStaysOnTopHint)
 
 
+
     def clicked_file_dialog(self):
         options = QFileDialog.Options()
         fileName, _ = QFileDialog.getOpenFileName(self, "QFileDialog.getOpenFileName()", "", "All Files (*)",
@@ -96,31 +89,18 @@ class UiMainWindow(QtWidgets.QMainWindow, form_window):
             print(fileName)
             self.edit_bin_file.setText(fileName)
 
-    def closeEvent(self, event):
-        try:
-            if self.threading.isRunning():
-                close = self.alert()
-                if close == QMessageBox.Yes:
-                    event.accept()
-                else:
-                    event.ignore()
-        except:
-            pass
-
-    def alert(self):
-        return QMessageBox.question(self,"Warning", "Are you sure want to quit?? \nYou might have a severe damage", QMessageBox.Yes,QMessageBox.No)
-
     def OK_Clicked(self):
         print("어디서지?1")
         self.bin_file = self.edit_bin_file.text()
         self.port = "COM" + self.edit_port_number.text()
+
         if self.checkBox.checkState():
             self.skip_checksum = True
-
         self.buttonBox.setEnabled(False)
-        #
-        print(self.bin_file, self.port, self.skip_checksum)
-        print(type(self.bin_file), type(self.port), type(self.skip_checksum))
+        self.tabWidget.tabBar().setEnabled(False)
+        self.pushButton.setEnabled(False)
+        self.checkBox.setEnabled(False)
+        self.btn_done.setEnabled(False)
 
         self.worker = Worker(self.bin_file, self.port, self.skip_checksum, self.progressBar)
         self.worker.finished_signal.connect(self.onFinished)
@@ -131,10 +111,22 @@ class UiMainWindow(QtWidgets.QMainWindow, form_window):
         self.lbl_log.setText(str(message))
 
     def onFinished(self):
-
-        print("end!!")
-        # QMessageBox.information(self, 'Finished', 'Task is finished.')
+        self.btn_done.setEnabled(True)
 
     def done_clicked(self):
-        os.execl(sys.executable, sys.executable, *sys.argv)
-        # main_window.buttonBox.setEnabled(True)
+        # 다른 필요한 작업을 수행한 후
+        self.worker.finished_signal.disconnect(self.onFinished)  # 시그널 연결 해제
+        self.worker.progress_signal.disconnect(self.show_log)  # 시그널 연결 해제
+        self.worker.quit()  # 스레드 종료
+        self.worker.wait()  # 스레드 완료까지 기다림
+        self.worker.deleteLater()  # 스레드 리소스를 삭제하도록 예약
+        self.worker = None  # 참조를 None으로 설정하여 메모리에서 삭제되도록 함
+        gc.collect()  # 가비지 콜렉터를 호출하여 메모리를 정리
+
+        self.buttonBox.setEnabled(True)
+        self.tabWidget.tabBar().setEnabled(True)
+        self.pushButton.setEnabled(True)
+        self.checkBox.setEnabled(True)
+        self.btn_done.setEnabled(False)
+        self.progressBar.setValue(0)
+
