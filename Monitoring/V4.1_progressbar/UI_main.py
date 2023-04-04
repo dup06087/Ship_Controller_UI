@@ -125,18 +125,15 @@ class UiMainWindow(QtWidgets.QMainWindow, form_window):
 
         self.setWindowFlags(self.windowFlags() | PyQt5.QtCore.Qt.WindowStaysOnTopHint)
 
+        '''여기가 센서'''
         self.worker_sensor = Worker_sensor(self.port, self.progressBar)
         self.worker_sensor.start()
-
-        # self.timer = QTimer()
-        # self.timer.timeout.connect(self.update_value)
-        # self.timer.timeout.connect(self.update_ui)
-        # self.timer.start(1000)
 
         self.worker_thread = WorkerThread()
         self.worker_thread.update_signal.connect(self.update_value)
         self.worker_thread.update_signal.connect(self.update_ui)
         self.worker_thread.start()
+        '''센서 끝'''
 
     def update_value(self):
         print("1초마다 실행되는 코드")
@@ -198,8 +195,6 @@ class UiMainWindow(QtWidgets.QMainWindow, form_window):
             self.edit_bin_file.setText(fileName)
 
     def OK_Clicked(self):
-        self.worker_sensor.stop()  # 스레드 종료
-        # self.worker_sensor.terminate()
 
         print("어디서지?1")
         self.bin_file = self.edit_bin_file.text()
@@ -213,7 +208,6 @@ class UiMainWindow(QtWidgets.QMainWindow, form_window):
         self.checkBox.setEnabled(False)
         self.btn_done.setEnabled(False)
 
-        print("종료?2")
 
         self.worker_update = Worker_update(self.bin_file, self.port, self.skip_checksum, self.progressBar)
         print("멈춤")
