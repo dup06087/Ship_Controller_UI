@@ -73,6 +73,18 @@ class Worker_sensor(threading.Thread):
     def stop(self):
         self.running = False
 
+
+class WorkerThread(QThread):
+    update_signal = pyqtSignal()
+
+    def __init__(self):
+        super().__init__()
+
+    def run(self):
+        while True:
+            self.update_signal.emit()
+            self.sleep(1)  # 1초마다 시그널을 발생시킵니다.
+
 class UiMainWindow(QtWidgets.QMainWindow, form_window):
     def __init__(self):
         super().__init__()
@@ -90,10 +102,7 @@ class UiMainWindow(QtWidgets.QMainWindow, form_window):
         self.btn_done.setEnabled(False)
         self.btn_done.clicked.connect(self.done_clicked)
 
-        # self.btn_done.setDisabled(True)
-        # self.each_sensor_format = uic.loadUiType("each_sensor.ui")
-        # self.gridlayout_sensors.setColumnMinimumWidth(1,1) # 각 센서 widget 최소 크기
-        ###초기화 잘해주기
+        self.sensor_values = {}
 
         #set sensor1
         self.gauge_sensor1.units = "Km/h"
@@ -119,21 +128,65 @@ class UiMainWindow(QtWidgets.QMainWindow, form_window):
         self.worker_sensor = Worker_sensor(self.port, self.progressBar)
         self.worker_sensor.start()
 
-        self.timer = QTimer()
-        self.timer.timeout.connect(self.timer_callback)
-        self.timer.start(1000)
+        # self.timer = QTimer()
+        # self.timer.timeout.connect(self.update_value)
+        # self.timer.timeout.connect(self.update_ui)
+        # self.timer.start(1000)
 
-    def timer_callback(self):
+        self.worker_thread = WorkerThread()
+        self.worker_thread.update_signal.connect(self.update_value)
+        self.worker_thread.update_signal.connect(self.update_ui)
+        self.worker_thread.start()
+
+    def update_value(self):
         print("1초마다 실행되는 코드")
+        time = self.worker_sensor.communication.ds3231_time_u32
+        date = self.worker_sensor.communication.ds3231_date_str
+        sensor1_b0 = self.worker_sensor.communication.test_module1_u8_B0
+        sensor1_b1 = self.worker_sensor.communication.test_module1_u8_B1
+        sensor1_b7 = self.worker_sensor.communication.test_module1_u8_B7
+        sensor2_b0 = self.worker_sensor.communication.test_module2_u8_B0
+        sensor2_b1 = self.worker_sensor.communication.test_module2_u8_B1
+        sensor2_b7 = self.worker_sensor.communication.test_module2_u8_B7
+
+        new_sensor_values = {"time": time, "date" : date, "sensor1" : sensor1_b0, "sensor2" : sensor1_b1, "sensor3" : sensor1_b7, "sensor4" : sensor2_b0, "sensor5" : sensor2_b1, "sensor6" : sensor2_b7}
+        # self.sensor_values = new_sensor_values
+
+        if self.sensor_values != new_sensor_values:
+            self.sensor_values = new_sensor_values
+            self.update_combobox()
+
+
+    def update_ui(self):
         self.gauge_sensor1.updateValue(float(self.worker_sensor.communication.test_module1_u8_B0))
         self.gauge_sensor2.updateValue(float(self.worker_sensor.communication.test_module1_u8_B1))
         self.gauge_sensor3.updateValue(float(self.worker_sensor.communication.test_module2_u8_B0))
 
+        combo_box_list = self.findChildren(QtWidgets.QComboBox)
 
-        print(self.worker_sensor.communication.exit_debug_mode_flag)
-        print(self.worker_sensor.communication.debug_bytearray_list)
-        print(self.worker_sensor.communication.ds3231_date_str)
-        print(self.worker_sensor.communication.test_module1_u8_B0)
+        for combo_box in combo_box_list:
+            current_text = combo_box.currentText()
+
+            label_object_name = combo_box.objectName().replace("combo", "lbl")
+            label = self.findChild(QtWidgets.QLabel, label_object_name)
+            if label is not None:
+                label_value = self.sensor_values.get(current_text)
+                if label_value is not None:
+                    label.setText(str(label_value))
+
+    def update_combobox(self):
+        combo_box_list = self.findChildren(QtWidgets.QComboBox)
+        # 가져온 QComboBox 객체 리스트를 출력한다.
+        for combo_box in combo_box_list:
+            current_text = combo_box.currentText()
+            combo_box.blockSignals(True)
+            combo_box.clear()
+            combo_box.addItems(map(str, self.sensor_values.keys()))
+
+            index = combo_box.findText(current_text)
+            combo_box.setCurrentIndex(index)
+            combo_box.blockSignals(False)  # 시그널 활성화
+
 
 
     def clicked_file_dialog(self):
