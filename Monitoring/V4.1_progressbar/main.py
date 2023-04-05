@@ -15,7 +15,6 @@ from PyQt5.QtWidgets import QApplication, QFileDialog, QMessageBox
 import UI_main
 # import upload_bin_func_and_debug_func
 
-
 app = QtWidgets.QApplication(sys.argv)
 qtmodern.styles.dark(app)
 

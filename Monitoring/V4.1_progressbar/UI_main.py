@@ -73,17 +73,27 @@ class Worker_sensor(threading.Thread):
     def stop(self):
         self.running = False
 
-
 class WorkerThread(QThread):
     update_signal = pyqtSignal()
 
     def __init__(self):
         super().__init__()
 
+
     def run(self):
-        while True:
-            self.update_signal.emit()
-            self.sleep(1)  # 1초마다 시그널을 발생시킵니다.
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.emit_update_signal)
+        self.timer.start(1000)  # 1초마다 timeout 이벤트가 발생합니다.
+        self.exec_()
+
+    def emit_update_signal(self):
+        self.update_signal.emit()
+
+        #
+        # while True:
+        #
+        #     self.update_signal.emit()
+        #     self.sleep(1)  # 1초마다 시그널을 발생시킵니다.
 
 class UiMainWindow(QtWidgets.QMainWindow, form_window):
     def __init__(self):
@@ -153,7 +163,6 @@ class UiMainWindow(QtWidgets.QMainWindow, form_window):
             self.sensor_values = new_sensor_values
             self.update_combobox()
 
-
     def update_ui(self):
         self.gauge_sensor1.updateValue(float(self.worker_sensor.communication.test_module1_u8_B0))
         self.gauge_sensor2.updateValue(float(self.worker_sensor.communication.test_module1_u8_B1))
@@ -174,6 +183,7 @@ class UiMainWindow(QtWidgets.QMainWindow, form_window):
     def update_combobox(self):
         combo_box_list = self.findChildren(QtWidgets.QComboBox)
         # 가져온 QComboBox 객체 리스트를 출력한다.
+        prev = time.time()
         for combo_box in combo_box_list:
             current_text = combo_box.currentText()
             combo_box.blockSignals(True)
@@ -184,7 +194,7 @@ class UiMainWindow(QtWidgets.QMainWindow, form_window):
             combo_box.setCurrentIndex(index)
             combo_box.blockSignals(False)  # 시그널 활성화
 
-
+        print(time.time() - prev)
 
     def clicked_file_dialog(self):
         options = QFileDialog.Options()
