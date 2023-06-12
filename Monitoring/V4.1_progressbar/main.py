@@ -23,3 +23,7 @@ main_window = qtmodern.windows.ModernWindow(main_window)
 main_window.show()
 
 sys.exit(app.exec_())
+
+
+
+

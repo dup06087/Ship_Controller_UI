@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1231</width>
-    <height>835</height>
+    <width>890</width>
+    <height>694</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1173,7 +1173,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1231</width>
+     <width>890</width>
      <height>21</height>
     </rect>
    </property>
@@ -1207,34 +1207,34 @@
    </hints>
   </connection>
   <connection>
-   <sender>buttonBox</sender>
-   <signal>accepted()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>OK_Clicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1084</x>
-     <y>783</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1127</x>
-     <y>808</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>btn_done</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>done_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1184</x>
-     <y>755</y>
+     <x>865</x>
+     <y>618</y>
     </hint>
     <hint type="destinationlabel">
      <x>1226</x>
      <y>801</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>OK_Clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>865</x>
+     <y>649</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1127</x>
+     <y>808</y>
     </hint>
    </hints>
   </connection>
