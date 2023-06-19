@@ -83,7 +83,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="edit_bin_file_2">
+      <widget class="QLineEdit" name="edit_bin_file">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -128,7 +128,20 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="edit_port_number_2"/>
+      <widget class="QLineEdit" name="edit_port_number">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="dragEnabled">
+        <bool>false</bool>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="lbl_checksum_2">
@@ -144,7 +157,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="checkBox_2">
+      <widget class="QCheckBox" name="chk_checksum">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -170,7 +183,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="lbl_log_2">
+      <widget class="QLabel" name="lbl_log">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
          <horstretch>0</horstretch>
@@ -243,7 +256,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QDialogButtonBox" name="buttonBox_2">
+        <widget class="QDialogButtonBox" name="btn_box">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -288,8 +301,42 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btn_box</sender>
+   <signal>accepted()</signal>
+   <receiver>Form</receiver>
+   <slot>btn_update_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>466</x>
+     <y>476</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>553</x>
+     <y>488</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_done_2</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>btn_update_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>522</x>
+     <y>437</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>558</x>
+     <y>459</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>btn_back_clicked()</slot>
+  <slot>btn_update_clicked()</slot>
+  <slot>btn_done_update_clicked()</slot>
  </slots>
 </ui>

@@ -22,7 +22,7 @@ import _thread
 bin_file = "./vcu_f413zh_mbed.NUCLEO_F413ZH.bin"
 #bin_file = "C:/Users/USER/Documents/STM32/BIN3_F413ZH.bin"
 #bin_file = os.path.join(sys.path[0], "BIN.bin")
-port = "COM9"
+port = "COM6"
 skip_checksum = True
 
 exit_debug_mode_flag = False
@@ -1520,5 +1520,5 @@ def main_func2(port):
     return True
         
     
-# check_main_func = main_func(bin_file, port, skip_checksum)
+check_main_func = main_func(bin_file, port, skip_checksum)
 # check_main_func2 = main_func2(port)

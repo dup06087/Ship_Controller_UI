@@ -1301,7 +1301,6 @@ def get_debug_message(check_ser, ser):
             
             print("")
             time.sleep(1.0)
-
         except:
             print("Can not get Debug Message")
             print("Can not use %s" % ser.port)

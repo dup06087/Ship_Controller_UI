@@ -101,7 +101,7 @@ class UiMainWindow(QtWidgets.QMainWindow, form_window):
         self.setWindowTitle("Firmware Update")
         self.setupUi(self)
         self.bin_file = "./vcu_f413zh_mbed.NUCLEO_F413ZH.bin"
-        self.port = "COM9"
+        self.port = "COM6"
         self.skip_checksum = False
         self.edit_bin_file.setText(self.bin_file)
         self.edit_port_number.setText(self.port[-1])
