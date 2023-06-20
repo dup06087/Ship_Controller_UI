@@ -1,7 +1,10 @@
+import random
+
 from PyQt5 import uic
 from PyQt5.QtGui import QPixmap, QPalette, QBrush, QIcon
 from PyQt5.QtCore import Qt, pyqtSlot, pyqtSignal, QUrl, QTimer, QThread
-from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QComboBox, QLineEdit, QPushButton, QVBoxLayout
+from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QComboBox, QLineEdit, QPushButton, QVBoxLayout, \
+    QFileDialog
 import threading
 import sys
 import upload_bin_func_and_debug_func as main_functions
@@ -14,7 +17,7 @@ class Page_Firmware_Update(QWidget):
     button_clicked_signal = pyqtSignal()
     # file, port, checksum_skip
     btn_update_clicked_signal = pyqtSignal(str, str, bool)
-    btn_done_update_clicked_signal = pyqtSignal()
+    btn_done_update_clicked_signal = pyqtSignal(str)
 
     def __init__(self, parent=None):
         super(Page_Firmware_Update, self).__init__(parent)
@@ -24,6 +27,11 @@ class Page_Firmware_Update(QWidget):
         self.button_clicked_signal.emit()
 
     def btn_update_clicked(self):
+        disable_button_list = [self.btn_back, self.btn_file_select, self.btn_box]
+
+        for button in disable_button_list:
+            button.setEnabled(False)
+
         _file = self.edit_bin_file.text()
         _port = self.edit_port_number.text()
         _checksum = self.chk_checksum.isChecked()
@@ -31,8 +39,20 @@ class Page_Firmware_Update(QWidget):
         self.btn_update_clicked_signal.emit(_file, _port, _checksum)
 
     def btn_done_update_clicked(self):
+        self.btn_done.setEnabled(False)
+        able_button_list = [self.btn_back, self.btn_file_select, self.btn_box]
+        for button in able_button_list:
+            button.setEnabled(True)
         _port = self.edit_port_number.text()
         self.btn_done_update_clicked_signal.emit(_port)
+
+    def btn_file_select_clicked(self):
+        options = QFileDialog.Options()
+        fileName, _ = QFileDialog.getOpenFileName(self, "Select Uploading File", "", "All Files (*)",
+                                                  options=options)
+        if fileName:
+            print(fileName)
+            self.edit_bin_file.setText(fileName)
 
 class SquareComboBox(QComboBox):
     def __init__(self, *args, **kwargs):
@@ -51,6 +71,8 @@ class SquarePushButton(QPushButton):
         self.setFixedSize(size, size)
 
 class Worker(QThread):
+    task_done = pyqtSignal()
+
     def __init__(self, func, *args):
         super().__init__()
         self.func = func
@@ -58,6 +80,9 @@ class Worker(QThread):
 
     def run(self):
         self.func(*self.args)
+        # func에서 함수가 실제로 동작 후 다음 구문 finished가 실행
+        self.task_done.emit()
+        print("worker done")
 
     def stop(self):
         self.is_running = False
@@ -119,8 +144,11 @@ class MainWindow(QtWidgets.QMainWindow):
         port = ports[0].name
         print(port)
 
+        ### init workers : cf. firmware update는 초기화만, 여기서 실행하지 않음
         # bin_file, port, skip_checksum
         self.worker_firmware_update = Worker(self.run_main_func, "vcu_f413zh_mbed.NUCLEO_F413ZH.bin", port, False)
+        self.worker_firmware_update.task_done.connect(self.update_done_signal)
+
         self.worker_debugging = Worker(self.run_main_func2, port)
 
         # Start the default thread
@@ -134,11 +162,59 @@ class MainWindow(QtWidgets.QMainWindow):
 
         ## Thead End
 
+        # init progressbars
+        self.init_progressbar()
 
         ### UI init
         QTimer.singleShot(0, self.update_ui_timer)
+        QTimer.singleShot(0, self.update_progressbar_timer)
+        QTimer.singleShot(0, self.ports_refresh_timer)
         QTimer.singleShot(0, self.fill_ports)
 
+    def update_done_signal(self):
+        self.page_firmware_update.btn_done.setDisabled(False)
+        
+    def init_progressbar(self):
+        self.progressbar_gas_meter.setMinimum(0)
+        self.progressbar_gas_meter.setMaximum(100)
+
+        # 음수가 안 됨 -30 ~ 50 >> 0 ~ 80
+        self.progressbar_thermometer.setMinimum(0)
+        self.progressbar_thermometer.setMaximum(80)
+
+
+    def update_progressbar_timer(self):
+        self.timer_update_progressbar = QTimer()
+        self.timer_update_progressbar.timeout.connect(self.update_progressbar)
+        self.timer_update_progressbar.start(1000)  # Fire the timer every 1000 ms (1 second)
+
+    def update_progressbar(self):
+        gas_meter_value = random.randint(0,100)
+        thermometer_value = random.randint(-30, 50) + 30
+        self.progressbar_gas_meter.setValue(gas_meter_value)
+        self.progressbar_thermometer.setValue(thermometer_value)
+
+        # if thermometer_value < 0:
+        #     self.progressbar_thermometer.setStyleSheet(
+        #         """
+        #             QProgressBar {
+        #             border: 2px solid #2196F3;
+        #             border-radius: 5px;
+        #             background-color: #E0E0E0;
+        #
+        #             font: bold 15px;
+        #             color: black;
+        #         }
+        #
+        #         QProgressBar::chunk {
+        #         background-color: #0000AA;
+        #         width: 20px;
+        #         }"""
+        #     )
+        # elif thermometer_value < 30:
+        #     pass
+        # else:
+        #     pass
 
     def update_ui_timer(self):
         self.timer_update_ui = QTimer()
@@ -149,7 +225,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def port_changed(self, new_port):
         self.page_firmware_update.edit_port_number.setText(str(new_port))
         # Stop the current worker
-        self.stop_worker(self.current_worker)
+        self.stop_worker_port_changed(self.current_worker)
 
         #init
         self.current_worker = None
@@ -159,24 +235,36 @@ class MainWindow(QtWidgets.QMainWindow):
         self.current_worker.start()
 
 
-    def stop_worker(self, worker):
+    def stop_worker_port_changed(self, worker):
         if worker is not None and worker.isRunning():  # If the thread is active
             # Stop the thread by setting exit_debug_mode_flag
             main_functions.exit_debug_mode_flag = True
             # True로 둔 것이 끝날 때까지 기다림
             worker.wait()
-            main_functions.exit_debug_mode_flag = False
 
-        main_functions.exit_debug_mode_flag = True
+        main_functions.exit_debug_mode_flag = False
+
+    def ports_refresh_timer(self):
+        self.timer_ports_refresh = QTimer()
+        self.timer_ports_refresh.timeout.connect(self.fill_ports)
+        self.timer_ports_refresh.start(5000)  # Fire the timer every 1000 ms (1 second)
 
     def fill_ports(self):
         self.combo_port.blockSignals(True)
 
+        # Save current selected item
+        current_item = self.combo_port.currentText()
+
         ports = list_ports.comports()
-        print(ports)
+        self.combo_port.clear()  # Clear existing items
+
         for port in ports:
-            print(str(port.name))
             self.combo_port.addItem(str(port.name))
+
+        # Restore previous selection if it still exists
+        index = self.combo_port.findText(current_item)
+        if index >= 0:
+            self.combo_port.setCurrentIndex(index)
 
         self.combo_port.blockSignals(False)
 
@@ -210,28 +298,47 @@ class MainWindow(QtWidgets.QMainWindow):
             label.setText(str(displaying_sensor_list[i - 1]))
 
     ### main_func thread
+    # 직접 실행하는 문
     def run_main_func(self, file, port, check_sum):
         main_functions.main_func(file, port, check_sum)
 
     def run_main_func2(self, port):
         main_functions.main_func2(port)
+    # 직접 실행하는 문 끝
 
+    # 2번째부터는 여기서 실행
+    # update 시작 할 때 : init에서 시그널로 연결 됨.
     def start_func1(self, file, port, check_sum):
+        # button 및 window disable
+        disable_list = [self.combo_port, self.combo_menu]
+        for widget in disable_list:
+            widget.setEnabled(False)
+
+        # thread 새로 만들기
         self.worker_firmware_update = Worker(self.run_main_func, file, port, check_sum)
+        self.worker_firmware_update.task_done.connect(self.update_done_signal)
+
         self.switch_workers(self.worker_firmware_update)
 
+    # update 끝나고 done 눌렀을 때 : init에서 시그널로 연결 됨.
     def start_func2(self, port):
+        able_list = [self.combo_port, self.combo_menu]
+        for widget in able_list:
+            widget.setEnabled(True)
+
         self.worker_debugging = Worker(self.run_main_func2, port)
         self.switch_workers(self.worker_debugging)
         self.timer_update_ui.start(1000)
+    # 2번째부터는 여기서 실행 끝
 
     def switch_workers(self, next_worker):
         if self.current_worker is not None:
             self.timer_update_ui.stop()
             main_functions.exit_debug_mode_flag = True
-            self.current_worker.quit()
             self.current_worker.wait()
+
         main_functions.exit_debug_mode_flag = False
+        self.current_worker = None
         self.current_worker = next_worker
         self.current_worker.start()
     ## main_func thread End
@@ -251,23 +358,26 @@ class MainWindow(QtWidgets.QMainWindow):
 
     # combobox가 변경됐을 때 바로 실행 # 페이지 움직이기 전부터 페이지 옮기는 것까지
     def change_stacked_widget(self, index):
-        self.prev_page_name = self.stacked_widget.currentIndex()
+        self.prev_page = self.stacked_widget.currentIndex()
+        self.prev_page_name = self.stacked_widget.currentWidget()
 
+        current_page = self.combo_menu.currentText()
         if index == -1:  # No item selected
             # Here you can handle the case where no item is selected
             pass
 
-        elif self.combo_menu.currentText() == "Firmware Update":  # If the first item is selected
+        elif current_page == "Firmware Update":  # If the first item is selected
+            self.lbl_title.setText("Firmware Update")
             self.stacked_widget.setCurrentWidget(self.page_firmware_update)
             self.btn_right.setDisabled(True)
             self.btn_left.setDisabled(True)
             self.btn_right.setStyleSheet("background-color: rgba(0, 0, 0, 0);")
             self.btn_left.setStyleSheet("background-color: rgba(0, 0, 0, 0);")
 
-        elif self.combo_menu.currentText() == "Option 2":  # If the first item is selected
+        elif current_page == "Option 2":  # If the first item is selected
             pass
 
-        elif self.combo_menu.currentText() == "Option 3":  # If the first item is selected
+        elif current_page == "Option 3":  # If the first item is selected
             pass
 
         else:
@@ -315,8 +425,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # 페이지 변경 및, combobox 초기화 : 순서 바뀌면 안됨
         # combo menu -1 index로 초기화
-        self.stacked_widget.setCurrentIndex(self.prev_page_name)
+        self.stacked_widget.setCurrentIndex(self.prev_page)
         self.combo_menu.setCurrentIndex(-1)
+        self.naming_title(self.prev_page)
 
         # btn control
         self.btn_right.setDisabled(False)

@@ -266,7 +266,7 @@ QComboBox { color: transparent; }
       <item>
        <widget class="QStackedWidget" name="stacked_widget">
         <property name="currentIndex">
-         <number>2</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="page_monitoring">
          <layout class="QGridLayout" name="gridLayout_3">
@@ -2483,28 +2483,49 @@ QPushButton#btn_right:disabled{
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="label_14">
-              <property name="text">
-               <string>TextLabel</string>
+             <widget class="QProgressBar" name="progressbar_gas_meter">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
               </property>
-              <property name="scaledContents">
-               <bool>true</bool>
+              <property name="minimumSize">
+               <size>
+                <width>300</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>300</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QProgressBar {
+    border: 2px solid #2196F3;
+    border-radius: 5px;
+    background-color: #E0E0E0;
+
+    font: bold 15px;  
+    color: black;
+}
+
+QProgressBar::chunk {
+    background-color: #2196F3;
+    width: 10px; 
+    margin: 0.5px;
+}</string>
+              </property>
+              <property name="value">
+               <number>24</number>
               </property>
               <property name="alignment">
-               <set>Qt::AlignCenter</set>
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_15">
-              <property name="text">
-               <string>TextLabel</string>
-              </property>
-              <property name="scaledContents">
-               <bool>true</bool>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
+              <property name="format">
+               <string>%p%</string>
               </property>
              </widget>
             </item>
@@ -2528,35 +2549,87 @@ QPushButton#btn_right:disabled{
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_4">
           <item>
-           <widget class="QLabel" name="label_12">
-            <property name="text">
-             <string>TextLabel</string>
+           <widget class="QProgressBar" name="progressbar_thermometer">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <property name="scaledContents">
-             <bool>true</bool>
+            <property name="minimumSize">
+             <size>
+              <width>300</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>300</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QProgressBar {
+    border: 2px solid #2196F3;
+    border-radius: 5px;
+    background-color: #E0E0E0;
+
+    font: bold 15px;
+    color: black;
+
+}
+QProgressBar::chunk {
+    background-color: #2196F3;
+    width: 10px; 
+    margin: 0.5px;
+}</string>
+            </property>
+            <property name="value">
+             <number>24</number>
             </property>
             <property name="alignment">
-             <set>Qt::AlignCenter</set>
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
             </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_10">
-            <property name="text">
-             <string>TextLabel</string>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
             </property>
-            <property name="scaledContents">
+            <property name="invertedAppearance">
              <bool>true</bool>
             </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
+            <property name="textDirection">
+             <enum>QProgressBar::TopToBottom</enum>
+            </property>
+            <property name="format">
+             <string>%p°C</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QLabel" name="label_11">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLabel
+{
+    border-image: url(img_thermometer.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+</string>
+            </property>
             <property name="text">
-             <string>TextLabel</string>
+             <string/>
             </property>
             <property name="scaledContents">
              <bool>true</bool>

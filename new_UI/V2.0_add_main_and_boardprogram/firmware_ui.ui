@@ -96,10 +96,13 @@
          <height>0</height>
         </size>
        </property>
+       <property name="text">
+        <string>vcu_f413zh_mbed.NUCLEO_F413ZH.bin</string>
+       </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="btn_file_select">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -134,6 +137,9 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Select with top left Port Number Combobox</string>
        </property>
        <property name="dragEnabled">
         <bool>false</bool>
@@ -217,7 +223,10 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="btn_done_2">
+        <widget class="QPushButton" name="btn_done">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -312,16 +321,16 @@
      <y>476</y>
     </hint>
     <hint type="destinationlabel">
-     <x>553</x>
-     <y>488</y>
+     <x>555</x>
+     <y>486</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>btn_done_2</sender>
+   <sender>btn_done</sender>
    <signal>clicked()</signal>
    <receiver>Form</receiver>
-   <slot>btn_update_clicked()</slot>
+   <slot>btn_done_update_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>522</x>
@@ -333,10 +342,27 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btn_file_select</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>btn_file_select_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>33</x>
+     <y>119</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>5</x>
+     <y>130</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>btn_back_clicked()</slot>
   <slot>btn_update_clicked()</slot>
   <slot>btn_done_update_clicked()</slot>
+  <slot>btn_file_select_clicked()</slot>
  </slots>
 </ui>
