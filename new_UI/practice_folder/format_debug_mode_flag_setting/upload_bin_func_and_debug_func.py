@@ -1517,5 +1517,5 @@ def main_func2(port):
     return True
         
     
-# check_main_func = main_func(bin_file, port, skip_checksum)
+check_main_func = main_func(bin_file, port, skip_checksum)
 # check_main_func2 = main_func2(port)

@@ -180,7 +180,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # 음수가 안 됨 -30 ~ 50 >> 0 ~ 80
         self.progressbar_thermometer.setMinimum(0)
-        self.progressbar_thermometer.setMaximum(80)
+        self.progressbar_thermometer.setMaximum(50)
 
 
     def update_progressbar_timer(self):
@@ -190,31 +190,67 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def update_progressbar(self):
         gas_meter_value = random.randint(0,100)
-        thermometer_value = random.randint(-30, 50) + 30
+        thermometer_value = random.randint(0, 50)
+
+        if gas_meter_value < 20:
+            self.progressbar_gas_meter.setStyleSheet(
+                """
+                    QProgressBar {
+                    border: 2px solid #2196F3;
+                    border-radius: 5px;
+                    background-color: #E0E0E0;
+                
+                    font: bold 15px;  
+                    color: black;
+                }
+                
+                QProgressBar::chunk {
+                    background-color: #F30000;
+                    width: 10px; 
+                    margin: 0.5px;
+                }"""
+            )
+        elif gas_meter_value < 50:
+            self.progressbar_gas_meter.setStyleSheet(
+            """
+                QProgressBar {
+                border: 2px solid #2196F3;
+                border-radius: 5px;
+                background-color: #E0E0E0;
+
+                font: bold 15px;  
+                color: black;
+            }
+
+            QProgressBar::chunk {
+                background-color: #F3F300;
+                width: 10px; 
+                margin: 0.5px;
+            }"""
+            )
+        else:
+            self.progressbar_gas_meter.setStyleSheet(
+                """
+                    QProgressBar {
+                    border: 2px solid #2196F3;
+                    border-radius: 5px;
+                    background-color: #E0E0E0;
+                
+                    font: bold 15px;  
+                    color: black;
+                }
+                
+                QProgressBar::chunk {
+                    background-color: #2196F3;
+                    width: 10px; 
+                    margin: 0.5px;
+                }"""
+            )
+
         self.progressbar_gas_meter.setValue(gas_meter_value)
         self.progressbar_thermometer.setValue(thermometer_value)
 
-        # if thermometer_value < 0:
-        #     self.progressbar_thermometer.setStyleSheet(
-        #         """
-        #             QProgressBar {
-        #             border: 2px solid #2196F3;
-        #             border-radius: 5px;
-        #             background-color: #E0E0E0;
-        #
-        #             font: bold 15px;
-        #             color: black;
-        #         }
-        #
-        #         QProgressBar::chunk {
-        #         background-color: #0000AA;
-        #         width: 20px;
-        #         }"""
-        #     )
-        # elif thermometer_value < 30:
-        #     pass
-        # else:
-        #     pass
+
 
     def update_ui_timer(self):
         self.timer_update_ui = QTimer()
