@@ -1,10 +1,10 @@
 import random
 
 from PyQt5 import uic
-from PyQt5.QtGui import QPixmap, QPalette, QBrush, QIcon
+from PyQt5.QtGui import QPixmap, QPalette, QBrush, QIcon, QPainter
 from PyQt5.QtCore import Qt, pyqtSlot, pyqtSignal, QUrl, QTimer, QThread
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QComboBox, QLineEdit, QPushButton, QVBoxLayout, \
-    QFileDialog
+    QFileDialog, QTextEdit, QDialogButtonBox, QMessageBox
 import threading
 import sys
 import upload_bin_func_and_debug_func as main_functions
@@ -23,11 +23,24 @@ class Page_Firmware_Update(QWidget):
         super(Page_Firmware_Update, self).__init__(parent)
         uic.loadUi('firmware_ui.ui', self)
 
+        # button disable init
+        self.btn_cancel.setEnabled(False)
+
+        self.textedit_log.document().setMaximumBlockCount(100)
+        # Connect the textEmitted signal from PrintEmitter to the append method of MyTextEdit
+        sys.stdout.textEmitted.connect(self.textedit_write)
+
+    def textedit_write(self, text):
+        if not self.btn_update.isEnabled():
+            self.textedit_log.append(text)
+
     def btn_back_clicked(self):
         self.button_clicked_signal.emit()
 
     def btn_update_clicked(self):
-        disable_button_list = [self.btn_back, self.btn_file_select, self.btn_box]
+
+
+        disable_button_list = [self.btn_back, self.btn_file_select, self.btn_update, self.btn_cancel]
 
         for button in disable_button_list:
             button.setEnabled(False)
@@ -40,10 +53,21 @@ class Page_Firmware_Update(QWidget):
 
     def btn_done_update_clicked(self):
         self.btn_done.setEnabled(False)
-        able_button_list = [self.btn_back, self.btn_file_select, self.btn_box]
+        able_button_list = [self.btn_back, self.btn_file_select, self.btn_update, self.btn_cancel]
         for button in able_button_list:
             button.setEnabled(True)
         _port = self.edit_port_number.text()
+        self.btn_done_update_clicked_signal.emit(_port)
+
+    def btn_cancel_update_clicked(self):
+        self.btn_cancel.setEnabled(False)
+        able_button_list = [self.btn_back, self.btn_file_select, self.btn_update]
+        for button in able_button_list:
+            button.setEnabled(True)
+        _port = self.edit_port_number.text()
+
+        QMessageBox.warning(self, "Warning", "Memory Erased Update again")
+
         self.btn_done_update_clicked_signal.emit(_port)
 
     def btn_file_select_clicked(self):
@@ -53,6 +77,14 @@ class Page_Firmware_Update(QWidget):
         if fileName:
             print(fileName)
             self.edit_bin_file.setText(fileName)
+
+class SquareWidget(QWidget):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def resizeEvent(self, event):
+        size = min(self.width(), self.height())
+        self.setFixedSize(size, size)
 
 class SquareComboBox(QComboBox):
     def __init__(self, *args, **kwargs):
@@ -103,13 +135,25 @@ class MainWindow(QtWidgets.QMainWindow):
         # menu box
         # self.combo_menu.addItem("Firmware Update")
 
+        ### Custom Settings
+        for i in range(1, 9):  # range(1, 13)는 1부터 12까지의 숫자를 생성합니다.
+            combo_sensor_selector = f"combo_p1_sensor_selector_{i}"  # f-string을 사용하여 위젯 이름 생성
+            combo_sensor_selector_ = getattr(self, combo_sensor_selector)  # getattr 함수로 동적으로 위젯 참조 얻기
+            combo_sensor_selector_.hide()
+        self.btn_custom_setting.hide()
+
+        ## Custom Settings End
+
+        disable_list = [self.btn_custom_setting, self.combo_p1_sensor_selector_1]
+
         # menu combobox settings
         icon1 = QIcon("img_sensors.png")
-        # icon2 = QIcon("main_theme.png")
+        icon2 = QIcon("img_settings.png")
         # icon3 = QIcon("Theme.png.png")
 
-        self.combo_menu.addItem(icon1,"Firmware Update")
-        # self.combo_menu.addItem(icon2, "")
+        self.menu_page_name = ["Firmware Update", "UI Settings"]
+        self.combo_menu.addItem(icon1,self.menu_page_name[0])
+        self.combo_menu.addItem(icon2, self.menu_page_name[1])
         # self.combo_menu.addItem(icon3, "")
 
         # self.combo_menu.addItem("Option 2")
@@ -126,23 +170,48 @@ class MainWindow(QtWidgets.QMainWindow):
         #
         self.hidden_pages = [self.page_firmware_update.objectName()]
 
-        # 특정 위젯들 정사각형 만들기
+        ### 특정 위젯들 정사각형 만들기
         self.combo_menu.__class__ = SquareComboBox
-        buttons = [self.btn_left, self.btn_right, self.btn_digital_1, self.btn_digital_2, self.btn_digital_3, self.btn_digital_4]  # 가정: button1, button2, button3는 my_ui.ui에 정의되어 있다.
+        self.widget_usb_state.__class__ = SquareWidget
+        # self.widget_digital_2.__class__ = SquareWidget
+
+        for i in range(1, 17):  # range(1, 13)는 1부터 12까지의 숫자를 생성합니다.
+            widget_name = f"widget_digital_{i}"  # f-string을 사용하여 위젯 이름 생성
+            widget = getattr(self, widget_name)  # getattr 함수로 동적으로 위젯 참조 얻기
+            widget.__class__ = SquareWidget  # 클래스 변경
+            btn_name = f"btn_btn_{i}"  # f-string을 사용하여 위젯 이름 생성
+            btn = getattr(self, btn_name)  # getattr 함수로 동적으로 위젯 참조 얻기
+            btn.__class__ = SquarePushButton  # 클래스 변경
+
+        #theme
+        buttons = [self.btn_left, self.btn_right]  # 가정: button1, button2, button3는 my_ui.ui에 정의되어 있다.
         for button in buttons:
             button.__class__ = SquarePushButton
+
+        #page_buttons
+        for i in range(1, 17):  # range(1, 13)는 1부터 12까지의 숫자를 생성합니다.
+            widget_name = f"btn_btn_{i}"  # f-string을 사용하여 위젯 이름 생성
+            widget = getattr(self, widget_name)  # getattr 함수로 동적으로 위젯 참조 얻기
+            widget.__class__ = SquarePushButton  # 클래스 변경
+
+        ## Square Widget End
+
+
+        # digital states
+        self.leds = [getattr(self, f'widget_digital_{i+1}') for i in range(16)]
+        self.led_states = [False]*16  # 예시로 모두 False로 초기화
+
+        self.pixmap_on = QPixmap('led_on.png')
+        self.pixmap_off = QPixmap('led_off.png')
+
 
         # gauge widget 설정
         self.init_gauge(self.widget_gauge1)
         self.init_gauge(self.widget_gauge2)
 
-        ### Thread
-        # Define the threads
-
+        # top left usb port combobox init
         ports = list_ports.comports()
-
         port = ports[0].name
-        print(port)
 
         ### init workers : cf. firmware update는 초기화만, 여기서 실행하지 않음
         # bin_file, port, skip_checksum
@@ -155,7 +224,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.current_worker = self.worker_debugging
         self.current_worker.start()
 
-        print("pass?")
         # Connect the buttons
         self.page_firmware_update.btn_update_clicked_signal.connect(self.start_func1)
         self.page_firmware_update.btn_done_update_clicked_signal.connect(self.start_func2)
@@ -165,15 +233,88 @@ class MainWindow(QtWidgets.QMainWindow):
         # init progressbars
         self.init_progressbar()
 
+        # port led state init
+
         ### UI init
         QTimer.singleShot(0, self.update_ui_timer)
         QTimer.singleShot(0, self.update_progressbar_timer)
         QTimer.singleShot(0, self.ports_refresh_timer)
         QTimer.singleShot(0, self.fill_ports)
+        QTimer.singleShot(0, self.update_usb_state_timer)
+        QTimer.singleShot(0, self.update_leds_timer)
+
+    def btn_custom_setting_end_clicked(self):
+        for i in range(1, 9):  # range(1, 13)는 1부터 12까지의 숫자를 생성합니다.
+            combo_sensor_selector = f"combo_p1_sensor_selector_{i}"  # f-string을 사용하여 위젯 이름 생성
+            combo_sensor_selector_ = getattr(self, combo_sensor_selector)  # getattr 함수로 동적으로 위젯 참조 얻기
+            combo_sensor_selector_.hide()
+        self.btn_custom_setting.hide()
+
+        self.combo_menu.setCurrentIndex(-1)
+
+    def update_leds_timer(self):
+        self.timer_update_leds = QTimer()
+        self.timer_update_leds.timeout.connect(self.update_leds)
+        self.timer_update_leds.start(3000)  # Fire the timer every 1000 ms (1 second)
+
+    def update_leds(self):
+        # 예시로 상태를 무작위로 변경
+        new_states = [random.choice([True, False]) for _ in range(len(self.leds))]
+        on_stylesheet = "QWidget {border-image: url(led_on.png); background-repeat: no-repeat; background-position: center; background-size: cover;}"
+        off_stylesheet = "QWidget {border-image: url(led_off.png); background-repeat: no-repeat; background-position: center; background-size: cover;}"
+
+        for led, new_state, old_state in zip(self.leds, new_states, self.led_states):
+            if new_state != old_state:
+                if new_state:
+                    led.setStyleSheet(on_stylesheet)
+                else:
+                    led.setStyleSheet(off_stylesheet)
+
+        self.led_states = new_states
+
+    def update_usb_state_timer(self):
+        self.timer_usb_state = QTimer()
+        self.timer_usb_state.timeout.connect(self.update_usb_state)
+        self.timer_usb_state.start(1000)  # Fire the timer every 1000 ms (1 second)
+        # self.lbl_usb_state.set_status(self.usb_state)
+
+    def update_usb_state(self):
+        if main_functions.usb_state == True:
+            self.widget_usb_state.setStyleSheet(
+                """
+                QWidget#widget_usb_state {
+                border-image: url(led_on.png);
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: cover;
+                }
+                """
+            )
+        else:
+            self.widget_usb_state.setStyleSheet(
+                """
+                QWidget#widget_usb_state {
+                border-image: url(led_off.png);
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: cover;
+                }
+                """
+            )
 
     def update_done_signal(self):
-        self.page_firmware_update.btn_done.setDisabled(False)
-        
+        if self.update_done_state == True:
+            print("in1")
+            self.page_firmware_update.btn_done.setDisabled(False)
+
+        elif self.update_done_state == False:
+            print("in2")
+
+            self.page_firmware_update.btn_cancel.setDisabled(False)
+
+        else:
+            print("error")
+
     def init_progressbar(self):
         self.progressbar_gas_meter.setMinimum(0)
         self.progressbar_gas_meter.setMaximum(100)
@@ -270,7 +411,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.current_worker = self.worker_debugging
         self.current_worker.start()
 
-
     def stop_worker_port_changed(self, worker):
         if worker is not None and worker.isRunning():  # If the thread is active
             # Stop the thread by setting exit_debug_mode_flag
@@ -330,16 +470,22 @@ class MainWindow(QtWidgets.QMainWindow):
                                   self.data8]
 
         for i in range(1, 9):
-            label = getattr(self, f'lbl_p1_sensor{i}')
+            label = getattr(self, f'lbl_p1_sensor_{i}')
             label.setText(str(displaying_sensor_list[i - 1]))
 
     ### main_func thread
     # 직접 실행하는 문
     def run_main_func(self, file, port, check_sum):
-        main_functions.main_func(file, port, check_sum)
+        # main_functions.main_func(file, port, check_sum)
+        main_func = main_functions.main_func
+        self.update_done_state = main_func(file, port, check_sum)
+
 
     def run_main_func2(self, port):
-        main_functions.main_func2(port)
+        # main_functions.main_func2(port)
+        main_func = main_functions.main_func2
+        value_extract = main_func(port)
+
     # 직접 실행하는 문 끝
 
     # 2번째부터는 여기서 실행
@@ -349,6 +495,7 @@ class MainWindow(QtWidgets.QMainWindow):
         disable_list = [self.combo_port, self.combo_menu]
         for widget in disable_list:
             widget.setEnabled(False)
+
 
         # thread 새로 만들기
         self.worker_firmware_update = Worker(self.run_main_func, file, port, check_sum)
@@ -373,7 +520,6 @@ class MainWindow(QtWidgets.QMainWindow):
             main_functions.exit_debug_mode_flag = True
             self.current_worker.wait()
 
-        main_functions.exit_debug_mode_flag = False
         self.current_worker = None
         self.current_worker = next_worker
         self.current_worker.start()
@@ -402,16 +548,21 @@ class MainWindow(QtWidgets.QMainWindow):
             # Here you can handle the case where no item is selected
             pass
 
-        elif current_page == "Firmware Update":  # If the first item is selected
-            self.lbl_title.setText("Firmware Update")
+        elif current_page == self.menu_page_name[0]:  # If the first item is selected
+            self.lbl_title.setText(str(self.menu_page_name[0]))
             self.stacked_widget.setCurrentWidget(self.page_firmware_update)
             self.btn_right.setDisabled(True)
             self.btn_left.setDisabled(True)
             self.btn_right.setStyleSheet("background-color: rgba(0, 0, 0, 0);")
             self.btn_left.setStyleSheet("background-color: rgba(0, 0, 0, 0);")
+            self.combo_menu.setEnabled(False)
 
-        elif current_page == "Option 2":  # If the first item is selected
-            pass
+        elif current_page == self.menu_page_name[1]:  # If the first item is selected
+            for i in range(1, 9):  # range(1, 13)는 1부터 12까지의 숫자를 생성합니다.
+                combo_sensor_selector = f"combo_p1_sensor_selector_{i}"  # f-string을 사용하여 위젯 이름 생성
+                combo_sensor_selector_ = getattr(self, combo_sensor_selector)  # getattr 함수로 동적으로 위젯 참조 얻기
+                combo_sensor_selector_.show()
+            self.btn_custom_setting.show()
 
         elif current_page == "Option 3":  # If the first item is selected
             pass
@@ -435,6 +586,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.naming_title(current_index)
 
     def prev_page(self):
+
         current_index = self.stacked_widget.currentIndex()
         while True:
             if current_index > 0:
@@ -464,6 +616,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.stacked_widget.setCurrentIndex(self.prev_page)
         self.combo_menu.setCurrentIndex(-1)
         self.naming_title(self.prev_page)
+
+        self.combo_menu.setEnabled(True)
 
         # btn control
         self.btn_right.setDisabled(False)

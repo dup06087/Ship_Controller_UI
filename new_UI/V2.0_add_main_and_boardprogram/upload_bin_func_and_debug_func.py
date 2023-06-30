@@ -16,8 +16,11 @@ from datetime import datetime
 import numpy as np
 import _thread
 
+from contextlib import redirect_stdout
 
 #bin_file = "C:/Users/USER/Desktop/STM32/BIN.bin"
+from PyQt5.QtCore import pyqtSignal, QObject
+
 bin_file = "vcu_f413zh_mbed.NUCLEO_F413ZH.bin"
 #bin_file = "C:/Users/USER/Documents/STM32/BIN3_F413ZH.bin"
 #bin_file = os.path.join(sys.path[0], "BIN.bin")
@@ -35,7 +38,20 @@ ds3231_date_str = str(datetime.fromtimestamp(ds3231_time_u32))
 test_module1_u8_B0, test_module1_u8_B1, test_module1_u8_B7 = 0, 0, 0
 test_module2_u8_B0, test_module2_u8_B1, test_module2_u8_B7 = 0, 0, 0
 
+'''바꾼부분'''
+class PrintEmitter(QObject):
+    textEmitted = pyqtSignal(str)
 
+    def write(self, text):
+        self.textEmitted.emit(str(text))
+
+    def flush(self):
+        pass
+
+sys.stdout = PrintEmitter()
+
+usb_state = False
+'''바꾼부분 끝'''
 def read_bin(bin_file):
     try:
         with open(bin_file, "rb") as f:
@@ -248,9 +264,9 @@ def check_hse_frequency(check_ser, ser):
                 data_dummy = ser.read()
                 
             request = b't079100\r'
-            for i in range(20):
+            for i in range(40):
                 ser.write(request) 
-                time.sleep(0.05)
+                time.sleep(0.025)
             print("Sent: %s\\r" % request[0:-1].decode("utf-8"))
             time.sleep(0.01)
             
@@ -1326,21 +1342,27 @@ def get_debug_message(check_ser, ser):
 
 def main_func(bin_file, port, skip_checksum):
     check_bin, contents, crc, num_128, crc_128 = read_bin(bin_file)
+    global usb_state
+    usb_state = True
+
     if check_bin == False:
         print("Failed to upload .bin file (read_bin)") 
         
         print("")
         time.sleep(1.0)
-        
+
+        usb_state = False
         return False
     
     check_ser, ser = open_serial(port)
+
     if check_ser == False:
         print("Failed to upload .bin file (open_serial)")
         
         print("")
         time.sleep(1.0)
-        
+
+        usb_state = False
         return False
     
     check_ser = check_serial(check_ser, ser)
@@ -1351,7 +1373,8 @@ def main_func(bin_file, port, skip_checksum):
         
         print("")
         time.sleep(1.0)
-        
+
+        usb_state = False
         return False
 
     check_enter_bootloader_mode = enter_bootloader_mode(check_ser, ser)
@@ -1362,7 +1385,8 @@ def main_func(bin_file, port, skip_checksum):
         
         print("")
         time.sleep(1.0)
-        
+
+        usb_state = False
         return False
     
     check_check_hse_frequency, check_check_hse_frequency_opt = check_hse_frequency(check_ser, ser)
@@ -1373,7 +1397,8 @@ def main_func(bin_file, port, skip_checksum):
         
         print("")
         time.sleep(1.0)
-        
+
+        usb_state = False
         return False
     
     check_get_id, chip_id = get_ID(check_ser, ser)
@@ -1384,7 +1409,8 @@ def main_func(bin_file, port, skip_checksum):
         
         print("")
         time.sleep(1.0)
-        
+
+        usb_state = False
         return False
     
     #check_erase_memory = erase_memory(check_ser, ser)
@@ -1407,7 +1433,8 @@ def main_func(bin_file, port, skip_checksum):
         
             print("")
             time.sleep(1.0)
-        
+
+            usb_state = False
             return False
 
     check_upload_bin = upload_bin(check_ser, ser, check_bin, contents, num_128)
@@ -1418,7 +1445,8 @@ def main_func(bin_file, port, skip_checksum):
         
         print("")
         time.sleep(1.0)
-        
+
+        usb_state = False
         return False
     
     if skip_checksum == False:
@@ -1430,7 +1458,8 @@ def main_func(bin_file, port, skip_checksum):
             
             print("")
             time.sleep(1.0)
-            
+
+            usb_state = False
             return False
         
         check_verify_checksum = verify_checksum(crc_128, crc_128_ack)
@@ -1465,7 +1494,8 @@ def main_func(bin_file, port, skip_checksum):
         
         print("")
         time.sleep(1.0)
-        
+
+        usb_state = False
         return False
         
     check_ser = close_serial(check_ser, ser)
@@ -1473,22 +1503,29 @@ def main_func(bin_file, port, skip_checksum):
     if skip_checksum == False:
         if check_verify_checksum == True:
             return True
-        else:            
+        else:
+            usb_state = False
             return False
     else:        
         return True
         
 
+
+
 def main_func2(port):
     global exit_debug_mode_flag
-    
+    global usb_state
+    usb_state = True
+
     check_ser, ser = open_serial(port)
+
     if check_ser == False:
         print("Failed to get debug message (open_serial)")
         
         print("")
         time.sleep(1.0)
-        
+
+        usb_state = False
         return False
     
     check_ser = check_serial(check_ser, ser)
@@ -1499,18 +1536,21 @@ def main_func2(port):
         
         print("")
         time.sleep(1.0)
-        
+
+        usb_state = False
         return False
-    
+
+
     check_get_debug_message = get_debug_message(check_ser, ser)
-    if check_get_debug_message == False:        
+    if check_get_debug_message == False:
         check_ser = close_serial(check_ser, ser)
         
         print("Failed to get debug message (get_debug_message)")
         
         print("")
         time.sleep(1.0)
-        
+
+        usb_state = False
         return False
 
     check_ser = close_serial(check_ser, ser)

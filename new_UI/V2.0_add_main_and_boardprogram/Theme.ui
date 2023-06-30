@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1210</width>
-    <height>720</height>
+    <width>1600</width>
+    <height>900</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -171,9 +171,39 @@ background-repeat: no-repeat;
        </layout>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="lay_menu_h" stretch="0,0,200,2,5">
+       <layout class="QHBoxLayout" name="lay_menu_h" stretch="0,0,0,200,0,2,5">
         <item>
          <widget class="QComboBox" name="combo_port"/>
+        </item>
+        <item>
+         <widget class="QWidget" name="widget_usb_state" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>20</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>20</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QWidget#widget_usb_state {
+    border-image: url(led_off.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+          </property>
+         </widget>
         </item>
         <item>
          <spacer name="verticalSpacer_9">
@@ -203,6 +233,16 @@ background-repeat: no-repeat;
            </size>
           </property>
          </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btn_custom_setting">
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="text">
+           <string>End Setting</string>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QComboBox" name="combo_menu">
@@ -242,6 +282,12 @@ QComboBox { color: transparent; }
 
 
 </string>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>50</width>
+            <height>50</height>
+           </size>
           </property>
          </widget>
         </item>
@@ -331,10 +377,141 @@ font-size: 30px; font-family: Arial;
 </string>
                     </property>
                     <layout class="QGridLayout" name="gridLayout_16">
-                     <item row="0" column="0">
-                      <widget class="QWidget" name="widget_sensor1" native="true">
+                     <item row="4" column="0">
+                      <widget class="QWidget" name="widget_p1_sensor_3" native="true">
                        <property name="sizePolicy">
-                        <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>0</width>
+                         <height>100</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>16777215</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">QWidget#widget_sensor1 {
+    border-image: url(display_widget.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                       </property>
+                       <layout class="QGridLayout" name="gridLayout_7" rowstretch="0">
+                        <item row="0" column="0">
+                         <layout class="QVBoxLayout" name="vlayout_p1_sensor_3" stretch="1,1">
+                          <item>
+                           <layout class="QHBoxLayout" name="horizontalLayout_15">
+                            <item>
+                             <spacer name="horizontalSpacer_25">
+                              <property name="orientation">
+                               <enum>Qt::Horizontal</enum>
+                              </property>
+                              <property name="sizeHint" stdset="0">
+                               <size>
+                                <width>40</width>
+                                <height>20</height>
+                               </size>
+                              </property>
+                             </spacer>
+                            </item>
+                            <item>
+                             <widget class="QLabel" name="lbl_p1_sensor_name_3">
+                              <property name="font">
+                               <font>
+                                <family>Arial</family>
+                                <pointsize>-1</pointsize>
+                               </font>
+                              </property>
+                              <property name="text">
+                               <string>Sensor</string>
+                              </property>
+                              <property name="scaledContents">
+                               <bool>true</bool>
+                              </property>
+                              <property name="alignment">
+                               <set>Qt::AlignCenter</set>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
+                             <spacer name="horizontalSpacer_26">
+                              <property name="orientation">
+                               <enum>Qt::Horizontal</enum>
+                              </property>
+                              <property name="sizeHint" stdset="0">
+                               <size>
+                                <width>40</width>
+                                <height>20</height>
+                               </size>
+                              </property>
+                             </spacer>
+                            </item>
+                           </layout>
+                          </item>
+                          <item>
+                           <layout class="QHBoxLayout" name="horizontalLayout_16">
+                            <item>
+                             <spacer name="horizontalSpacer_27">
+                              <property name="orientation">
+                               <enum>Qt::Horizontal</enum>
+                              </property>
+                              <property name="sizeHint" stdset="0">
+                               <size>
+                                <width>40</width>
+                                <height>20</height>
+                               </size>
+                              </property>
+                             </spacer>
+                            </item>
+                            <item>
+                             <widget class="QComboBox" name="combo_p1_sensor_selector_3"/>
+                            </item>
+                            <item>
+                             <widget class="QLabel" name="lbl_p1_sensor_3">
+                              <property name="text">
+                               <string>3</string>
+                              </property>
+                              <property name="scaledContents">
+                               <bool>true</bool>
+                              </property>
+                              <property name="alignment">
+                               <set>Qt::AlignCenter</set>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
+                             <spacer name="horizontalSpacer_28">
+                              <property name="orientation">
+                               <enum>Qt::Horizontal</enum>
+                              </property>
+                              <property name="sizeHint" stdset="0">
+                               <size>
+                                <width>40</width>
+                                <height>20</height>
+                               </size>
+                              </property>
+                             </spacer>
+                            </item>
+                           </layout>
+                          </item>
+                         </layout>
+                        </item>
+                       </layout>
+                      </widget>
+                     </item>
+                     <item row="0" column="0">
+                      <widget class="QWidget" name="widget_p1_sensor_1" native="true">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                          <horstretch>0</horstretch>
                          <verstretch>0</verstretch>
                         </sizepolicy>
@@ -361,7 +538,7 @@ font-size: 30px; font-family: Arial;
                        </property>
                        <layout class="QGridLayout" name="gridLayout_5" rowstretch="0">
                         <item row="0" column="0">
-                         <layout class="QVBoxLayout" name="verticalLayout_6" stretch="1,1">
+                         <layout class="QVBoxLayout" name="vlayout_p1_sensor_1" stretch="1,1">
                           <item>
                            <layout class="QHBoxLayout" name="horizontalLayout_8">
                             <item>
@@ -378,21 +555,41 @@ font-size: 30px; font-family: Arial;
                              </spacer>
                             </item>
                             <item>
-                             <widget class="QLabel" name="lbl_p1_sensor_name1">
-                              <property name="font">
-                               <font>
-                                <family>Arial</family>
-                                <pointsize>-1</pointsize>
-                               </font>
+                             <widget class="QLineEdit" name="edit_p1_sensor_name_1">
+                              <property name="sizePolicy">
+                               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                               </sizepolicy>
+                              </property>
+                              <property name="minimumSize">
+                               <size>
+                                <width>0</width>
+                                <height>0</height>
+                               </size>
+                              </property>
+                              <property name="maximumSize">
+                               <size>
+                                <width>16777215</width>
+                                <height>16777215</height>
+                               </size>
+                              </property>
+                              <property name="styleSheet">
+                               <string notr="true">QLineEdit {
+background:transparent;
+}</string>
                               </property>
                               <property name="text">
-                               <string>Sensor</string>
+                               <string>sensor1</string>
                               </property>
-                              <property name="scaledContents">
-                               <bool>true</bool>
+                              <property name="frame">
+                               <bool>false</bool>
                               </property>
                               <property name="alignment">
                                <set>Qt::AlignCenter</set>
+                              </property>
+                              <property name="readOnly">
+                               <bool>true</bool>
                               </property>
                              </widget>
                             </item>
@@ -427,7 +624,10 @@ font-size: 30px; font-family: Arial;
                              </spacer>
                             </item>
                             <item>
-                             <widget class="QLabel" name="lbl_p1_sensor1">
+                             <widget class="QComboBox" name="combo_p1_sensor_selector_1"/>
+                            </item>
+                            <item>
+                             <widget class="QLabel" name="lbl_p1_sensor_1">
                               <property name="text">
                                <string>1</string>
                               </property>
@@ -472,10 +672,36 @@ font-size: 30px; font-family: Arial;
                        </property>
                       </spacer>
                      </item>
+                     <item row="3" column="0">
+                      <spacer name="verticalSpacer_7">
+                       <property name="orientation">
+                        <enum>Qt::Vertical</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>194</width>
+                         <height>10</height>
+                        </size>
+                       </property>
+                      </spacer>
+                     </item>
+                     <item row="5" column="0">
+                      <spacer name="verticalSpacer_3">
+                       <property name="orientation">
+                        <enum>Qt::Vertical</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>194</width>
+                         <height>10</height>
+                        </size>
+                       </property>
+                      </spacer>
+                     </item>
                      <item row="2" column="0">
-                      <widget class="QWidget" name="widget_sensor2" native="true">
+                      <widget class="QWidget" name="widget_p1_sensor_2" native="true">
                        <property name="sizePolicy">
-                        <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                          <horstretch>0</horstretch>
                          <verstretch>0</verstretch>
                         </sizepolicy>
@@ -493,20 +719,20 @@ font-size: 30px; font-family: Arial;
                         </size>
                        </property>
                        <property name="styleSheet">
-                        <string notr="true">QWidget#widget_sensor2 {
+                        <string notr="true">QWidget#widget_sensor1 {
     border-image: url(display_widget.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
 }</string>
                        </property>
-                       <layout class="QGridLayout" name="gridLayout_6">
+                       <layout class="QGridLayout" name="gridLayout_6" rowstretch="0">
                         <item row="0" column="0">
-                         <layout class="QVBoxLayout" name="verticalLayout_10" stretch="1,1">
+                         <layout class="QVBoxLayout" name="vlayout_p1_sensor_2" stretch="1,1">
                           <item>
-                           <layout class="QHBoxLayout" name="horizontalLayout_17">
+                           <layout class="QHBoxLayout" name="horizontalLayout_13">
                             <item>
-                             <spacer name="horizontalSpacer_25">
+                             <spacer name="horizontalSpacer_21">
                               <property name="orientation">
                                <enum>Qt::Horizontal</enum>
                               </property>
@@ -519,7 +745,7 @@ font-size: 30px; font-family: Arial;
                              </spacer>
                             </item>
                             <item>
-                             <widget class="QLabel" name="lbl_p1_sensor_name2">
+                             <widget class="QLabel" name="lbl_p1_sensor_name_2">
                               <property name="font">
                                <font>
                                 <family>Arial</family>
@@ -538,7 +764,7 @@ font-size: 30px; font-family: Arial;
                              </widget>
                             </item>
                             <item>
-                             <spacer name="horizontalSpacer_26">
+                             <spacer name="horizontalSpacer_22">
                               <property name="orientation">
                                <enum>Qt::Horizontal</enum>
                               </property>
@@ -553,9 +779,9 @@ font-size: 30px; font-family: Arial;
                            </layout>
                           </item>
                           <item>
-                           <layout class="QHBoxLayout" name="horizontalLayout_18">
+                           <layout class="QHBoxLayout" name="horizontalLayout_14">
                             <item>
-                             <spacer name="horizontalSpacer_27">
+                             <spacer name="horizontalSpacer_23">
                               <property name="orientation">
                                <enum>Qt::Horizontal</enum>
                               </property>
@@ -568,7 +794,10 @@ font-size: 30px; font-family: Arial;
                              </spacer>
                             </item>
                             <item>
-                             <widget class="QLabel" name="lbl_p1_sensor2">
+                             <widget class="QComboBox" name="combo_p1_sensor_selector_2"/>
+                            </item>
+                            <item>
+                             <widget class="QLabel" name="lbl_p1_sensor_2">
                               <property name="text">
                                <string>2</string>
                               </property>
@@ -581,7 +810,7 @@ font-size: 30px; font-family: Arial;
                              </widget>
                             </item>
                             <item>
-                             <spacer name="horizontalSpacer_28">
+                             <spacer name="horizontalSpacer_24">
                               <property name="orientation">
                                <enum>Qt::Horizontal</enum>
                               </property>
@@ -600,23 +829,10 @@ font-size: 30px; font-family: Arial;
                        </layout>
                       </widget>
                      </item>
-                     <item row="3" column="0">
-                      <spacer name="verticalSpacer_7">
-                       <property name="orientation">
-                        <enum>Qt::Vertical</enum>
-                       </property>
-                       <property name="sizeHint" stdset="0">
-                        <size>
-                         <width>194</width>
-                         <height>10</height>
-                        </size>
-                       </property>
-                      </spacer>
-                     </item>
-                     <item row="4" column="0">
-                      <widget class="QWidget" name="widget_sensor3" native="true">
+                     <item row="6" column="0">
+                      <widget class="QWidget" name="widget_p1_sensor_4" native="true">
                        <property name="sizePolicy">
-                        <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                          <horstretch>0</horstretch>
                          <verstretch>0</verstretch>
                         </sizepolicy>
@@ -634,18 +850,18 @@ font-size: 30px; font-family: Arial;
                         </size>
                        </property>
                        <property name="styleSheet">
-                        <string notr="true">QWidget#widget_sensor3 {
+                        <string notr="true">QWidget#widget_sensor1 {
     border-image: url(display_widget.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
 }</string>
                        </property>
-                       <layout class="QGridLayout" name="gridLayout_7">
-                        <item row="1" column="0">
-                         <layout class="QVBoxLayout" name="verticalLayout_11" stretch="1,1">
+                       <layout class="QGridLayout" name="gridLayout_8" rowstretch="0">
+                        <item row="0" column="0">
+                         <layout class="QVBoxLayout" name="vlayout_p1_sensor_4" stretch="1,1">
                           <item>
-                           <layout class="QHBoxLayout" name="horizontalLayout_19">
+                           <layout class="QHBoxLayout" name="horizontalLayout_17">
                             <item>
                              <spacer name="horizontalSpacer_29">
                               <property name="orientation">
@@ -660,7 +876,7 @@ font-size: 30px; font-family: Arial;
                              </spacer>
                             </item>
                             <item>
-                             <widget class="QLabel" name="lbl_p1_sensor_name3">
+                             <widget class="QLabel" name="lbl_p1_sensor_name_4">
                               <property name="font">
                                <font>
                                 <family>Arial</family>
@@ -694,7 +910,7 @@ font-size: 30px; font-family: Arial;
                            </layout>
                           </item>
                           <item>
-                           <layout class="QHBoxLayout" name="horizontalLayout_20">
+                           <layout class="QHBoxLayout" name="horizontalLayout_18">
                             <item>
                              <spacer name="horizontalSpacer_31">
                               <property name="orientation">
@@ -709,142 +925,10 @@ font-size: 30px; font-family: Arial;
                              </spacer>
                             </item>
                             <item>
-                             <widget class="QLabel" name="lbl_p1_sensor3">
-                              <property name="text">
-                               <string>3</string>
-                              </property>
-                              <property name="scaledContents">
-                               <bool>true</bool>
-                              </property>
-                              <property name="alignment">
-                               <set>Qt::AlignCenter</set>
-                              </property>
-                             </widget>
+                             <widget class="QComboBox" name="combo_p1_sensor_selector_4"/>
                             </item>
                             <item>
-                             <spacer name="horizontalSpacer_32">
-                              <property name="orientation">
-                               <enum>Qt::Horizontal</enum>
-                              </property>
-                              <property name="sizeHint" stdset="0">
-                               <size>
-                                <width>40</width>
-                                <height>20</height>
-                               </size>
-                              </property>
-                             </spacer>
-                            </item>
-                           </layout>
-                          </item>
-                         </layout>
-                        </item>
-                       </layout>
-                      </widget>
-                     </item>
-                     <item row="5" column="0">
-                      <spacer name="verticalSpacer_3">
-                       <property name="orientation">
-                        <enum>Qt::Vertical</enum>
-                       </property>
-                       <property name="sizeHint" stdset="0">
-                        <size>
-                         <width>194</width>
-                         <height>10</height>
-                        </size>
-                       </property>
-                      </spacer>
-                     </item>
-                     <item row="6" column="0">
-                      <widget class="QWidget" name="widget_sensor4" native="true">
-                       <property name="sizePolicy">
-                        <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-                         <horstretch>0</horstretch>
-                         <verstretch>0</verstretch>
-                        </sizepolicy>
-                       </property>
-                       <property name="minimumSize">
-                        <size>
-                         <width>0</width>
-                         <height>100</height>
-                        </size>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true">QWidget#widget_sensor4 {
-    border-image: url(display_widget.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-}</string>
-                       </property>
-                       <layout class="QGridLayout" name="gridLayout_8">
-                        <item row="1" column="0">
-                         <layout class="QVBoxLayout" name="verticalLayout_12" stretch="1,1">
-                          <item>
-                           <layout class="QHBoxLayout" name="horizontalLayout_21">
-                            <item>
-                             <spacer name="horizontalSpacer_33">
-                              <property name="orientation">
-                               <enum>Qt::Horizontal</enum>
-                              </property>
-                              <property name="sizeHint" stdset="0">
-                               <size>
-                                <width>40</width>
-                                <height>20</height>
-                               </size>
-                              </property>
-                             </spacer>
-                            </item>
-                            <item>
-                             <widget class="QLabel" name="lbl_p1_sensor_name4">
-                              <property name="font">
-                               <font>
-                                <family>Arial</family>
-                                <pointsize>-1</pointsize>
-                               </font>
-                              </property>
-                              <property name="text">
-                               <string>Sensor</string>
-                              </property>
-                              <property name="scaledContents">
-                               <bool>true</bool>
-                              </property>
-                              <property name="alignment">
-                               <set>Qt::AlignCenter</set>
-                              </property>
-                             </widget>
-                            </item>
-                            <item>
-                             <spacer name="horizontalSpacer_34">
-                              <property name="orientation">
-                               <enum>Qt::Horizontal</enum>
-                              </property>
-                              <property name="sizeHint" stdset="0">
-                               <size>
-                                <width>40</width>
-                                <height>20</height>
-                               </size>
-                              </property>
-                             </spacer>
-                            </item>
-                           </layout>
-                          </item>
-                          <item>
-                           <layout class="QHBoxLayout" name="horizontalLayout_22">
-                            <item>
-                             <spacer name="horizontalSpacer_35">
-                              <property name="orientation">
-                               <enum>Qt::Horizontal</enum>
-                              </property>
-                              <property name="sizeHint" stdset="0">
-                               <size>
-                                <width>40</width>
-                                <height>20</height>
-                               </size>
-                              </property>
-                             </spacer>
-                            </item>
-                            <item>
-                             <widget class="QLabel" name="lbl_p1_sensor4">
+                             <widget class="QLabel" name="lbl_p1_sensor_4">
                               <property name="text">
                                <string>4</string>
                               </property>
@@ -857,7 +941,7 @@ font-size: 30px; font-family: Arial;
                              </widget>
                             </item>
                             <item>
-                             <spacer name="horizontalSpacer_36">
+                             <spacer name="horizontalSpacer_32">
                               <property name="orientation">
                                <enum>Qt::Horizontal</enum>
                               </property>
@@ -1115,10 +1199,10 @@ font-size: 30px; font-family: Arial;
 </string>
                     </property>
                     <layout class="QGridLayout" name="gridLayout_17">
-                     <item row="0" column="0">
-                      <widget class="QWidget" name="widget_sensor1_2" native="true">
+                     <item row="2" column="0">
+                      <widget class="QWidget" name="widget_p1_sensor_6" native="true">
                        <property name="sizePolicy">
-                        <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                          <horstretch>0</horstretch>
                          <verstretch>0</verstretch>
                         </sizepolicy>
@@ -1126,7 +1210,13 @@ font-size: 30px; font-family: Arial;
                        <property name="minimumSize">
                         <size>
                          <width>0</width>
-                         <height>80</height>
+                         <height>100</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>16777215</width>
+                         <height>16777215</height>
                         </size>
                        </property>
                        <property name="styleSheet">
@@ -1137,9 +1227,271 @@ font-size: 30px; font-family: Arial;
     background-size: cover;
 }</string>
                        </property>
-                       <layout class="QGridLayout" name="gridLayout_9">
+                       <layout class="QGridLayout" name="gridLayout_10" rowstretch="0">
                         <item row="0" column="0">
-                         <layout class="QVBoxLayout" name="verticalLayout_7" stretch="1,1">
+                         <layout class="QVBoxLayout" name="vlayout_p1_sensor_6" stretch="1,1">
+                          <item>
+                           <layout class="QHBoxLayout" name="horizontalLayout_19">
+                            <item>
+                             <spacer name="horizontalSpacer_33">
+                              <property name="orientation">
+                               <enum>Qt::Horizontal</enum>
+                              </property>
+                              <property name="sizeHint" stdset="0">
+                               <size>
+                                <width>40</width>
+                                <height>20</height>
+                               </size>
+                              </property>
+                             </spacer>
+                            </item>
+                            <item>
+                             <widget class="QLabel" name="lbl_p1_sensor_name_6">
+                              <property name="font">
+                               <font>
+                                <family>Arial</family>
+                                <pointsize>-1</pointsize>
+                               </font>
+                              </property>
+                              <property name="text">
+                               <string>Sensor</string>
+                              </property>
+                              <property name="scaledContents">
+                               <bool>true</bool>
+                              </property>
+                              <property name="alignment">
+                               <set>Qt::AlignCenter</set>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
+                             <spacer name="horizontalSpacer_34">
+                              <property name="orientation">
+                               <enum>Qt::Horizontal</enum>
+                              </property>
+                              <property name="sizeHint" stdset="0">
+                               <size>
+                                <width>40</width>
+                                <height>20</height>
+                               </size>
+                              </property>
+                             </spacer>
+                            </item>
+                           </layout>
+                          </item>
+                          <item>
+                           <layout class="QHBoxLayout" name="horizontalLayout_20">
+                            <item>
+                             <spacer name="horizontalSpacer_35">
+                              <property name="orientation">
+                               <enum>Qt::Horizontal</enum>
+                              </property>
+                              <property name="sizeHint" stdset="0">
+                               <size>
+                                <width>40</width>
+                                <height>20</height>
+                               </size>
+                              </property>
+                             </spacer>
+                            </item>
+                            <item>
+                             <widget class="QComboBox" name="combo_p1_sensor_selector_6"/>
+                            </item>
+                            <item>
+                             <widget class="QLabel" name="lbl_p1_sensor_6">
+                              <property name="text">
+                               <string>6</string>
+                              </property>
+                              <property name="scaledContents">
+                               <bool>true</bool>
+                              </property>
+                              <property name="alignment">
+                               <set>Qt::AlignCenter</set>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
+                             <spacer name="horizontalSpacer_36">
+                              <property name="orientation">
+                               <enum>Qt::Horizontal</enum>
+                              </property>
+                              <property name="sizeHint" stdset="0">
+                               <size>
+                                <width>40</width>
+                                <height>20</height>
+                               </size>
+                              </property>
+                             </spacer>
+                            </item>
+                           </layout>
+                          </item>
+                         </layout>
+                        </item>
+                       </layout>
+                      </widget>
+                     </item>
+                     <item row="4" column="0">
+                      <widget class="QWidget" name="widget_p1_sensor_7" native="true">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>0</width>
+                         <height>100</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>16777215</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">QWidget#widget_sensor1 {
+    border-image: url(display_widget.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                       </property>
+                       <layout class="QGridLayout" name="gridLayout_11" rowstretch="0">
+                        <item row="0" column="0">
+                         <layout class="QVBoxLayout" name="vlayout_p1_sensor_7" stretch="1,1">
+                          <item>
+                           <layout class="QHBoxLayout" name="horizontalLayout_21">
+                            <item>
+                             <spacer name="horizontalSpacer_37">
+                              <property name="orientation">
+                               <enum>Qt::Horizontal</enum>
+                              </property>
+                              <property name="sizeHint" stdset="0">
+                               <size>
+                                <width>40</width>
+                                <height>20</height>
+                               </size>
+                              </property>
+                             </spacer>
+                            </item>
+                            <item>
+                             <widget class="QLabel" name="lbl_p1_sensor_name_7">
+                              <property name="font">
+                               <font>
+                                <family>Arial</family>
+                                <pointsize>-1</pointsize>
+                               </font>
+                              </property>
+                              <property name="text">
+                               <string>Sensor</string>
+                              </property>
+                              <property name="scaledContents">
+                               <bool>true</bool>
+                              </property>
+                              <property name="alignment">
+                               <set>Qt::AlignCenter</set>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
+                             <spacer name="horizontalSpacer_38">
+                              <property name="orientation">
+                               <enum>Qt::Horizontal</enum>
+                              </property>
+                              <property name="sizeHint" stdset="0">
+                               <size>
+                                <width>40</width>
+                                <height>20</height>
+                               </size>
+                              </property>
+                             </spacer>
+                            </item>
+                           </layout>
+                          </item>
+                          <item>
+                           <layout class="QHBoxLayout" name="horizontalLayout_22">
+                            <item>
+                             <spacer name="horizontalSpacer_39">
+                              <property name="orientation">
+                               <enum>Qt::Horizontal</enum>
+                              </property>
+                              <property name="sizeHint" stdset="0">
+                               <size>
+                                <width>40</width>
+                                <height>20</height>
+                               </size>
+                              </property>
+                             </spacer>
+                            </item>
+                            <item>
+                             <widget class="QComboBox" name="combo_p1_sensor_selector_7"/>
+                            </item>
+                            <item>
+                             <widget class="QLabel" name="lbl_p1_sensor_7">
+                              <property name="text">
+                               <string>7</string>
+                              </property>
+                              <property name="scaledContents">
+                               <bool>true</bool>
+                              </property>
+                              <property name="alignment">
+                               <set>Qt::AlignCenter</set>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
+                             <spacer name="horizontalSpacer_40">
+                              <property name="orientation">
+                               <enum>Qt::Horizontal</enum>
+                              </property>
+                              <property name="sizeHint" stdset="0">
+                               <size>
+                                <width>40</width>
+                                <height>20</height>
+                               </size>
+                              </property>
+                             </spacer>
+                            </item>
+                           </layout>
+                          </item>
+                         </layout>
+                        </item>
+                       </layout>
+                      </widget>
+                     </item>
+                     <item row="0" column="0">
+                      <widget class="QWidget" name="widget_p1_sensor_5" native="true">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>0</width>
+                         <height>100</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>16777215</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">QWidget#widget_sensor1 {
+    border-image: url(display_widget.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                       </property>
+                       <layout class="QGridLayout" name="gridLayout_9" rowstretch="0">
+                        <item row="0" column="0">
+                         <layout class="QVBoxLayout" name="vlayout_p1_sensor_5" stretch="1,1">
                           <item>
                            <layout class="QHBoxLayout" name="horizontalLayout_11">
                             <item>
@@ -1156,7 +1508,7 @@ font-size: 30px; font-family: Arial;
                              </spacer>
                             </item>
                             <item>
-                             <widget class="QLabel" name="lbl_p1_sensor_name5">
+                             <widget class="QLabel" name="lbl_p1_sensor_name_5">
                               <property name="font">
                                <font>
                                 <family>Arial</family>
@@ -1205,7 +1557,10 @@ font-size: 30px; font-family: Arial;
                              </spacer>
                             </item>
                             <item>
-                             <widget class="QLabel" name="lbl_p1_sensor5">
+                             <widget class="QComboBox" name="combo_p1_sensor_selector_5"/>
+                            </item>
+                            <item>
+                             <widget class="QLabel" name="lbl_p1_sensor_5">
                               <property name="text">
                                <string>5</string>
                               </property>
@@ -1250,128 +1605,6 @@ font-size: 30px; font-family: Arial;
                        </property>
                       </spacer>
                      </item>
-                     <item row="2" column="0">
-                      <widget class="QWidget" name="widget_sensor2_2" native="true">
-                       <property name="sizePolicy">
-                        <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-                         <horstretch>0</horstretch>
-                         <verstretch>0</verstretch>
-                        </sizepolicy>
-                       </property>
-                       <property name="minimumSize">
-                        <size>
-                         <width>0</width>
-                         <height>80</height>
-                        </size>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true">QWidget#widget_sensor2 {
-    border-image: url(display_widget.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-}</string>
-                       </property>
-                       <layout class="QGridLayout" name="gridLayout_10">
-                        <item row="0" column="0">
-                         <layout class="QVBoxLayout" name="verticalLayout_14" stretch="1,1">
-                          <item>
-                           <layout class="QHBoxLayout" name="horizontalLayout_23">
-                            <item>
-                             <spacer name="horizontalSpacer_37">
-                              <property name="orientation">
-                               <enum>Qt::Horizontal</enum>
-                              </property>
-                              <property name="sizeHint" stdset="0">
-                               <size>
-                                <width>40</width>
-                                <height>20</height>
-                               </size>
-                              </property>
-                             </spacer>
-                            </item>
-                            <item>
-                             <widget class="QLabel" name="lbl_p1_sensor_name6">
-                              <property name="font">
-                               <font>
-                                <family>Arial</family>
-                                <pointsize>-1</pointsize>
-                               </font>
-                              </property>
-                              <property name="text">
-                               <string>Sensor</string>
-                              </property>
-                              <property name="scaledContents">
-                               <bool>true</bool>
-                              </property>
-                              <property name="alignment">
-                               <set>Qt::AlignCenter</set>
-                              </property>
-                             </widget>
-                            </item>
-                            <item>
-                             <spacer name="horizontalSpacer_38">
-                              <property name="orientation">
-                               <enum>Qt::Horizontal</enum>
-                              </property>
-                              <property name="sizeHint" stdset="0">
-                               <size>
-                                <width>40</width>
-                                <height>20</height>
-                               </size>
-                              </property>
-                             </spacer>
-                            </item>
-                           </layout>
-                          </item>
-                          <item>
-                           <layout class="QHBoxLayout" name="horizontalLayout_24">
-                            <item>
-                             <spacer name="horizontalSpacer_39">
-                              <property name="orientation">
-                               <enum>Qt::Horizontal</enum>
-                              </property>
-                              <property name="sizeHint" stdset="0">
-                               <size>
-                                <width>40</width>
-                                <height>20</height>
-                               </size>
-                              </property>
-                             </spacer>
-                            </item>
-                            <item>
-                             <widget class="QLabel" name="lbl_p1_sensor6">
-                              <property name="text">
-                               <string>6</string>
-                              </property>
-                              <property name="scaledContents">
-                               <bool>true</bool>
-                              </property>
-                              <property name="alignment">
-                               <set>Qt::AlignCenter</set>
-                              </property>
-                             </widget>
-                            </item>
-                            <item>
-                             <spacer name="horizontalSpacer_40">
-                              <property name="orientation">
-                               <enum>Qt::Horizontal</enum>
-                              </property>
-                              <property name="sizeHint" stdset="0">
-                               <size>
-                                <width>40</width>
-                                <height>20</height>
-                               </size>
-                              </property>
-                             </spacer>
-                            </item>
-                           </layout>
-                          </item>
-                         </layout>
-                        </item>
-                       </layout>
-                      </widget>
-                     </item>
                      <item row="3" column="0">
                       <spacer name="verticalSpacer_12">
                        <property name="orientation">
@@ -1385,10 +1618,23 @@ font-size: 30px; font-family: Arial;
                        </property>
                       </spacer>
                      </item>
-                     <item row="4" column="0">
-                      <widget class="QWidget" name="widget_sensor3_2" native="true">
+                     <item row="5" column="0">
+                      <spacer name="verticalSpacer_4">
+                       <property name="orientation">
+                        <enum>Qt::Vertical</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>194</width>
+                         <height>37</height>
+                        </size>
+                       </property>
+                      </spacer>
+                     </item>
+                     <item row="6" column="0">
+                      <widget class="QWidget" name="widget_p1_sensor_8" native="true">
                        <property name="sizePolicy">
-                        <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                          <horstretch>0</horstretch>
                          <verstretch>0</verstretch>
                         </sizepolicy>
@@ -1396,22 +1642,28 @@ font-size: 30px; font-family: Arial;
                        <property name="minimumSize">
                         <size>
                          <width>0</width>
-                         <height>80</height>
+                         <height>100</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>16777215</width>
+                         <height>16777215</height>
                         </size>
                        </property>
                        <property name="styleSheet">
-                        <string notr="true">QWidget#widget_sensor3 {
+                        <string notr="true">QWidget#widget_sensor1 {
     border-image: url(display_widget.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
 }</string>
                        </property>
-                       <layout class="QGridLayout" name="gridLayout_11">
-                        <item row="1" column="0">
-                         <layout class="QVBoxLayout" name="verticalLayout_15" stretch="1,1">
+                       <layout class="QGridLayout" name="gridLayout_12" rowstretch="0">
+                        <item row="0" column="0">
+                         <layout class="QVBoxLayout" name="vlayout_p1_sensor_8" stretch="1,1">
                           <item>
-                           <layout class="QHBoxLayout" name="horizontalLayout_25">
+                           <layout class="QHBoxLayout" name="horizontalLayout_23">
                             <item>
                              <spacer name="horizontalSpacer_41">
                               <property name="orientation">
@@ -1426,7 +1678,7 @@ font-size: 30px; font-family: Arial;
                              </spacer>
                             </item>
                             <item>
-                             <widget class="QLabel" name="lbl_p1_sensor_name7">
+                             <widget class="QLabel" name="lbl_p1_sensor_name_8">
                               <property name="font">
                                <font>
                                 <family>Arial</family>
@@ -1460,7 +1712,7 @@ font-size: 30px; font-family: Arial;
                            </layout>
                           </item>
                           <item>
-                           <layout class="QHBoxLayout" name="horizontalLayout_26">
+                           <layout class="QHBoxLayout" name="horizontalLayout_24">
                             <item>
                              <spacer name="horizontalSpacer_43">
                               <property name="orientation">
@@ -1475,142 +1727,10 @@ font-size: 30px; font-family: Arial;
                              </spacer>
                             </item>
                             <item>
-                             <widget class="QLabel" name="lbl_p1_sensor7">
-                              <property name="text">
-                               <string>7</string>
-                              </property>
-                              <property name="scaledContents">
-                               <bool>true</bool>
-                              </property>
-                              <property name="alignment">
-                               <set>Qt::AlignCenter</set>
-                              </property>
-                             </widget>
+                             <widget class="QComboBox" name="combo_p1_sensor_selector_8"/>
                             </item>
                             <item>
-                             <spacer name="horizontalSpacer_44">
-                              <property name="orientation">
-                               <enum>Qt::Horizontal</enum>
-                              </property>
-                              <property name="sizeHint" stdset="0">
-                               <size>
-                                <width>40</width>
-                                <height>20</height>
-                               </size>
-                              </property>
-                             </spacer>
-                            </item>
-                           </layout>
-                          </item>
-                         </layout>
-                        </item>
-                       </layout>
-                      </widget>
-                     </item>
-                     <item row="5" column="0">
-                      <spacer name="verticalSpacer_4">
-                       <property name="orientation">
-                        <enum>Qt::Vertical</enum>
-                       </property>
-                       <property name="sizeHint" stdset="0">
-                        <size>
-                         <width>194</width>
-                         <height>37</height>
-                        </size>
-                       </property>
-                      </spacer>
-                     </item>
-                     <item row="6" column="0">
-                      <widget class="QWidget" name="widget_sensor4_2" native="true">
-                       <property name="sizePolicy">
-                        <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-                         <horstretch>0</horstretch>
-                         <verstretch>0</verstretch>
-                        </sizepolicy>
-                       </property>
-                       <property name="minimumSize">
-                        <size>
-                         <width>0</width>
-                         <height>80</height>
-                        </size>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true">QWidget#widget_sensor4 {
-    border-image: url(display_widget.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-}</string>
-                       </property>
-                       <layout class="QGridLayout" name="gridLayout_12">
-                        <item row="1" column="0">
-                         <layout class="QVBoxLayout" name="verticalLayout_16" stretch="1,1">
-                          <item>
-                           <layout class="QHBoxLayout" name="horizontalLayout_27">
-                            <item>
-                             <spacer name="horizontalSpacer_45">
-                              <property name="orientation">
-                               <enum>Qt::Horizontal</enum>
-                              </property>
-                              <property name="sizeHint" stdset="0">
-                               <size>
-                                <width>40</width>
-                                <height>20</height>
-                               </size>
-                              </property>
-                             </spacer>
-                            </item>
-                            <item>
-                             <widget class="QLabel" name="lbl_p1_sensor_name8">
-                              <property name="font">
-                               <font>
-                                <family>Arial</family>
-                                <pointsize>-1</pointsize>
-                               </font>
-                              </property>
-                              <property name="text">
-                               <string>Sensor</string>
-                              </property>
-                              <property name="scaledContents">
-                               <bool>true</bool>
-                              </property>
-                              <property name="alignment">
-                               <set>Qt::AlignCenter</set>
-                              </property>
-                             </widget>
-                            </item>
-                            <item>
-                             <spacer name="horizontalSpacer_46">
-                              <property name="orientation">
-                               <enum>Qt::Horizontal</enum>
-                              </property>
-                              <property name="sizeHint" stdset="0">
-                               <size>
-                                <width>40</width>
-                                <height>20</height>
-                               </size>
-                              </property>
-                             </spacer>
-                            </item>
-                           </layout>
-                          </item>
-                          <item>
-                           <layout class="QHBoxLayout" name="horizontalLayout_28">
-                            <item>
-                             <spacer name="horizontalSpacer_47">
-                              <property name="orientation">
-                               <enum>Qt::Horizontal</enum>
-                              </property>
-                              <property name="sizeHint" stdset="0">
-                               <size>
-                                <width>40</width>
-                                <height>20</height>
-                               </size>
-                              </property>
-                             </spacer>
-                            </item>
-                            <item>
-                             <widget class="QLabel" name="lbl_p1_sensor8">
+                             <widget class="QLabel" name="lbl_p1_sensor_8">
                               <property name="text">
                                <string>8</string>
                               </property>
@@ -1623,7 +1743,7 @@ font-size: 30px; font-family: Arial;
                              </widget>
                             </item>
                             <item>
-                             <spacer name="horizontalSpacer_48">
+                             <spacer name="horizontalSpacer_44">
                               <property name="orientation">
                                <enum>Qt::Horizontal</enum>
                               </property>
@@ -1673,195 +1793,21 @@ font-size: 30px; font-family: Arial;
           <item row="0" column="0">
            <widget class="QWidget" name="widget_stylesheet_page2" native="true">
             <property name="styleSheet">
-             <string notr="true">QPushButton {
+             <string notr="true">QWidget&gt;QPushButton {
     border: none;
     border-image: url(btn_off.png); /* Unchecked image */
 }
 
-QPushButton:checked {
+QWidget&gt;QPushButton:checked {
     border-image: url(btn_on.png); /* Checked image */
 }
-
-QPushButton:disabled {
-    border-image: url(button_disabled_unchecked.png); /* Disabled and unchecked image */
-}
-
-QPushButton:disabled:checked {
-    border-image: url(button_disabled_checked.png); /* Disabled and checked image */
-}</string>
+</string>
             </property>
             <layout class="QGridLayout" name="gridLayout">
              <item row="0" column="0">
               <layout class="QGridLayout" name="gridLayout_13">
-               <item row="1" column="2">
-                <widget class="QPushButton" name="btn_digital_3">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="cursor">
-                  <cursorShape>PointingHandCursor</cursorShape>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="checkable">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="5">
-                <widget class="QWidget" name="widget_digital_4" native="true">
-                 <property name="styleSheet">
-                  <string notr="true">
-QWidget#widget_digital_4 {
-    border-image: url(led_off.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-}</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="4">
-                <widget class="QWidget" name="widget_digital_3" native="true">
-                 <property name="styleSheet">
-                  <string notr="true">QWidget#widget_digital_3 {
-    border-image: url(led_on.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-}
-</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="5">
-                <widget class="QWidget" name="widget_digital_2" native="true">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">QWidget#widget_digital_2
- {
-    border-image: url(led_on.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-}
-
-</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="4">
-                <widget class="QWidget" name="widget_digital_1" native="true">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">QWidget#widget_digital_1 {
-    border-image: url(led_on.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-}</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="1">
-                <widget class="QLabel" name="label_5">
-                 <property name="font">
-                  <font>
-                   <family>Arial</family>
-                   <pointsize>15</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>BTN2</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="3">
-                <widget class="QLabel" name="label_7">
-                 <property name="font">
-                  <font>
-                   <family>Arial</family>
-                   <pointsize>15</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>BTN4</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="4">
-                <widget class="QLabel" name="label_8">
-                 <property name="font">
-                  <font>
-                   <family>Arial</family>
-                   <pointsize>15</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>STATUS1</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="0">
-                <widget class="QLabel" name="label_4">
-                 <property name="font">
-                  <font>
-                   <family>Arial</family>
-                   <pointsize>15</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>BTN1</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="3">
-                <widget class="QPushButton" name="btn_digital_4">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="cursor">
-                  <cursorShape>PointingHandCursor</cursorShape>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="checkable">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <widget class="QPushButton" name="btn_digital_1">
+               <item row="2" column="8">
+                <widget class="QPushButton" name="btn_btn_8">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                    <horstretch>0</horstretch>
@@ -1888,54 +1834,253 @@ QWidget#widget_digital_4 {
                  </property>
                 </widget>
                </item>
-               <item row="3" column="0">
-                <widget class="QPushButton" name="pushButton_6">
+               <item row="2" column="2">
+                <widget class="QPushButton" name="btn_btn_2">
                  <property name="sizePolicy">
-                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>100</height>
+                  </size>
+                 </property>
                  <property name="cursor">
                   <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true"/>
                  </property>
                  <property name="text">
                   <string/>
                  </property>
                  <property name="checkable">
                   <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="7">
+                <widget class="QPushButton" name="btn_btn_7">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true"/>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="checkable">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QPushButton" name="btn_btn_1">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true"/>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="checkable">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <spacer name="verticalSpacer_2">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Maximum</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>10</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="0" column="0">
+                <widget class="QLabel" name="lbl_btn_1">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>BTN1</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
                  </property>
                 </widget>
                </item>
                <item row="3" column="3">
-                <widget class="QPushButton" name="pushButton_8">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="cursor">
-                  <cursorShape>PointingHandCursor</cursorShape>
+                <widget class="QLabel" name="lbl_btn_11">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
                  </property>
                  <property name="text">
-                  <string/>
+                  <string>BTN11</string>
                  </property>
-                 <property name="checkable">
-                  <bool>true</bool>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
                  </property>
                 </widget>
                </item>
                <item row="3" column="2">
-                <widget class="QPushButton" name="pushButton_4">
+                <widget class="QLabel" name="lbl_btn_10">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>BTN10</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="6">
+                <widget class="QLabel" name="lbl_btn_14">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>BTN14</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="5">
+                <widget class="QLabel" name="lbl_btn_13">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>BTN13</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="4">
+                <widget class="QLabel" name="lbl_btn_12">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>BTN12</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="8">
+                <widget class="QLabel" name="lbl_btn_16">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>BTN16</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="7">
+                <widget class="QLabel" name="lbl_btn_15">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>BTN15</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="5">
+                <widget class="QPushButton" name="btn_btn_5">
                  <property name="sizePolicy">
-                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>100</height>
+                  </size>
+                 </property>
                  <property name="cursor">
                   <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true"/>
                  </property>
                  <property name="text">
                   <string/>
@@ -1945,31 +2090,108 @@ QWidget#widget_digital_4 {
                  </property>
                 </widget>
                </item>
-               <item row="3" column="1">
-                <widget class="QPushButton" name="pushButton_2">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="cursor">
-                  <cursorShape>PointingHandCursor</cursorShape>
+               <item row="0" column="7">
+                <widget class="QLabel" name="lbl_btn_7">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
                  </property>
                  <property name="text">
-                  <string/>
+                  <string>BTN7</string>
                  </property>
-                 <property name="checkable">
-                  <bool>true</bool>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="6">
+                <widget class="QLabel" name="lbl_btn_6">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>BTN6</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="5">
+                <widget class="QLabel" name="lbl_btn_5">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>BTN5</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="8">
+                <widget class="QLabel" name="lbl_btn_8">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>BTN8</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
                  </property>
                 </widget>
                </item>
                <item row="0" column="2">
-                <widget class="QLabel" name="label_6">
+                <widget class="QLabel" name="lbl_btn_2">
                  <property name="font">
                   <font>
                    <family>Arial</family>
-                   <pointsize>15</pointsize>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>BTN2</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="4">
+                <widget class="QLabel" name="lbl_btn_4">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>BTN4</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="3">
+                <widget class="QLabel" name="lbl_btn_3">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
                   </font>
                  </property>
                  <property name="text">
@@ -1980,80 +2202,88 @@ QWidget#widget_digital_4 {
                  </property>
                 </widget>
                </item>
-               <item row="0" column="5">
-                <widget class="QLabel" name="label_9">
-                 <property name="font">
-                  <font>
-                   <family>Arial</family>
-                   <pointsize>15</pointsize>
-                  </font>
+               <item row="2" column="6">
+                <widget class="QPushButton" name="btn_btn_6">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true"/>
                  </property>
                  <property name="text">
-                  <string>STATUS2</string>
+                  <string/>
                  </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="label_30">
-                 <property name="font">
-                  <font>
-                   <family>Arial</family>
-                   <pointsize>15</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>TextLabel</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="1">
-                <widget class="QLabel" name="label_31">
-                 <property name="font">
-                  <font>
-                   <family>Arial</family>
-                   <pointsize>15</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>TextLabel</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="2">
-                <widget class="QLabel" name="label_32">
-                 <property name="font">
-                  <font>
-                   <family>Arial</family>
-                   <pointsize>15</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>TextLabel</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
+                 <property name="checkable">
+                  <bool>true</bool>
                  </property>
                 </widget>
                </item>
                <item row="2" column="3">
-                <widget class="QLabel" name="label_33">
+                <widget class="QPushButton" name="btn_btn_3">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true"/>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="checkable">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="0">
+                <spacer name="verticalSpacer_5">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Maximum</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>10</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="lbl_btn_9">
                  <property name="font">
                   <font>
                    <family>Arial</family>
-                   <pointsize>15</pointsize>
+                   <pointsize>30</pointsize>
                   </font>
                  </property>
                  <property name="text">
-                  <string>TextLabel</string>
+                  <string>BTN9</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
@@ -2061,47 +2291,248 @@ QWidget#widget_digital_4 {
                 </widget>
                </item>
                <item row="2" column="4">
-                <widget class="QLabel" name="label_34">
-                 <property name="font">
-                  <font>
-                   <family>Arial</family>
-                   <pointsize>15</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>TextLabel</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="5">
-                <widget class="QLabel" name="label_35">
-                 <property name="font">
-                  <font>
-                   <family>Arial</family>
-                   <pointsize>15</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>TextLabel</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="1">
-                <widget class="QPushButton" name="btn_digital_2">
+                <widget class="QPushButton" name="btn_btn_4">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>100</height>
+                  </size>
+                 </property>
                  <property name="cursor">
                   <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true"/>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="checkable">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="0">
+                <widget class="QPushButton" name="btn_btn_9">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true"/>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="checkable">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="2">
+                <widget class="QPushButton" name="btn_btn_10">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true"/>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="checkable">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="3">
+                <widget class="QPushButton" name="btn_btn_11">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true"/>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="checkable">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="4">
+                <widget class="QPushButton" name="btn_btn_12">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true"/>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="checkable">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="5">
+                <widget class="QPushButton" name="btn_btn_13">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true"/>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="checkable">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="6">
+                <widget class="QPushButton" name="btn_btn_14">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true"/>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="checkable">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="7">
+                <widget class="QPushButton" name="btn_btn_15">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true"/>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="checkable">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="8">
+                <widget class="QPushButton" name="btn_btn_16">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true"/>
                  </property>
                  <property name="text">
                   <string/>
@@ -2118,203 +2549,1997 @@ QWidget#widget_digital_4 {
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="page_empty">
+        <widget class="QWidget" name="page_states">
+         <layout class="QGridLayout" name="gridLayout_21">
+          <item row="0" column="0">
+           <widget class="QWidget" name="widget_stylesheet_page2_2" native="true">
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+    border: none;
+    border-image: url(btn_off.png); /* Unchecked image */
+}
+
+QPushButton:checked {
+    border-image: url(btn_on.png); /* Checked image */
+}
+
+QPushButton:disabled {
+    border-image: url(button_disabled_unchecked.png); /* Disabled and unchecked image */
+}
+
+QPushButton:disabled:checked {
+    border-image: url(button_disabled_checked.png); /* Disabled and checked image */
+}</string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_18">
+             <item row="0" column="0">
+              <layout class="QGridLayout" name="gridLayout_20">
+               <item row="2" column="8">
+                <widget class="QWidget" name="widget_digital_3" native="true">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QWidget {
+    border-image: url(led_on.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QWidget" name="widget_digital_1" native="true">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QWidget {
+    border-image: url(led_on.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="10">
+                <widget class="QWidget" name="widget_digital_4" native="true">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QWidget {
+    border-image: url(led_on.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="12">
+                <widget class="QWidget" name="widget_digital_5" native="true">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QWidget {
+    border-image: url(led_on.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <spacer name="verticalSpacer_14">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Maximum</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>10</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="3" column="0">
+                <spacer name="verticalSpacer_15">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Maximum</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>10</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="0" column="14">
+                <widget class="QLabel" name="lbl_digital2_2">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>STATE6</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="6">
+                <widget class="QWidget" name="widget_digital_2" native="true">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QWidget {
+    border-image: url(led_on.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="15">
+                <widget class="QWidget" name="widget_digital_7" native="true">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QWidget {
+    border-image: url(led_on.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="14">
+                <widget class="QWidget" name="widget_digital_6" native="true">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QWidget {
+    border-image: url(led_on.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="0">
+                <widget class="QWidget" name="widget_digital_8" native="true">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QWidget {
+    border-image: url(led_on.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="12">
+                <widget class="QLabel" name="lbl_digital1_2">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>STATE5</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="0">
+                <spacer name="verticalSpacer_13">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Maximum</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>10</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="0" column="10">
+                <widget class="QLabel" name="lbl_btn4_2">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>STATE4</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0">
+                <widget class="QLabel" name="lbl_btn1_2">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>STATE1</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="8">
+                <widget class="QLabel" name="lbl_btn3_2">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>STATE3</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="2">
+                <spacer name="horizontalSpacer_51">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Maximum</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>10</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="2" column="13">
+                <spacer name="horizontalSpacer_50">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Maximum</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>10</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="2" column="7">
+                <spacer name="horizontalSpacer_52">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Maximum</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>10</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="2" column="11">
+                <spacer name="horizontalSpacer_57">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Maximum</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>10</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="2" column="9">
+                <spacer name="horizontalSpacer_56">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Maximum</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>10</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="0" column="6">
+                <widget class="QLabel" name="lbl_btn2_2">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>STATE2</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="16">
+                <widget class="QWidget" name="widget_digital_9" native="true">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QWidget {
+    border-image: url(led_on.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="6">
+                <widget class="QWidget" name="widget_digital_10" native="true">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QWidget {
+    border-image: url(led_on.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="8">
+                <widget class="QWidget" name="widget_digital_11" native="true">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QWidget {
+    border-image: url(led_on.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="10">
+                <widget class="QWidget" name="widget_digital_12" native="true">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QWidget {
+    border-image: url(led_on.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="12">
+                <widget class="QWidget" name="widget_digital_13" native="true">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QWidget {
+    border-image: url(led_on.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="14">
+                <widget class="QWidget" name="widget_digital_14" native="true">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QWidget {
+    border-image: url(led_on.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="15">
+                <widget class="QWidget" name="widget_digital_15" native="true">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QWidget {
+    border-image: url(led_on.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="16">
+                <widget class="QWidget" name="widget_digital_16" native="true">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QWidget {
+    border-image: url(led_on.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="15">
+                <widget class="QLabel" name="lbl_btn5_2">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>STATE7</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="16">
+                <widget class="QLabel" name="lbl_btn6_2">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>STATE8</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="0">
+                <widget class="QLabel" name="lbl_btn7_2">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>STATE9</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="6">
+                <widget class="QLabel" name="lbl_btn8_2">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>STATE10</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="8">
+                <widget class="QLabel" name="lbl_digital_4">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>STATE11</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="10">
+                <widget class="QLabel" name="lbl_digital4_2">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>STATE12</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="12">
+                <widget class="QLabel" name="lbl_digital4_3">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>STATE13</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="14">
+                <widget class="QLabel" name="lbl_digital4_4">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>STATE14</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="15">
+                <widget class="QLabel" name="lbl_digital4_5">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>STATE15</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="16">
+                <widget class="QLabel" name="lbl_digital4_6">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>STATE16</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="page_sensor_group">
          <layout class="QGridLayout" name="gridLayout_4">
           <item row="0" column="0">
            <widget class="QWidget" name="widget_page3" native="true">
+            <property name="styleSheet">
+             <string notr="true">QGroupBox &gt; QWidget {
+    border-image: url(img_sensor_display.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+            </property>
             <widget class="QGroupBox" name="groupBox">
              <property name="geometry">
               <rect>
-               <x>20</x>
-               <y>20</y>
-               <width>391</width>
+               <x>10</x>
+               <y>10</y>
+               <width>321</width>
                <height>211</height>
               </rect>
              </property>
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
              <property name="title">
-              <string>GroupBox</string>
+              <string>위치1</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_19">
-              <item row="0" column="0">
-               <layout class="QGridLayout" name="gridLayout_18">
-                <item row="0" column="1">
-                 <widget class="QWidget" name="widget_sensor_group1" native="true">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">QWidget#widget_sensor_group1 {
-    border-image: url(sensor_display_group.png);
+              <item row="1" column="0">
+               <widget class="QWidget" name="widget_sensor_group1_1" native="true">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>150</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QWidget#widget_sensor_group1_1 {
+    border-image: url(img_sensor_display.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
 }</string>
-                  </property>
-                  <widget class="QLabel" name="label">
-                   <property name="geometry">
-                    <rect>
-                     <x>40</x>
-                     <y>30</y>
-                     <width>101</width>
-                     <height>41</height>
-                    </rect>
-                   </property>
-                   <property name="text">
-                    <string>TextLabel</string>
-                   </property>
-                  </widget>
-                  <widget class="QLabel" name="label_38">
-                   <property name="geometry">
-                    <rect>
-                     <x>40</x>
-                     <y>100</y>
-                     <width>101</width>
-                     <height>41</height>
-                    </rect>
-                   </property>
-                   <property name="text">
-                    <string>TextLabel</string>
-                   </property>
-                  </widget>
-                 </widget>
-                </item>
-               </layout>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_15">
+                 <item row="0" column="0">
+                  <layout class="QVBoxLayout" name="verticalLayout_3">
+                   <item>
+                    <widget class="QLabel" name="lbl_sensor_name1_1">
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>15</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>Sensor1</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="lbl_sensor_value1_1">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>30</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>32</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
               </item>
-              <item row="0" column="1">
-               <layout class="QGridLayout" name="gridLayout_20">
-                <item row="0" column="0">
-                 <widget class="QWidget" name="widget_sensor_group2" native="true">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">QWidget#widget_sensor_group2 {
-    border-image: url(sensor_display_group.png);
+              <item row="1" column="1">
+               <widget class="QWidget" name="widget_sensor_group1_3" native="true">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>150</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>150</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QWidget#widget_sensor_group1_1 {
+    border-image: url(img_sensor_display.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
 }</string>
-                  </property>
-                  <widget class="QLabel" name="label_39">
-                   <property name="geometry">
-                    <rect>
-                     <x>40</x>
-                     <y>100</y>
-                     <width>101</width>
-                     <height>41</height>
-                    </rect>
-                   </property>
-                   <property name="text">
-                    <string>TextLabel</string>
-                   </property>
-                  </widget>
-                  <widget class="QLabel" name="label_40">
-                   <property name="geometry">
-                    <rect>
-                     <x>40</x>
-                     <y>30</y>
-                     <width>101</width>
-                     <height>41</height>
-                    </rect>
-                   </property>
-                   <property name="text">
-                    <string>TextLabel</string>
-                   </property>
-                  </widget>
-                 </widget>
-                </item>
-               </layout>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_22">
+                 <item row="0" column="0">
+                  <layout class="QVBoxLayout" name="verticalLayout_9">
+                   <item>
+                    <widget class="QLabel" name="lbl_sensor_name1_2">
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>15</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>Sensor1</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="lbl_sensor_value1_2">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>30</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>32</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
               </item>
              </layout>
             </widget>
             <widget class="QGroupBox" name="groupBox_2">
              <property name="geometry">
               <rect>
-               <x>550</x>
-               <y>20</y>
-               <width>391</width>
+               <x>340</x>
+               <y>10</y>
+               <width>641</width>
                <height>211</height>
               </rect>
              </property>
-             <property name="title">
-              <string>GroupBox</string>
+             <property name="styleSheet">
+              <string notr="true"/>
              </property>
-             <layout class="QGridLayout" name="gridLayout_21">
-              <item row="0" column="0">
-               <layout class="QGridLayout" name="gridLayout_22">
-                <item row="0" column="0">
-                 <widget class="QPushButton" name="pushButton_12">
-                  <property name="text">
-                   <string>PushButton</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
+             <property name="title">
+              <string>위치1</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_23">
+              <item row="1" column="2">
+               <widget class="QWidget" name="widget_sensor_group2_3" native="true">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>150</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>150</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QWidget#widget_sensor_group2_3 {
+    border-image: url(img_sensor_display.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_26">
+                 <item row="0" column="0">
+                  <layout class="QVBoxLayout" name="verticalLayout_19">
+                   <item>
+                    <widget class="QLabel" name="label_15">
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>15</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>Sensor1</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_45">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>30</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>32</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
               </item>
-              <item row="0" column="1">
-               <layout class="QGridLayout" name="gridLayout_23">
-                <item row="0" column="0">
-                 <widget class="QPushButton" name="pushButton_13">
-                  <property name="text">
-                   <string>PushButton</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
+              <item row="1" column="1">
+               <widget class="QWidget" name="widget_sensor_group2_2" native="true">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>150</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>150</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QWidget#widget_sensor_group1_1 {
+    border-image: url(img_sensor_display.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_25">
+                 <item row="0" column="0">
+                  <layout class="QVBoxLayout" name="verticalLayout_18">
+                   <item>
+                    <widget class="QLabel" name="label_14">
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>15</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>Sensor1</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_44">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>30</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>32</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QWidget" name="widget_sensor_group2_1" native="true">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>150</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QWidget#widget_sensor_group2_1 {
+    border-image: url(img_sensor_display.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_24">
+                 <item row="0" column="0">
+                  <layout class="QVBoxLayout" name="verticalLayout_17">
+                   <item>
+                    <widget class="QLabel" name="lbl_sensor_name1_3">
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>15</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>Sensor1</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="lbl_sensor_value1_3">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>30</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>32</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="1" column="3">
+               <widget class="QWidget" name="widget_sensor_group2_4" native="true">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>150</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>150</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QWidget#widget_sensor_group2_4 {
+    border-image: url(img_sensor_display.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_27">
+                 <item row="0" column="0">
+                  <layout class="QVBoxLayout" name="verticalLayout_20">
+                   <item>
+                    <widget class="QLabel" name="label_16">
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>15</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>Sensor1</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_46">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>30</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>32</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
               </item>
              </layout>
             </widget>
             <widget class="QGroupBox" name="groupBox_3">
              <property name="geometry">
               <rect>
-               <x>20</x>
-               <y>240</y>
-               <width>591</width>
+               <x>10</x>
+               <y>230</y>
+               <width>491</width>
                <height>211</height>
               </rect>
              </property>
-             <property name="title">
-              <string>GroupBox</string>
+             <property name="styleSheet">
+              <string notr="true"/>
              </property>
-             <layout class="QGridLayout" name="gridLayout_24">
-              <item row="0" column="0">
-               <layout class="QGridLayout" name="gridLayout_25">
-                <item row="0" column="0">
-                 <widget class="QPushButton" name="pushButton_14">
-                  <property name="text">
-                   <string>PushButton</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
+             <property name="title">
+              <string>위치1</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_29">
+              <item row="1" column="1">
+               <widget class="QWidget" name="widget_sensor_group1_9" native="true">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>150</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>150</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QWidget#widget_sensor_group1_1 {
+    border-image: url(img_sensor_display.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_31">
+                 <item row="0" column="0">
+                  <layout class="QVBoxLayout" name="verticalLayout_22">
+                   <item>
+                    <widget class="QLabel" name="label_18">
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>15</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>Sensor1</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_48">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>30</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>32</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
               </item>
-              <item row="0" column="1">
-               <layout class="QGridLayout" name="gridLayout_26">
-                <item row="0" column="0">
-                 <widget class="QPushButton" name="pushButton_10">
-                  <property name="text">
-                   <string>PushButton</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
+              <item row="1" column="0">
+               <widget class="QWidget" name="widget_sensor_group1_10" native="true">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>150</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QWidget#widget_sensor_group1_1 {
+    border-image: url(img_sensor_display.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_32">
+                 <item row="0" column="0">
+                  <layout class="QVBoxLayout" name="verticalLayout_23">
+                   <item>
+                    <widget class="QLabel" name="label_19">
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>15</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>Sensor1</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_49">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>30</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>32</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
               </item>
-              <item row="0" column="2">
-               <layout class="QGridLayout" name="gridLayout_27">
-                <item row="0" column="0">
-                 <widget class="QPushButton" name="pushButton_11">
-                  <property name="text">
-                   <string>PushButton</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
+              <item row="1" column="2">
+               <widget class="QWidget" name="widget_sensor_group1_11" native="true">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>150</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>150</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QWidget#widget_sensor_group1_1 {
+    border-image: url(img_sensor_display.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_33">
+                 <item row="0" column="0">
+                  <layout class="QVBoxLayout" name="verticalLayout_24">
+                   <item>
+                    <widget class="QLabel" name="label_20">
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>15</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>Sensor1</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_50">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>30</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>32</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QGroupBox" name="groupBox_4">
+             <property name="geometry">
+              <rect>
+               <x>610</x>
+               <y>310</y>
+               <width>381</width>
+               <height>211</height>
+              </rect>
+             </property>
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+             <property name="title">
+              <string>위치1</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_30">
+              <item row="1" column="1">
+               <widget class="QWidget" name="widget_sensor_group1_12" native="true">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>150</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>150</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QWidget#widget_sensor_group1_1 {
+    border-image: url(img_sensor_display.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_34">
+                 <item row="0" column="0">
+                  <layout class="QVBoxLayout" name="verticalLayout_25">
+                   <item>
+                    <widget class="QLabel" name="label_21">
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>15</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>Sensor1</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_51">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>30</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>32</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QWidget" name="widget_sensor_group1_13" native="true">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>150</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QWidget#widget_sensor_group1_1 {
+    border-image: url(img_sensor_display.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_35">
+                 <item row="0" column="0">
+                  <layout class="QVBoxLayout" name="verticalLayout_26">
+                   <item>
+                    <widget class="QLabel" name="label_22">
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>15</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>Sensor1</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_52">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>30</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>32</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QGroupBox" name="groupBox_5">
+             <property name="geometry">
+              <rect>
+               <x>1120</x>
+               <y>310</y>
+               <width>381</width>
+               <height>211</height>
+              </rect>
+             </property>
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+             <property name="title">
+              <string>위치1</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_36">
+              <item row="1" column="1">
+               <widget class="QWidget" name="widget_sensor_group1_14" native="true">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>150</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>150</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QWidget#widget_sensor_group1_1 {
+    border-image: url(img_sensor_display.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_37">
+                 <item row="0" column="0">
+                  <layout class="QVBoxLayout" name="verticalLayout_27">
+                   <item>
+                    <widget class="QLabel" name="label_23">
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>15</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>Sensor1</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_53">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>30</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>32</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QWidget" name="widget_sensor_group1_15" native="true">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>150</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QWidget#widget_sensor_group1_1 {
+    border-image: url(img_sensor_display.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_38">
+                 <item row="0" column="0">
+                  <layout class="QVBoxLayout" name="verticalLayout_28">
+                   <item>
+                    <widget class="QLabel" name="label_24">
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>15</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>Sensor1</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_54">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>30</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>32</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QGroupBox" name="groupBox_6">
+             <property name="geometry">
+              <rect>
+               <x>990</x>
+               <y>10</y>
+               <width>381</width>
+               <height>211</height>
+              </rect>
+             </property>
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+             <property name="title">
+              <string>위치1</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_39">
+              <item row="1" column="1">
+               <widget class="QWidget" name="widget_sensor_group1_16" native="true">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>150</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>150</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QWidget#widget_sensor_group1_1 {
+    border-image: url(img_sensor_display.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_40">
+                 <item row="0" column="0">
+                  <layout class="QVBoxLayout" name="verticalLayout_29">
+                   <item>
+                    <widget class="QLabel" name="label_25">
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>15</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>Sensor1</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_55">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>30</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>32</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QWidget" name="widget_sensor_group1_17" native="true">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>150</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QWidget#widget_sensor_group1_1 {
+    border-image: url(img_sensor_display.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_41">
+                 <item row="0" column="0">
+                  <layout class="QVBoxLayout" name="verticalLayout_30">
+                   <item>
+                    <widget class="QLabel" name="label_26">
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>15</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>Sensor1</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_56">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>30</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>32</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
               </item>
              </layout>
             </widget>
@@ -2605,7 +4830,7 @@ QProgressBar::chunk {
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="label_11">
+           <widget class="QLabel" name="lbl_thermometer">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
               <horstretch>0</horstretch>
@@ -2652,7 +4877,7 @@ QProgressBar::chunk {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1210</width>
+     <width>1600</width>
      <height>21</height>
     </rect>
    </property>
@@ -2675,8 +4900,8 @@ QProgressBar::chunk {
    <slot>prev_page()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>58</x>
-     <y>627</y>
+     <x>69</x>
+     <y>805</y>
     </hint>
     <hint type="destinationlabel">
      <x>285</x>
@@ -2691,8 +4916,8 @@ QProgressBar::chunk {
    <slot>next_page()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1198</x>
-     <y>627</y>
+     <x>1588</x>
+     <y>805</y>
     </hint>
     <hint type="destinationlabel">
      <x>374</x>
@@ -2707,12 +4932,28 @@ QProgressBar::chunk {
    <slot>port_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>22</x>
-     <y>104</y>
+     <x>33</x>
+     <y>138</y>
     </hint>
     <hint type="destinationlabel">
      <x>5</x>
      <y>103</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_custom_setting</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>btn_custom_setting_end_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1441</x>
+     <y>125</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1593</x>
+     <y>125</y>
     </hint>
    </hints>
   </connection>
@@ -2722,5 +4963,7 @@ QProgressBar::chunk {
   <slot>next_page()</slot>
   <slot>change_stacked_widget(QString)</slot>
   <slot>port_changed()</slot>
+  <slot>end_setting()</slot>
+  <slot>btn_custom_setting_end_clicked()</slot>
  </slots>
 </ui>
