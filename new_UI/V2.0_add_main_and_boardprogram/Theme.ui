@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1600</width>
-    <height>900</height>
+    <height>911</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -312,7 +312,7 @@ QComboBox { color: transparent; }
       <item>
        <widget class="QStackedWidget" name="stacked_widget">
         <property name="currentIndex">
-         <number>0</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="page_monitoring">
          <layout class="QGridLayout" name="gridLayout_3">
@@ -555,41 +555,21 @@ font-size: 30px; font-family: Arial;
                              </spacer>
                             </item>
                             <item>
-                             <widget class="QLineEdit" name="edit_p1_sensor_name_1">
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="minimumSize">
-                               <size>
-                                <width>0</width>
-                                <height>0</height>
-                               </size>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>16777215</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                              <property name="styleSheet">
-                               <string notr="true">QLineEdit {
-background:transparent;
-}</string>
+                             <widget class="QLabel" name="lbl_p1_sensor_name_1">
+                              <property name="font">
+                               <font>
+                                <family>Arial</family>
+                                <pointsize>-1</pointsize>
+                               </font>
                               </property>
                               <property name="text">
-                               <string>sensor1</string>
+                               <string>Sensor</string>
                               </property>
-                              <property name="frame">
-                               <bool>false</bool>
+                              <property name="scaledContents">
+                               <bool>true</bool>
                               </property>
                               <property name="alignment">
                                <set>Qt::AlignCenter</set>
-                              </property>
-                              <property name="readOnly">
-                               <bool>true</bool>
                               </property>
                              </widget>
                             </item>
@@ -1053,7 +1033,7 @@ background:transparent;
                               </widget>
                              </item>
                              <item>
-                              <spacer name="horizontalSpacer_19">
+                              <spacer name="horizontalSpacer_46">
                                <property name="orientation">
                                 <enum>Qt::Horizontal</enum>
                                </property>
@@ -2574,27 +2554,115 @@ QPushButton:disabled:checked {
             <layout class="QGridLayout" name="gridLayout_18">
              <item row="0" column="0">
               <layout class="QGridLayout" name="gridLayout_20">
-               <item row="2" column="8">
-                <widget class="QWidget" name="widget_digital_3" native="true">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
+               <item row="2" column="9">
+                <spacer name="horizontalSpacer_56">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
                  </property>
-                 <property name="minimumSize">
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Maximum</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
                   <size>
-                   <width>100</width>
-                   <height>100</height>
+                   <width>10</width>
+                   <height>20</height>
                   </size>
                  </property>
-                 <property name="styleSheet">
-                  <string notr="true">QWidget {
-    border-image: url(led_on.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-}</string>
+                </spacer>
+               </item>
+               <item row="2" column="7">
+                <spacer name="horizontalSpacer_52">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Maximum</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>10</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="2" column="11">
+                <spacer name="horizontalSpacer_57">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Maximum</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>10</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="0" column="8">
+                <widget class="QLabel" name="lbl_digital_3">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>STATE3</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="2">
+                <spacer name="horizontalSpacer_51">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Maximum</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>10</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="2" column="13">
+                <spacer name="horizontalSpacer_50">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Maximum</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>10</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="0" column="0">
+                <widget class="QLabel" name="lbl_digital_1">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>STATE1</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
                  </property>
                 </widget>
                </item>
@@ -2624,6 +2692,86 @@ QPushButton:disabled:checked {
                </item>
                <item row="2" column="10">
                 <widget class="QWidget" name="widget_digital_4" native="true">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QWidget {
+    border-image: url(led_on.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="8">
+                <widget class="QWidget" name="widget_digital_3" native="true">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QWidget {
+    border-image: url(led_on.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <spacer name="verticalSpacer_15">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Maximum</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>10</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="0" column="14">
+                <widget class="QLabel" name="lbl_digital_6">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>STATE6</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="6">
+                <widget class="QWidget" name="widget_digital_2" native="true">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                    <horstretch>0</horstretch>
@@ -2686,8 +2834,8 @@ QPushButton:disabled:checked {
                  </property>
                 </spacer>
                </item>
-               <item row="3" column="0">
-                <spacer name="verticalSpacer_15">
+               <item row="5" column="0">
+                <spacer name="verticalSpacer_13">
                  <property name="orientation">
                   <enum>Qt::Vertical</enum>
                  </property>
@@ -2701,70 +2849,6 @@ QPushButton:disabled:checked {
                   </size>
                  </property>
                 </spacer>
-               </item>
-               <item row="0" column="14">
-                <widget class="QLabel" name="lbl_digital2_2">
-                 <property name="font">
-                  <font>
-                   <family>Arial</family>
-                   <pointsize>30</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>STATE6</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="6">
-                <widget class="QWidget" name="widget_digital_2" native="true">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>100</width>
-                   <height>100</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">QWidget {
-    border-image: url(led_on.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-}</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="15">
-                <widget class="QWidget" name="widget_digital_7" native="true">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>100</width>
-                   <height>100</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">QWidget {
-    border-image: url(led_on.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-}</string>
-                 </property>
-                </widget>
                </item>
                <item row="2" column="14">
                 <widget class="QWidget" name="widget_digital_6" native="true">
@@ -2814,40 +2898,32 @@ QPushButton:disabled:checked {
                  </property>
                 </widget>
                </item>
-               <item row="0" column="12">
-                <widget class="QLabel" name="lbl_digital1_2">
-                 <property name="font">
-                  <font>
-                   <family>Arial</family>
-                   <pointsize>30</pointsize>
-                  </font>
+               <item row="2" column="15">
+                <widget class="QWidget" name="widget_digital_7" native="true">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
                  </property>
-                 <property name="text">
-                  <string>STATE5</string>
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>100</height>
+                  </size>
                  </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
+                 <property name="styleSheet">
+                  <string notr="true">QWidget {
+    border-image: url(led_on.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
                  </property>
                 </widget>
                </item>
-               <item row="5" column="0">
-                <spacer name="verticalSpacer_13">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Maximum</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>10</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
                <item row="0" column="10">
-                <widget class="QLabel" name="lbl_btn4_2">
+                <widget class="QLabel" name="lbl_digital_4">
                  <property name="font">
                   <font>
                    <family>Arial</family>
@@ -2862,120 +2938,8 @@ QPushButton:disabled:checked {
                  </property>
                 </widget>
                </item>
-               <item row="0" column="0">
-                <widget class="QLabel" name="lbl_btn1_2">
-                 <property name="font">
-                  <font>
-                   <family>Arial</family>
-                   <pointsize>30</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>STATE1</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="8">
-                <widget class="QLabel" name="lbl_btn3_2">
-                 <property name="font">
-                  <font>
-                   <family>Arial</family>
-                   <pointsize>30</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>STATE3</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="2">
-                <spacer name="horizontalSpacer_51">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Maximum</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>10</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item row="2" column="13">
-                <spacer name="horizontalSpacer_50">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Maximum</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>10</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item row="2" column="7">
-                <spacer name="horizontalSpacer_52">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Maximum</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>10</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item row="2" column="11">
-                <spacer name="horizontalSpacer_57">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Maximum</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>10</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item row="2" column="9">
-                <spacer name="horizontalSpacer_56">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Maximum</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>10</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
                <item row="0" column="6">
-                <widget class="QLabel" name="lbl_btn2_2">
+                <widget class="QLabel" name="lbl_digital_2">
                  <property name="font">
                   <font>
                    <family>Arial</family>
@@ -2987,54 +2951,6 @@ QPushButton:disabled:checked {
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="16">
-                <widget class="QWidget" name="widget_digital_9" native="true">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>100</width>
-                   <height>100</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">QWidget {
-    border-image: url(led_on.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-}</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="6" column="6">
-                <widget class="QWidget" name="widget_digital_10" native="true">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>100</width>
-                   <height>100</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">QWidget {
-    border-image: url(led_on.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-}</string>
                  </property>
                 </widget>
                </item>
@@ -3086,8 +3002,32 @@ QPushButton:disabled:checked {
                  </property>
                 </widget>
                </item>
-               <item row="6" column="12">
-                <widget class="QWidget" name="widget_digital_13" native="true">
+               <item row="2" column="16">
+                <widget class="QWidget" name="widget_digital_9" native="true">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QWidget {
+    border-image: url(led_on.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="6">
+                <widget class="QWidget" name="widget_digital_10" native="true">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                    <horstretch>0</horstretch>
@@ -3134,30 +3074,6 @@ QPushButton:disabled:checked {
                  </property>
                 </widget>
                </item>
-               <item row="6" column="15">
-                <widget class="QWidget" name="widget_digital_15" native="true">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>100</width>
-                   <height>100</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">QWidget {
-    border-image: url(led_on.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-}</string>
-                 </property>
-                </widget>
-               </item>
                <item row="6" column="16">
                 <widget class="QWidget" name="widget_digital_16" native="true">
                  <property name="sizePolicy">
@@ -3182,24 +3098,56 @@ QPushButton:disabled:checked {
                  </property>
                 </widget>
                </item>
-               <item row="0" column="15">
-                <widget class="QLabel" name="lbl_btn5_2">
-                 <property name="font">
-                  <font>
-                   <family>Arial</family>
-                   <pointsize>30</pointsize>
-                  </font>
+               <item row="6" column="12">
+                <widget class="QWidget" name="widget_digital_13" native="true">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
                  </property>
-                 <property name="text">
-                  <string>STATE7</string>
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>100</height>
+                  </size>
                  </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
+                 <property name="styleSheet">
+                  <string notr="true">QWidget {
+    border-image: url(led_on.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="15">
+                <widget class="QWidget" name="widget_digital_15" native="true">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QWidget {
+    border-image: url(led_on.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}</string>
                  </property>
                 </widget>
                </item>
                <item row="0" column="16">
-                <widget class="QLabel" name="lbl_btn6_2">
+                <widget class="QLabel" name="lbl_digital_8">
                  <property name="font">
                   <font>
                    <family>Arial</family>
@@ -3215,7 +3163,7 @@ QPushButton:disabled:checked {
                 </widget>
                </item>
                <item row="4" column="0">
-                <widget class="QLabel" name="lbl_btn7_2">
+                <widget class="QLabel" name="lbl_digital_9">
                  <property name="font">
                   <font>
                    <family>Arial</family>
@@ -3230,8 +3178,24 @@ QPushButton:disabled:checked {
                  </property>
                 </widget>
                </item>
+               <item row="0" column="15">
+                <widget class="QLabel" name="lbl_digital_7">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>STATE7</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
                <item row="4" column="6">
-                <widget class="QLabel" name="lbl_btn8_2">
+                <widget class="QLabel" name="lbl_digital_10">
                  <property name="font">
                   <font>
                    <family>Arial</family>
@@ -3247,7 +3211,7 @@ QPushButton:disabled:checked {
                 </widget>
                </item>
                <item row="4" column="8">
-                <widget class="QLabel" name="lbl_digital_4">
+                <widget class="QLabel" name="lbl_digital_11">
                  <property name="font">
                   <font>
                    <family>Arial</family>
@@ -3263,7 +3227,7 @@ QPushButton:disabled:checked {
                 </widget>
                </item>
                <item row="4" column="10">
-                <widget class="QLabel" name="lbl_digital4_2">
+                <widget class="QLabel" name="lbl_digital_12">
                  <property name="font">
                   <font>
                    <family>Arial</family>
@@ -3278,24 +3242,8 @@ QPushButton:disabled:checked {
                  </property>
                 </widget>
                </item>
-               <item row="4" column="12">
-                <widget class="QLabel" name="lbl_digital4_3">
-                 <property name="font">
-                  <font>
-                   <family>Arial</family>
-                   <pointsize>30</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>STATE13</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
                <item row="4" column="14">
-                <widget class="QLabel" name="lbl_digital4_4">
+                <widget class="QLabel" name="lbl_digital_14">
                  <property name="font">
                   <font>
                    <family>Arial</family>
@@ -3310,8 +3258,40 @@ QPushButton:disabled:checked {
                  </property>
                 </widget>
                </item>
+               <item row="4" column="16">
+                <widget class="QLabel" name="lbl_digital_16">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>STATE16</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="12">
+                <widget class="QLabel" name="lbl_digital_13">
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>30</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>STATE13</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
                <item row="4" column="15">
-                <widget class="QLabel" name="lbl_digital4_5">
+                <widget class="QLabel" name="lbl_digital_15">
                  <property name="font">
                   <font>
                    <family>Arial</family>
@@ -3326,8 +3306,8 @@ QPushButton:disabled:checked {
                  </property>
                 </widget>
                </item>
-               <item row="4" column="16">
-                <widget class="QLabel" name="lbl_digital4_6">
+               <item row="0" column="12">
+                <widget class="QLabel" name="lbl_digital_5">
                  <property name="font">
                   <font>
                    <family>Arial</family>
@@ -3335,7 +3315,7 @@ QPushButton:disabled:checked {
                   </font>
                  </property>
                  <property name="text">
-                  <string>STATE16</string>
+                  <string>STATE5</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
@@ -4770,6 +4750,22 @@ QProgressBar::chunk {
            </spacer>
           </item>
          </layout>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_19">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Maximum</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>250</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_4">

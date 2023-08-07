@@ -38,6 +38,10 @@ ds3231_date_str = str(datetime.fromtimestamp(ds3231_time_u32))
 test_module1_u8_B0, test_module1_u8_B1, test_module1_u8_B7 = 0, 0, 0
 test_module2_u8_B0, test_module2_u8_B1, test_module2_u8_B7 = 0, 0, 0
 
+display_data = {"date" : ds3231_date_str, "module1 B0" : test_module1_u8_B0, "module1 B1" : test_module1_u8_B1, "module1 B2" : test_module1_u8_B7,
+"module2 B0" : test_module2_u8_B0, "module2 B1" : test_module2_u8_B1, "module2 B2" : test_module2_u8_B7 }
+
+
 '''바꾼부분'''
 class PrintEmitter(QObject):
     textEmitted = pyqtSignal(str)

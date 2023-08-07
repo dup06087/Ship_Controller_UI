@@ -4,7 +4,7 @@ from PyQt5 import uic
 from PyQt5.QtGui import QPixmap, QPalette, QBrush, QIcon, QPainter
 from PyQt5.QtCore import Qt, pyqtSlot, pyqtSignal, QUrl, QTimer, QThread
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QComboBox, QLineEdit, QPushButton, QVBoxLayout, \
-    QFileDialog, QTextEdit, QDialogButtonBox, QMessageBox
+    QFileDialog, QTextEdit, QDialogButtonBox, QMessageBox, QLabel, QInputDialog
 import threading
 import sys
 import upload_bin_func_and_debug_func as main_functions
@@ -38,8 +38,6 @@ class Page_Firmware_Update(QWidget):
         self.button_clicked_signal.emit()
 
     def btn_update_clicked(self):
-
-
         disable_button_list = [self.btn_back, self.btn_file_select, self.btn_update, self.btn_cancel]
 
         for button in disable_button_list:
@@ -132,6 +130,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setWindowFlags(Qt.WindowStaysOnTopHint)
         self.stacked_widget.setCurrentIndex(0)
 
+        self.initializing_editable_labels()
+        self.load_label_texts()
+
         # menu box
         # self.combo_menu.addItem("Firmware Update")
 
@@ -141,6 +142,10 @@ class MainWindow(QtWidgets.QMainWindow):
             combo_sensor_selector_ = getattr(self, combo_sensor_selector)  # getattr 함수로 동적으로 위젯 참조 얻기
             combo_sensor_selector_.hide()
         self.btn_custom_setting.hide()
+
+        for i in range(1, 9):  # Adjust range accordingly
+            combo_box = self.findChild(QComboBox, f'combo_p1_sensor_selector_{i}')
+            combo_box.currentIndexChanged.connect(self.update_label)
 
         ## Custom Settings End
 
@@ -235,6 +240,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # port led state init
 
+
+
         ### UI init
         QTimer.singleShot(0, self.update_ui_timer)
         QTimer.singleShot(0, self.update_progressbar_timer)
@@ -242,6 +249,80 @@ class MainWindow(QtWidgets.QMainWindow):
         QTimer.singleShot(0, self.fill_ports)
         QTimer.singleShot(0, self.update_usb_state_timer)
         QTimer.singleShot(0, self.update_leds_timer)
+        QTimer.singleShot(0, self.timer_per_5sec)
+
+    def initializing_editable_labels(self):
+        self.editable_labels = []
+        # lbl_p1_sensor_name_1 ~ lbl_p1_sensor_name_8
+        for i in range(1, 9):
+            self.editable_labels.append(f"lbl_p1_sensor_name_{i}")
+
+        # lbl_btn_1 ~ lbl_btn_16
+        for i in range(1, 17):
+            self.editable_labels.append(f"lbl_btn_{i}")
+
+        # lbl_digital_1 ~ lbl_digital_16
+        for i in range(1, 17):
+            self.editable_labels.append(f"lbl_digital_{i}")
+
+    def load_label_texts(self):
+        try:
+            with open("label_texts.txt", "r") as file:
+                for line in file.readlines():
+                    label_name, text = line.strip().split(":")
+                    if label_name in self.editable_labels:
+                        label = getattr(self, label_name)
+                        label.setText(text)
+        except FileNotFoundError:
+            # 파일이 없는 경우의 처리: 일단은 아무것도 하지 않음
+            pass
+
+    def update_label(self, index):
+        # Sender is the combo box that emitted the signal
+        combo_box = self.sender()
+        # Get the currently selected key
+        key = combo_box.currentText()
+        # Get the corresponding value from the dictionary
+        value = main_functions.display_data.get(key)
+        # Update the corresponding label
+        label = self.findChild(QLabel, f'lbl_p1_sensor_{combo_box.objectName()[-1]}')
+        label.setText(str(value))
+
+        with open('selections.txt', 'w') as file:
+            for i in range(1, 9):
+                combo_box = self.findChild(QComboBox, f'combo_p1_sensor_selector_{i}')
+                selected_key = combo_box.currentText()
+                file.write(f'{selected_key}\n')
+
+    def timer_per_5sec(self):
+        self.timer_per_second = QTimer(self)
+        self.timer_per_second.setInterval(5000)  # 1000ms = 1초
+        self.timer_per_second.timeout.connect(self.update_combo_boxes)
+        self.timer_per_second.start()
+
+    def update_combo_boxes(self):
+        for i in range(1, 9):  # Adjust range accordingly
+            combo_box = self.findChild(QComboBox, f'combo_p1_sensor_selector_{i}')
+
+            # Block signals
+            combo_box.blockSignals(True)
+
+            # Save current selected item
+            current_item = combo_box.currentText()
+
+            combo_box.clear()
+
+            # Populate combo box with keys from display_data
+            for key in main_functions.display_data.keys():
+                combo_box.addItem(key)
+
+            # Restore previous selection if it still exists
+            index = combo_box.findText(current_item)
+            if index >= 0:
+                combo_box.setCurrentIndex(index)
+
+            # Unblock signals
+            combo_box.blockSignals(False)
 
     def btn_custom_setting_end_clicked(self):
         for i in range(1, 9):  # range(1, 13)는 1부터 12까지의 숫자를 생성합니다.
@@ -250,7 +331,42 @@ class MainWindow(QtWidgets.QMainWindow):
             combo_sensor_selector_.hide()
         self.btn_custom_setting.hide()
 
+        self.combo_menu.setEnabled(True)
         self.combo_menu.setCurrentIndex(-1)
+
+        for label_name in self.editable_labels:
+            label = self.findChild(QLabel, label_name)
+            if label:
+                label.setStyleSheet("")
+                label.mousePressEvent = None
+
+        self.save_label_texts()
+
+    def label_clicked(self, label):
+        text, ok = QInputDialog.getText(self, "Edit Label", "Enter new text:", text=label.text())
+        if ok:
+            label.setText(text)
+
+    def save_label_texts(self):
+        with open("label_texts.txt", "w") as file:
+            for label_name in self.editable_labels:
+                label = self.findChild(QLabel, label_name)
+                if label:
+                    file.write(f"{label_name}:{label.text()}\n")
+
+        # Load the saved text and update labels
+        with open("label_texts.txt", "r") as file:
+            for line in file:
+                name, text = line.strip().split(":")
+                label = self.findChild(QLabel, name)
+                if label:
+                    label.setText(text)
+
+        # Make labels non-editable
+        for label_name in self.editable_labels:
+            label = self.findChild(QLabel, label_name)
+            label.setTextInteractionFlags(Qt.NoTextInteraction)
+            label.setStyleSheet("")  # Reset to default style
 
     def update_leds_timer(self):
         self.timer_update_leds = QTimer()
@@ -394,6 +510,21 @@ class MainWindow(QtWidgets.QMainWindow):
 
 
     def update_ui_timer(self):
+
+        self.update_combo_boxes()
+
+        try:
+            with open('selections.txt', 'r') as f:
+                selections = f.read().splitlines()
+        except FileNotFoundError:
+            selections = [None] * 8  # Default to None if the file does not exist
+
+        # Apply previous selections
+        for i in range(1, 9):
+            combo_box = self.findChild(QComboBox, f'combo_p1_sensor_selector_{i}')
+            # if selections[i-1] is not None and selections[i-1] in [combo_box.itemText(j) for j in range(combo_box.count())]:
+            combo_box.setCurrentText(selections[i-1])
+
         self.timer_update_ui = QTimer()
         self.timer_update_ui.timeout.connect(self.update_ui)
         self.timer_update_ui.start(1000)  # Fire the timer every 1000 ms (1 second)
@@ -444,34 +575,44 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.combo_port.blockSignals(False)
 
-    def update_ui(self):
-        """ 모든 변수
-        global debug_bytearray_list
-        global ds3231_time_u32, ds3231_date_str
-        global test_module1_u8_B0, test_module1_u8_B1, test_module1_u8_B7
-        global test_module2_u8_B0, test_module2_u8_B1, test_module2_u8_B7
-        :return:
-        """
+    # def update_ui(self):
+    #     """ 모든 변수
+    #     global debug_bytearray_list
+    #     global ds3231_time_u32, ds3231_date_str
+    #     global test_module1_u8_B0, test_module1_u8_B1, test_module1_u8_B7
+    #     global test_module2_u8_B0, test_module2_u8_B1, test_module2_u8_B7
+    #     :return:
+    #     """
+    #
+    #     # time : top_left
+    #     data_time = main_functions.ds3231_date_str
+    #     self.lbl_time.setText(str(data_time))
+    #
+    #     for i in range(1, 9):
+    #         # Get the combo box
+    #         combo_box = self.findChild(QComboBox, f'combo_p1_sensor_selector_{i}')
+    #         # Get the currently selected key
+    #         key = combo_box.currentText()
+    #         # Get the corresponding value from the dictionary
+    #         value = main_functions.display_data.get(key)
+    #
+    #         # Update the corresponding label
+    #         label = self.findChild(QLabel, f'lbl_p1_sensor_{i}')
+    #         if value is not None:
+    #             label.setText(str(value))
 
-        # time : top_left
+    def update_ui(self):
         data_time = main_functions.ds3231_date_str
         self.lbl_time.setText(str(data_time))
-        # sensors : page1
-        self.data1 = main_functions.test_module1_u8_B0
-        self.data2 = main_functions.test_module1_u8_B1
-        self.data3 = main_functions.test_module1_u8_B7
-        self.data4 = main_functions.test_module2_u8_B0
-        self.data5 = main_functions.test_module2_u8_B1
-        self.data6 = main_functions.test_module2_u8_B7
-        self.data7 = '7'
-        self.data8 = '8'
-
-        displaying_sensor_list = [self.data1, self.data2, self.data3, self.data4, self.data5, self.data6, self.data7,
-                                  self.data8]
 
         for i in range(1, 9):
-            label = getattr(self, f'lbl_p1_sensor_{i}')
-            label.setText(str(displaying_sensor_list[i - 1]))
+            combo_box = self.findChild(QComboBox, f'combo_p1_sensor_selector_{i}')
+            label = self.findChild(QLabel, f'lbl_p1_sensor_{i}')
+
+            selected_key = combo_box.currentText()
+            selected_value = main_functions.display_data.get(selected_key, 'N/A')  # Default to 'N/A' if key is not present
+
+            label.setText(str(selected_value))
 
     ### main_func thread
     # 직접 실행하는 문
@@ -538,6 +679,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # gauge.setGaugeTheme(0)
         # gauge.setGaugeTheme(2)
 
+
     # combobox가 변경됐을 때 바로 실행 # 페이지 움직이기 전부터 페이지 옮기는 것까지
     def change_stacked_widget(self, index):
         self.prev_page = self.stacked_widget.currentIndex()
@@ -558,17 +700,36 @@ class MainWindow(QtWidgets.QMainWindow):
             self.combo_menu.setEnabled(False)
 
         elif current_page == self.menu_page_name[1]:  # If the first item is selected
-            for i in range(1, 9):  # range(1, 13)는 1부터 12까지의 숫자를 생성합니다.
-                combo_sensor_selector = f"combo_p1_sensor_selector_{i}"  # f-string을 사용하여 위젯 이름 생성
-                combo_sensor_selector_ = getattr(self, combo_sensor_selector)  # getattr 함수로 동적으로 위젯 참조 얻기
-                combo_sensor_selector_.show()
-            self.btn_custom_setting.show()
+            self.customizing_pages()
 
         elif current_page == "Option 3":  # If the first item is selected
             pass
 
         else:
             pass
+
+    def customizing_pages(self):
+        ### page_main
+        for i in range(1, 9):  # range(1, 13)는 1부터 12까지의 숫자를 생성합니다.
+            combo_sensor_selector = f"combo_p1_sensor_selector_{i}"  # f-string을 사용하여 위젯 이름 생성
+            combo_sensor_selector_ = getattr(self, combo_sensor_selector)  # getattr 함수로 동적으로 위젯 참조 얻기
+            combo_sensor_selector_.show()
+        self.btn_custom_setting.show()
+        self.combo_menu.setEnabled(False)
+
+        for label_name in self.editable_labels:
+            label = self.findChild(QLabel, label_name)
+            if label:
+                label.setStyleSheet("QLabel { border: 1px solid gray; background-color: lightyellow; }")
+                label.mousePressEvent = lambda event, l=label: self.label_clicked(l)
+
+        ### page_btn
+
+        ### page_digital_status
+
+        ### sensors
+
+
 
     def next_page(self):
         current_index = self.stacked_widget.currentIndex()
@@ -618,7 +779,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.naming_title(self.prev_page)
 
         self.combo_menu.setEnabled(True)
-
         # btn control
         self.btn_right.setDisabled(False)
         self.btn_left.setDisabled(False)
