@@ -961,23 +961,7 @@ font-size: 30px; font-family: Arial;
                 <item>
                  <layout class="QHBoxLayout" name="horizontalLayout_7">
                   <item>
-                   <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,40,60">
-                    <item>
-                     <spacer name="verticalSpacer">
-                      <property name="orientation">
-                       <enum>Qt::Vertical</enum>
-                      </property>
-                      <property name="sizeType">
-                       <enum>QSizePolicy::Maximum</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>20</width>
-                        <height>30</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
+                   <layout class="QVBoxLayout" name="verticalLayout_2" stretch="40,60,0">
                     <item>
                      <layout class="QHBoxLayout" name="horizontalLayout_31">
                       <item>
@@ -987,11 +971,154 @@ font-size: 30px; font-family: Arial;
                         </property>
                         <layout class="QGridLayout" name="gridLayout_28">
                          <item row="0" column="1">
-                          <layout class="QVBoxLayout" name="verticalLayout">
+                          <layout class="QVBoxLayout" name="verticalLayout" stretch="0,8">
+                           <item>
+                            <layout class="QHBoxLayout" name="horizontalLayout_25">
+                             <item>
+                              <spacer name="verticalSpacer_17">
+                               <property name="orientation">
+                                <enum>Qt::Vertical</enum>
+                               </property>
+                               <property name="sizeType">
+                                <enum>QSizePolicy::Minimum</enum>
+                               </property>
+                               <property name="sizeHint" stdset="0">
+                                <size>
+                                 <width>20</width>
+                                 <height>40</height>
+                                </size>
+                               </property>
+                              </spacer>
+                             </item>
+                             <item>
+                              <spacer name="horizontalSpacer_47">
+                               <property name="orientation">
+                                <enum>Qt::Horizontal</enum>
+                               </property>
+                               <property name="sizeType">
+                                <enum>QSizePolicy::Minimum</enum>
+                               </property>
+                               <property name="sizeHint" stdset="0">
+                                <size>
+                                 <width>200</width>
+                                 <height>20</height>
+                                </size>
+                               </property>
+                              </spacer>
+                             </item>
+                             <item>
+                              <widget class="QComboBox" name="combo_small_gauge_1"/>
+                             </item>
+                             <item>
+                              <widget class="QLabel" name="lbl_small_gauge_1">
+                               <property name="sizePolicy">
+                                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                                 <horstretch>0</horstretch>
+                                 <verstretch>0</verstretch>
+                                </sizepolicy>
+                               </property>
+                               <property name="minimumSize">
+                                <size>
+                                 <width>147</width>
+                                 <height>0</height>
+                                </size>
+                               </property>
+                               <property name="maximumSize">
+                                <size>
+                                 <width>147</width>
+                                 <height>16777215</height>
+                                </size>
+                               </property>
+                               <property name="text">
+                                <string>GAUGE1</string>
+                               </property>
+                               <property name="alignment">
+                                <set>Qt::AlignCenter</set>
+                               </property>
+                              </widget>
+                             </item>
+                             <item>
+                              <widget class="QLabel" name="lbl_small_gauge_2">
+                               <property name="sizePolicy">
+                                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                                 <horstretch>0</horstretch>
+                                 <verstretch>0</verstretch>
+                                </sizepolicy>
+                               </property>
+                               <property name="minimumSize">
+                                <size>
+                                 <width>147</width>
+                                 <height>0</height>
+                                </size>
+                               </property>
+                               <property name="maximumSize">
+                                <size>
+                                 <width>147</width>
+                                 <height>16777215</height>
+                                </size>
+                               </property>
+                               <property name="text">
+                                <string>GAUGE2</string>
+                               </property>
+                               <property name="alignment">
+                                <set>Qt::AlignCenter</set>
+                               </property>
+                              </widget>
+                             </item>
+                             <item>
+                              <widget class="QComboBox" name="combo_small_gauge_2"/>
+                             </item>
+                             <item>
+                              <spacer name="horizontalSpacer_45">
+                               <property name="orientation">
+                                <enum>Qt::Horizontal</enum>
+                               </property>
+                               <property name="sizeType">
+                                <enum>QSizePolicy::Minimum</enum>
+                               </property>
+                               <property name="sizeHint" stdset="0">
+                                <size>
+                                 <width>200</width>
+                                 <height>20</height>
+                                </size>
+                               </property>
+                              </spacer>
+                             </item>
+                             <item>
+                              <spacer name="verticalSpacer_18">
+                               <property name="orientation">
+                                <enum>Qt::Vertical</enum>
+                               </property>
+                               <property name="sizeType">
+                                <enum>QSizePolicy::Minimum</enum>
+                               </property>
+                               <property name="sizeHint" stdset="0">
+                                <size>
+                                 <width>20</width>
+                                 <height>40</height>
+                                </size>
+                               </property>
+                              </spacer>
+                             </item>
+                            </layout>
+                           </item>
                            <item>
                             <layout class="QHBoxLayout" name="layout_small_gauge">
                              <item>
-                              <spacer name="horizontalSpacer_20">
+                              <spacer name="verticalSpacer_6">
+                               <property name="orientation">
+                                <enum>Qt::Vertical</enum>
+                               </property>
+                               <property name="sizeHint" stdset="0">
+                                <size>
+                                 <width>20</width>
+                                 <height>40</height>
+                                </size>
+                               </property>
+                              </spacer>
+                             </item>
+                             <item>
+                              <spacer name="horizontalSpacer_46">
                                <property name="orientation">
                                 <enum>Qt::Horizontal</enum>
                                </property>
@@ -1000,7 +1127,7 @@ font-size: 30px; font-family: Arial;
                                </property>
                                <property name="sizeHint" stdset="0">
                                 <size>
-                                 <width>250</width>
+                                 <width>200</width>
                                  <height>20</height>
                                 </size>
                                </property>
@@ -1008,6 +1135,12 @@ font-size: 30px; font-family: Arial;
                              </item>
                              <item>
                               <widget class="AnalogGaugeWidget" name="widget_small_gauge1" native="true">
+                               <property name="sizePolicy">
+                                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                                 <horstretch>0</horstretch>
+                                 <verstretch>0</verstretch>
+                                </sizepolicy>
+                               </property>
                                <property name="styleSheet">
                                 <string notr="true">QWidget#widget_gauge2
  {
@@ -1021,6 +1154,12 @@ font-size: 30px; font-family: Arial;
                              </item>
                              <item>
                               <widget class="AnalogGaugeWidget" name="widget_small_gauge2" native="true">
+                               <property name="sizePolicy">
+                                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                                 <horstretch>0</horstretch>
+                                 <verstretch>0</verstretch>
+                                </sizepolicy>
+                               </property>
                                <property name="styleSheet">
                                 <string notr="true">QWidget#widget_gauge2
  {
@@ -1033,7 +1172,7 @@ font-size: 30px; font-family: Arial;
                               </widget>
                              </item>
                              <item>
-                              <spacer name="horizontalSpacer_46">
+                              <spacer name="horizontalSpacer_20">
                                <property name="orientation">
                                 <enum>Qt::Horizontal</enum>
                                </property>
@@ -1042,8 +1181,21 @@ font-size: 30px; font-family: Arial;
                                </property>
                                <property name="sizeHint" stdset="0">
                                 <size>
-                                 <width>250</width>
+                                 <width>200</width>
                                  <height>20</height>
+                                </size>
+                               </property>
+                              </spacer>
+                             </item>
+                             <item>
+                              <spacer name="verticalSpacer_16">
+                               <property name="orientation">
+                                <enum>Qt::Vertical</enum>
+                               </property>
+                               <property name="sizeHint" stdset="0">
+                                <size>
+                                 <width>20</width>
+                                 <height>40</height>
                                 </size>
                                </property>
                               </spacer>
@@ -1114,6 +1266,98 @@ font-size: 30px; font-family: Arial;
                          <size>
                           <width>40</width>
                           <height>20</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_26">
+                      <item>
+                       <spacer name="verticalSpacer_19">
+                        <property name="orientation">
+                         <enum>Qt::Vertical</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>0</width>
+                          <height>40</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                      <item>
+                       <widget class="QComboBox" name="combo_gauge_1"/>
+                      </item>
+                      <item>
+                       <widget class="QLabel" name="lbl_gauge_1">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                         <size>
+                          <width>147</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>147</width>
+                          <height>16777215</height>
+                         </size>
+                        </property>
+                        <property name="text">
+                         <string>GAUGE1</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLabel" name="lbl_gauge_2">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                         <size>
+                          <width>147</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>147</width>
+                          <height>16777215</height>
+                         </size>
+                        </property>
+                        <property name="text">
+                         <string>GAUGE2</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QComboBox" name="combo_gauge_2"/>
+                      </item>
+                      <item>
+                       <spacer name="verticalSpacer_20">
+                        <property name="orientation">
+                         <enum>Qt::Vertical</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>0</width>
+                          <height>40</height>
                          </size>
                         </property>
                        </spacer>

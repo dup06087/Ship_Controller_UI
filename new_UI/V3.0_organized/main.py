@@ -123,6 +123,9 @@ class MainWindow(QtWidgets.QMainWindow):
         uic.loadUi("Theme.ui", self)
 
         #window size and other options
+
+        self.combo_gauges = ["combo_small_gauge_1", "combo_small_gauge_2", "combo_gauge_1", "combo_gauge_2"]
+
         self.init_window()
         self.initializing_editable_labels()
         self.load_label_texts()
@@ -134,12 +137,17 @@ class MainWindow(QtWidgets.QMainWindow):
         self.init_progressbar()
         self.init_make_rectangle_widgets()
 
+
         self.hidden_pages = [self.page_firmware_update.objectName()]
+
+
         self.init_digital_status()
 
         # gauge widget 설정
         self.init_gauge(self.widget_gauge1)
         self.init_gauge(self.widget_gauge2)
+        self.init_gauge(self.widget_small_gauge1)
+        self.init_gauge(self.widget_small_gauge2)
 
         # 기본 실행 thread
         self.worker_debugging = Worker(self.run_main_func2, self.init_port)
@@ -153,11 +161,17 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setWindowFlags(Qt.WindowStaysOnTopHint)
         self.stacked_widget.setCurrentIndex(0)
 
+
         for i in range(1, 9):  # range(1, 13)는 1부터 12까지의 숫자를 생성합니다.
             combo_sensor_selector = f"combo_p1_sensor_selector_{i}"  # f-string을 사용하여 위젯 이름 생성
             combo_sensor_selector_ = getattr(self, combo_sensor_selector)  # getattr 함수로 동적으로 위젯 참조 얻기
             combo_sensor_selector_.hide()
+
+        for combo_gauge in self.combo_gauges:  # range(1, 13)는 1부터 12까지의 숫자를 생성합니다.
+            getattr(self, combo_gauge).hide()  # getattr 함수로 동적으로 위젯 참조 얻기
+
         self.btn_custom_setting.hide()
+
 
     def init_signals_and_slots(self):
         for i in range(1, 9):  # Adjust range accordingly
@@ -245,6 +259,12 @@ class MainWindow(QtWidgets.QMainWindow):
         for i in range(1, 17):
             self.editable_labels.append(f"lbl_digital_{i}")
 
+        for i in range(1, 3):
+            self.editable_labels.append(f"lbl_small_gauge_{i}")
+
+        for i in range(1, 3):
+            self.editable_labels.append(f"lbl_gauge_{i}")
+
     def load_label_texts(self):
         try:
             with open("label_texts.txt", "r") as file:
@@ -319,6 +339,9 @@ class MainWindow(QtWidgets.QMainWindow):
             if label:
                 label.setStyleSheet("")
                 label.mousePressEvent = None
+
+        for combo_gauge in self.combo_gauges:  # range(1, 13)는 1부터 12까지의 숫자를 생성합니다.
+            getattr(self, combo_gauge).hide()  # getattr 함수로 동적으로 위젯 참조 얻기
 
         self.save_label_texts()
 
@@ -487,10 +510,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.progressbar_gas_meter.setValue(gas_meter_value)
         self.progressbar_thermometer.setValue(thermometer_value)
 
-
-
     def update_ui_timer(self):
-
         self.update_combo_boxes()
 
         try:
@@ -554,32 +574,6 @@ class MainWindow(QtWidgets.QMainWindow):
             self.combo_port.setCurrentIndex(index)
 
         self.combo_port.blockSignals(False)
-
-    # def update_ui(self):
-    #     """ 모든 변수
-    #     global debug_bytearray_list
-    #     global ds3231_time_u32, ds3231_date_str
-    #     global test_module1_u8_B0, test_module1_u8_B1, test_module1_u8_B7
-    #     global test_module2_u8_B0, test_module2_u8_B1, test_module2_u8_B7
-    #     :return:
-    #     """
-    #
-    #     # time : top_left
-    #     data_time = main_functions.ds3231_date_str
-    #     self.lbl_time.setText(str(data_time))
-    #
-    #     for i in range(1, 9):
-    #         # Get the combo box
-    #         combo_box = self.findChild(QComboBox, f'combo_p1_sensor_selector_{i}')
-    #         # Get the currently selected key
-    #         key = combo_box.currentText()
-    #         # Get the corresponding value from the dictionary
-    #         value = main_functions.display_data.get(key)
-    #
-    #         # Update the corresponding label
-    #         label = self.findChild(QLabel, f'lbl_p1_sensor_{i}')
-    #         if value is not None:
-    #             label.setText(str(value))
 
     def update_ui(self):
         data_time = main_functions.ds3231_date_str
@@ -650,7 +644,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def init_gauge(self, gauge):
         gauge.units = "Km/h"
         gauge.enableBarGraph = True
-        gauge.setMouseTracking(True)
+        gauge.setMouseTracking(False)
         gauge.maxValue = 255
         gauge.minValue = 0
         gauge.updateValue(0)
@@ -658,7 +652,6 @@ class MainWindow(QtWidgets.QMainWindow):
         # 사용할만한 theme
         # gauge.setGaugeTheme(0)
         # gauge.setGaugeTheme(2)
-
 
     # combobox가 변경됐을 때 바로 실행 # 페이지 움직이기 전부터 페이지 옮기는 것까지
     def change_stacked_widget(self, index):
@@ -703,6 +696,9 @@ class MainWindow(QtWidgets.QMainWindow):
                 label.setStyleSheet("QLabel { border: 1px solid gray; background-color: lightyellow; }")
                 label.mousePressEvent = lambda event, l=label: self.label_clicked(l)
 
+
+        for combo_gauge in self.combo_gauges:
+            getattr(self, combo_gauge).show()  # getattr 함수로 동적으로 위젯 참조 얻기
         ### page_btn
 
         ### page_digital_status
