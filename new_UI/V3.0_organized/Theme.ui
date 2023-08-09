@@ -562,26 +562,14 @@ font-size: 30px; font-family: Arial;
                                 <pointsize>-1</pointsize>
                                </font>
                               </property>
-                              <property name="cursor">
-                               <cursorShape>ArrowCursor</cursorShape>
-                              </property>
-                              <property name="acceptDrops">
-                               <bool>false</bool>
-                              </property>
                               <property name="text">
                                <string>Sensor</string>
-                              </property>
-                              <property name="textFormat">
-                               <enum>Qt::PlainText</enum>
                               </property>
                               <property name="scaledContents">
                                <bool>true</bool>
                               </property>
                               <property name="alignment">
                                <set>Qt::AlignCenter</set>
-                              </property>
-                              <property name="wordWrap">
-                               <bool>false</bool>
                               </property>
                              </widget>
                             </item>
@@ -3395,7 +3383,7 @@ QPushButton:disabled:checked {
                  <item row="0" column="0">
                   <layout class="QVBoxLayout" name="verticalLayout_3">
                    <item>
-                    <widget class="QLabel" name="lbl_sensor_name_1">
+                    <widget class="QLabel" name="lbl_sensor_name1_1">
                      <property name="font">
                       <font>
                        <family>Arial</family>
@@ -3469,7 +3457,7 @@ QPushButton:disabled:checked {
                  <item row="0" column="0">
                   <layout class="QVBoxLayout" name="verticalLayout_9">
                    <item>
-                    <widget class="QLabel" name="lbl_sensor_name_2">
+                    <widget class="QLabel" name="lbl_sensor_name1_2">
                      <property name="font">
                       <font>
                        <family>Arial</family>
@@ -3703,7 +3691,7 @@ QPushButton:disabled:checked {
                  <item row="0" column="0">
                   <layout class="QVBoxLayout" name="verticalLayout_17">
                    <item>
-                    <widget class="QLabel" name="lbl_sensor_name_4">
+                    <widget class="QLabel" name="lbl_sensor_name1_3">
                      <property name="font">
                       <font>
                        <family>Arial</family>
@@ -4491,7 +4479,7 @@ QPushButton:disabled:checked {
                  <item row="0" column="0">
                   <layout class="QVBoxLayout" name="verticalLayout_30">
                    <item>
-                    <widget class="QLabel" name="label">
+                    <widget class="QLabel" name="label_26">
                      <property name="font">
                       <font>
                        <family>Arial</family>
