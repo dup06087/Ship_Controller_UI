@@ -1,0 +1,12 @@
+<RCC>
+  <qresource>
+    <file>img_contech-removebg-preview.png</file>
+    <file>img_contech.png</file>
+    <file>img_sensors.png</file>
+    <file>img_firmware_update.png</file>
+    <file>img_settings.png</file>
+    <file>btn_left.png</file>
+    <file>btn_right.png</file>
+    <file>img_bluetooth.png</file>
+  </qresource>
+</RCC>

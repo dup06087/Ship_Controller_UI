@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="Resources">
+    <file>Theme.png</file>
+  </qresource>
+</RCC>
