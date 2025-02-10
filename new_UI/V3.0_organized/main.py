@@ -5,8 +5,9 @@ from PyQt5.QtGui import QPixmap, QPalette, QBrush, QIcon, QPainter
 from PyQt5.QtCore import Qt, pyqtSlot, pyqtSignal, QUrl, QTimer, QThread
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QComboBox, QLineEdit, QPushButton, QVBoxLayout, \
     QFileDialog, QTextEdit, QDialogButtonBox, QMessageBox, QLabel, QInputDialog
-import sys
+
 import upload_bin_func_and_debug_func as main_functions
+import sys
 from serial.tools import list_ports
 from PyQt5 import QtWidgets, uic
 
@@ -124,7 +125,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         #window size and other options
 
-        self.combo_gauges = ["combo_small_gauge_1", "combo_small_gauge_2", "combo_gauge_1", "combo_gauge_2"]
+        self.combo_gauges = ["combo_gauge_1", "combo_gauge_2", "combo_gauge_3", "combo_gauge_4"]
 
         self.init_window()
         self.initializing_editable_labels()
@@ -136,10 +137,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.init_combo_menu()
         self.init_progressbar()
         self.init_make_rectangle_widgets()
-
+        self.init_button_functions()
 
         self.hidden_pages = [self.page_firmware_update.objectName()]
-
 
         self.init_digital_status()
 
@@ -172,11 +172,21 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.btn_custom_setting.hide()
 
+    def init_button_functions(self):
+        # 각 버튼에 함수 연결
+        for i in range(1, 17):
+            button = self.findChild(QPushButton, f'btn_{i}')
+            if button:
+                button.clicked.connect(getattr(self, f'button_{i}_clicked'))
 
     def init_signals_and_slots(self):
         for i in range(1, 9):  # Adjust range accordingly
             combo_box = self.findChild(QComboBox, f'combo_p1_sensor_selector_{i}')
             combo_box.currentIndexChanged.connect(self.update_label)
+
+        for combo_gauge in self.combo_gauges:  # Adjust range accordingly
+            combo_box_gauge = self.findChild(QComboBox, combo_gauge)
+            combo_box_gauge.currentIndexChanged.connect(self.update_label_combobox)
 
         self.worker_firmware_update = Worker(self.run_main_func, "vcu_f413zh_mbed.NUCLEO_F413ZH.bin", self.init_port, False)
         self.worker_firmware_update.task_done.connect(self.update_done_signal)
@@ -259,10 +269,7 @@ class MainWindow(QtWidgets.QMainWindow):
         for i in range(1, 17):
             self.editable_labels.append(f"lbl_digital_{i}")
 
-        for i in range(1, 3):
-            self.editable_labels.append(f"lbl_small_gauge_{i}")
-
-        for i in range(1, 3):
+        for i in range(1, 5):
             self.editable_labels.append(f"lbl_gauge_{i}")
 
     def load_label_texts(self):
@@ -294,6 +301,28 @@ class MainWindow(QtWidgets.QMainWindow):
                 selected_key = combo_box.currentText()
                 file.write(f'{selected_key}\n')
 
+    def update_label_combobox(self, index):
+        # Sender is the combo box that emitted the signal
+        combo_box = self.sender()
+        # Get the currently selected key
+        key = combo_box.currentText()
+        # Get the corresponding value from the dictionary
+        value = main_functions.display_data.get(key)
+        # Update the corresponding label
+
+        '''
+        key value 찾았으니 backend랑 연결
+        '''
+        with open('gauges.txt', 'w') as file:
+            for i in range(1, 5):
+                combo_box = self.findChild(QComboBox, f'combo_gauge_{i}')
+                selected_key = combo_box.currentText()
+                file.write(f'{selected_key}\n')
+
+        '''
+        backend와 연결은 했고, gauge widget이랑 연결
+        '''
+
     def timer_per_5sec(self):
         self.timer_per_second = QTimer(self)
         self.timer_per_second.setInterval(5000)  # 1000ms = 1초
@@ -303,26 +332,39 @@ class MainWindow(QtWidgets.QMainWindow):
     def update_combo_boxes(self):
         for i in range(1, 9):  # Adjust range accordingly
             combo_box = self.findChild(QComboBox, f'combo_p1_sensor_selector_{i}')
-
             # Block signals
             combo_box.blockSignals(True)
-
             # Save current selected item
             current_item = combo_box.currentText()
-
             combo_box.clear()
 
             # Populate combo box with keys from display_data
             for key in main_functions.display_data.keys():
                 combo_box.addItem(key)
-
             # Restore previous selection if it still exists
             index = combo_box.findText(current_item)
             if index >= 0:
                 combo_box.setCurrentIndex(index)
-
             # Unblock signals
             combo_box.blockSignals(False)
+
+        for combo_gauge in self.combo_gauges:  # Adjust range accordingly
+            combo_box_gauge = self.findChild(QComboBox, combo_gauge)
+            # Block signals
+            combo_box_gauge.blockSignals(True)
+            # Save current selected item
+            current_item = combo_box_gauge.currentText()
+            combo_box_gauge.clear()
+
+            # Populate combo box with keys from display_data
+            for key in main_functions.display_data.keys():
+                combo_box_gauge.addItem(key)
+            # Restore previous selection if it still exists
+            index = combo_box_gauge.findText(current_item)
+            if index >= 0:
+                combo_box_gauge.setCurrentIndex(index)
+            # Unblock signals
+            combo_box_gauge.blockSignals(False)
 
     def btn_custom_setting_end_clicked(self):
         for i in range(1, 9):  # range(1, 13)는 1부터 12까지의 숫자를 생성합니다.
@@ -525,6 +567,17 @@ class MainWindow(QtWidgets.QMainWindow):
             # if selections[i-1] is not None and selections[i-1] in [combo_box.itemText(j) for j in range(combo_box.count())]:
             combo_box.setCurrentText(selections[i-1])
 
+        try:
+            with open('gauges.txt', 'r') as f:
+                selections_gauges = f.read().splitlines()
+        except FileNotFoundError:
+            selections_gauges = [None] * 8  # Default to None if the file does not exist
+
+        for i in range(1, 5):
+            combo_box_gauge = self.findChild(QComboBox, f'combo_gauge_{i}')
+            # if selections[i-1] is not None and selections[i-1] in [combo_box.itemText(j) for j in range(combo_box.count())]:
+            combo_box_gauge.setCurrentText(selections_gauges[i-1])
+
         self.timer_update_ui = QTimer()
         self.timer_update_ui.timeout.connect(self.update_ui)
         self.timer_update_ui.start(1000)  # Fire the timer every 1000 ms (1 second)
@@ -648,7 +701,9 @@ class MainWindow(QtWidgets.QMainWindow):
         gauge.maxValue = 255
         gauge.minValue = 0
         gauge.updateValue(0)
-
+        gauge.setGaugeColorInnerRadiusFactor(900)
+        gauge.setScaleValueColor(R=255, G=255, B=255, Transparency=255)
+        gauge.setDisplayValueColor(R=255, G=255, B=255, Transparency=255)
         # 사용할만한 theme
         # gauge.setGaugeTheme(0)
         # gauge.setGaugeTheme(2)
@@ -696,7 +751,6 @@ class MainWindow(QtWidgets.QMainWindow):
                 label.setStyleSheet("QLabel { border: 1px solid gray; background-color: lightyellow; }")
                 label.mousePressEvent = lambda event, l=label: self.label_clicked(l)
 
-
         for combo_gauge in self.combo_gauges:
             getattr(self, combo_gauge).show()  # getattr 함수로 동적으로 위젯 참조 얻기
         ### page_btn
@@ -704,8 +758,6 @@ class MainWindow(QtWidgets.QMainWindow):
         ### page_digital_status
 
         ### sensors
-
-
 
     def next_page(self):
         current_index = self.stacked_widget.currentIndex()

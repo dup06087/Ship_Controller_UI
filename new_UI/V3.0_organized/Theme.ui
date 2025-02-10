@@ -312,7 +312,7 @@ QComboBox { color: transparent; }
       <item>
        <widget class="QStackedWidget" name="stacked_widget">
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="page_monitoring">
          <layout class="QGridLayout" name="gridLayout_3">
@@ -1007,10 +1007,10 @@ font-size: 30px; font-family: Arial;
                               </spacer>
                              </item>
                              <item>
-                              <widget class="QComboBox" name="combo_small_gauge_1"/>
+                              <widget class="QComboBox" name="combo_gauge_3"/>
                              </item>
                              <item>
-                              <widget class="QLabel" name="lbl_small_gauge_1">
+                              <widget class="QLabel" name="lbl_gauge_3">
                                <property name="sizePolicy">
                                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                                  <horstretch>0</horstretch>
@@ -1038,7 +1038,7 @@ font-size: 30px; font-family: Arial;
                               </widget>
                              </item>
                              <item>
-                              <widget class="QLabel" name="lbl_small_gauge_2">
+                              <widget class="QLabel" name="lbl_gauge_4">
                                <property name="sizePolicy">
                                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                                  <horstretch>0</horstretch>
@@ -1066,7 +1066,7 @@ font-size: 30px; font-family: Arial;
                               </widget>
                              </item>
                              <item>
-                              <widget class="QComboBox" name="combo_small_gauge_2"/>
+                              <widget class="QComboBox" name="combo_gauge_4"/>
                              </item>
                              <item>
                               <spacer name="horizontalSpacer_45">
@@ -1210,11 +1210,14 @@ font-size: 30px; font-family: Arial;
                      </layout>
                     </item>
                     <item>
-                     <layout class="QHBoxLayout" name="horizontalLayout_32" stretch="10,450,10,450,10">
+                     <layout class="QHBoxLayout" name="horizontalLayout_32" stretch="10,0,0,10">
                       <item>
                        <spacer name="horizontalSpacer_54">
                         <property name="orientation">
                          <enum>Qt::Horizontal</enum>
+                        </property>
+                        <property name="sizeType">
+                         <enum>QSizePolicy::Maximum</enum>
                         </property>
                         <property name="sizeHint" stdset="0">
                          <size>
@@ -1230,19 +1233,6 @@ font-size: 30px; font-family: Arial;
                          <string notr="true"/>
                         </property>
                        </widget>
-                      </item>
-                      <item>
-                       <spacer name="horizontalSpacer_55">
-                        <property name="orientation">
-                         <enum>Qt::Horizontal</enum>
-                        </property>
-                        <property name="sizeHint" stdset="0">
-                         <size>
-                          <width>40</width>
-                          <height>20</height>
-                         </size>
-                        </property>
-                       </spacer>
                       </item>
                       <item>
                        <widget class="AnalogGaugeWidget" name="widget_gauge2" native="true">
@@ -1261,6 +1251,9 @@ font-size: 30px; font-family: Arial;
                        <spacer name="horizontalSpacer_53">
                         <property name="orientation">
                          <enum>Qt::Horizontal</enum>
+                        </property>
+                        <property name="sizeType">
+                         <enum>QSizePolicy::Maximum</enum>
                         </property>
                         <property name="sizeHint" stdset="0">
                          <size>
